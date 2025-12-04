@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EXORA | Plataforma integral para barberías y peluquerías</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #555BF6;
+      --accent: #FD778B;
+      --text: #0F0F1A;
+      --muted: #5B5D75;
+      --bg: #F7F8FB;
+      --card: #FFFFFF;
+      --border: #E6E8F0;
+      --shadow: 0 10px 40px rgba(13, 12, 34, 0.08);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+      color: var(--text);
+      background: #ffffff;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    header {
+      padding: 32px 64px 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-weight: 800;
+      font-size: 20px;
+      letter-spacing: 0.6px;
+      color: var(--primary);
+    }
+
+    nav {
+      display: flex;
+      gap: 24px;
+      font-weight: 600;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 18px;
+      border-radius: 999px;
+      border: none;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 50px rgba(85, 91, 246, 0.35);
+    }
+
+    .btn-secondary {
+      background: rgba(85, 91, 246, 0.08);
+      color: var(--primary);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(85, 91, 246, 0.16);
+      transform: translateY(-1px);
+    }
+
+    .hero {
+      padding: 32px 64px 64px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      align-items: center;
+      gap: 48px;
+    }
+
+    .hero h1 {
+      font-size: clamp(32px, 4vw, 48px);
+      line-height: 1.1;
+      margin: 0 0 16px;
+      letter-spacing: -0.5px;
+    }
+
+    .hero p {
+      color: var(--muted);
+      margin: 0 0 24px;
+      font-size: 16px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(85, 91, 246, 0.08);
+      color: var(--primary);
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 12px;
+      margin-bottom: 16px;
+    }
+
+    .hero-bullets {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px 18px;
+      margin: 20px 0 28px;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .hero-bullets .item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--card);
+      padding: 12px 14px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: 0 12px 30px rgba(15, 15, 26, 0.03);
+    }
+
+    .tick {
+      width: 28px;
+      height: 28px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .mockup {
+      background: linear-gradient(145deg, rgba(85,91,246,0.12), rgba(253,119,139,0.12));
+      border-radius: 28px;
+      padding: 28px;
+      min-height: 360px;
+      border: 1px solid var(--border);
+      box-shadow: 0 16px 40px rgba(15, 15, 26, 0.06);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mockup:before, .mockup:after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(40px);
+      opacity: 0.6;
+    }
+
+    .mockup:before {
+      width: 180px;
+      height: 180px;
+      background: rgba(85, 91, 246, 0.25);
+      top: -40px;
+      right: -20px;
+    }
+
+    .mockup:after {
+      width: 140px;
+      height: 140px;
+      background: rgba(253, 119, 139, 0.25);
+      bottom: -30px;
+      left: -10px;
+    }
+
+    .mockup .placeholder {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .device, .panel {
+      background: #fff;
+      border-radius: 22px;
+      box-shadow: 0 20px 50px rgba(13, 12, 34, 0.12);
+      border: 1px solid rgba(255,255,255,0.8);
+      padding: 18px;
+    }
+
+    .device {
+      height: 320px;
+      display: grid;
+      align-content: space-between;
+    }
+
+    .pill {
+      height: 10px;
+      width: 70px;
+      background: var(--border);
+      border-radius: 999px;
+      margin: 0 auto;
+    }
+
+    .device h4 {
+      margin: 0 0 8px;
+      font-size: 16px;
+      color: var(--text);
+    }
+
+    .device ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .device li {
+      background: var(--bg);
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .panel h4 {
+      margin: 0 0 12px;
+      font-size: 16px;
+    }
+
+    .panel .chart {
+      height: 180px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(85, 91, 246, 0.12), rgba(253, 119, 139, 0.12));
+      border: 1px dashed rgba(85, 91, 246, 0.3);
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .section {
+      padding: 72px 64px;
+    }
+
+    .section.alt {
+      background: var(--bg);
+    }
+
+    .section h2 {
+      font-size: 32px;
+      margin: 0 0 16px;
+      letter-spacing: -0.3px;
+    }
+
+    .section p {
+      color: var(--muted);
+      margin: 0 0 28px;
+      max-width: 860px;
+    }
+
+    .diagram {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 22px;
+      border: 1px solid var(--border);
+      box-shadow: 0 10px 30px rgba(15, 15, 26, 0.04);
+    }
+
+    .card h3, .card h4 {
+      margin: 0 0 10px;
+    }
+
+    .card p {
+      margin: 0 0 12px;
+    }
+
+    .mini-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: rgba(85, 91, 246, 0.12);
+      color: var(--primary);
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .two-column {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 32px;
+      align-items: center;
+    }
+
+    .visual-placeholder {
+      height: 360px;
+      background: linear-gradient(135deg, rgba(85, 91, 246, 0.12), rgba(253, 119, 139, 0.12));
+      border-radius: 26px;
+      border: 1px dashed rgba(85, 91, 246, 0.35);
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      font-weight: 700;
+      box-shadow: var(--shadow);
+    }
+
+    .list {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .list .row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--primary);
+      box-shadow: 0 0 0 6px rgba(85, 91, 246, 0.12);
+    }
+
+    .benefits {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .testimonial-wrap {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+    }
+
+    .quote {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: 0 14px 30px rgba(15, 15, 26, 0.05);
+    }
+
+    .quote strong {
+      display: block;
+      margin-top: 12px;
+      color: var(--primary);
+    }
+
+    .cta-final {
+      background: linear-gradient(120deg, rgba(85, 91, 246, 0.12), rgba(253, 119, 139, 0.1));
+      border-radius: 28px;
+      padding: 48px;
+      border: 1px solid var(--border);
+      box-shadow: 0 18px 40px rgba(15, 15, 26, 0.08);
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px 14px;
+      margin-top: 24px;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: #fff;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--text);
+      transition: border 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(85, 91, 246, 0.18);
+    }
+
+    textarea {
+      min-height: 120px;
+      grid-column: span 2;
+      resize: vertical;
+    }
+
+    .note {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    footer {
+      padding: 32px 64px 48px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      align-items: center;
+    }
+
+    .footer-links, .footer-social {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .footer-social a {
+      color: var(--primary);
+    }
+
+    @media (max-width: 768px) {
+      header { padding: 20px 22px 8px; }
+      .hero { padding: 18px 22px 48px; }
+      .section { padding: 56px 22px; }
+      footer { padding: 28px 22px 40px; }
+      textarea { grid-column: span 1; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">EXORA</div>
+    <nav>
+      <a href="#plataforma">Plataforma</a>
+      <a href="#beneficios">Beneficios</a>
+      <a href="#testimonios">Testimonios</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <button class="btn btn-primary">Hablar con un experto</button>
+  </header>
+
+  <section class="hero">
+    <div class="hero-copy">
+      <div class="badge">Plataforma de gestión integral para barberías y peluquerías</div>
+      <h1>La plataforma que controla tu barbería de arriba abajo</h1>
+      <p>EXORA une reservas online, administración, control horario digital y facturación en una sola herramienta pensada para barberías y peluquerías.</p>
+      <div class="hero-bullets">
+        <div class="item"><span class="tick">✓</span>Reservas 24/7 desde el móvil</div>
+        <div class="item"><span class="tick">✓</span>Menos ausencias y cancelaciones</div>
+        <div class="item"><span class="tick">✓</span>Control total de empleados y caja</div>
+        <div class="item"><span class="tick">✓</span>Listo para la nueva normativa de facturación</div>
+      </div>
+      <div class="hero-actions">
+        <button class="btn btn-primary">Quiero más información</button>
+        <button class="btn btn-secondary">Ver cómo funciona</button>
+      </div>
+    </div>
+    <div class="mockup">
+      <div class="placeholder">
+        <div class="device">
+          <div class="pill"></div>
+          <div>
+            <h4>Reservas hoy</h4>
+            <ul>
+              <li>Corte + Perfilado · 17:00h · Mario</li>
+              <li>Afeitado tradicional · 17:45h · Pablo</li>
+              <li>Color + Peinado · 18:30h · Ana</li>
+            </ul>
+          </div>
+          <div class="pill" style="width: 52px; opacity: 0.6;"></div>
+        </div>
+        <div class="panel">
+          <h4>Panel de administración</h4>
+          <div class="chart">Espacio para el panel en portátil</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="plataforma" class="section alt">
+    <h2>Mucho más que una app de reservas</h2>
+    <p>EXORA es la columna vertebral de tu negocio. Unifica la agenda, los cobros, el equipo y la facturación para que puedas gestionar tu barbería o peluquería con claridad y sin fricciones.</p>
+    <div class="diagram">
+      <div class="card">
+        <div class="mini-icon">📊</div>
+        <h4>Administración</h4>
+        <p>Agenda, caja, ventas y métricas clave en un solo lugar.</p>
+      </div>
+      <div class="card">
+        <div class="mini-icon">📱</div>
+        <h4>Reservas online</h4>
+        <p>Tu app corporativa para que los clientes reserven sin llamadas.</p>
+      </div>
+      <div class="card">
+        <div class="mini-icon">⏱️</div>
+        <h4>Control horario</h4>
+        <p>Fichajes digitales y reportes listos para inspecciones.</p>
+      </div>
+      <div class="card">
+        <div class="mini-icon">🧾</div>
+        <h4>Facturación</h4>
+        <p>Tickets y facturas preparados para sistemas Verifactu/Perifacto.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="two-column">
+      <div>
+        <h2>Administra tu barbería sin perderte en el papeleo</h2>
+        <p>Consulta la agenda, controla la caja y las ventas, y revisa el rendimiento de cada profesional desde un panel que habla tu idioma. Ten siempre a mano las métricas que importan para decidir con seguridad.</p>
+        <div class="list">
+          <div class="row"><span class="dot"></span>Visión clara de la ocupación diaria y semanal</div>
+          <div class="row"><span class="dot"></span>Control de caja, ventas y medios de pago</div>
+          <div class="row"><span class="dot"></span>Métricas por profesional y servicios más rentables</div>
+          <div class="row"><span class="dot"></span>Informes listos para tu gestoría</div>
+        </div>
+      </div>
+      <div class="visual-placeholder">Fotografía o mockup del panel de administración</div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="two-column">
+      <div class="visual-placeholder">Mockup de la app móvil con tu marca</div>
+      <div>
+        <h2>Tu propia app de reservas, con tu logo y tus colores</h2>
+        <p>Los clientes reservan desde el móvil sin llamar, solo ven tu negocio y reciben recordatorios automáticos. Menos huecos vacíos, más tiempo ocupado.</p>
+        <div class="list">
+          <div class="row"><span class="dot"></span>App corporativa con tu marca</div>
+          <div class="row"><span class="dot"></span>Reservas 24/7 y pagos opcionales</div>
+          <div class="row"><span class="dot"></span>Recordatorios por notificación, correo o SMS</div>
+          <div class="row"><span class="dot"></span>Sin distracciones: tu negocio, sin competencia</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background: #F3F5FA;">
+    <div class="two-column">
+      <div>
+        <h2>Control horario digital para todo tu equipo</h2>
+        <p>Fichajes de entrada y salida desde móvil, tablet o PC, con histórico de horas y descarga de informes. Cumple con la normativa sin papeles ni discusiones.</p>
+        <div class="list">
+          <div class="row"><span class="dot"></span>Registro de jornada conforme a la ley</div>
+          <div class="row"><span class="dot"></span>Informes descargables para inspecciones</div>
+          <div class="row"><span class="dot"></span>Visibilidad de horas por empleado y por servicio</div>
+          <div class="row"><span class="dot"></span>Alertas de fichajes pendientes</div>
+        </div>
+      </div>
+      <div class="card" style="box-shadow: var(--shadow);">
+        <div class="mini-icon">⏰</div>
+        <h3>Tranquilidad legal</h3>
+        <p>Digitaliza el control horario y olvídate de hojas de firmas. EXORA registra, guarda y exporta cada fichaje.</p>
+        <div class="list">
+          <div class="row"><span class="dot"></span>Fichajes desde cualquier dispositivo</div>
+          <div class="row"><span class="dot"></span>Histórico inalterable y seguro</div>
+          <div class="row"><span class="dot"></span>Listo para compartir con tu gestoría</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="two-column">
+      <div>
+        <h2>Tu facturación preparada para la nueva era digital</h2>
+        <p>Emite tickets y facturas desde el mismo sistema donde gestionas reservas y cobros. Reduce errores, gana control y prepárate para entornos Verifactu/Perifacto con un registro seguro y trazable.</p>
+        <div class="list">
+          <div class="row"><span class="dot"></span>Facturas y tickets en segundos</div>
+          <div class="row"><span class="dot"></span>Trazabilidad y seguridad antifraude</div>
+          <div class="row"><span class="dot"></span>Ingresos claros y controlados en un panel único</div>
+        </div>
+      </div>
+      <div class="card" style="box-shadow: var(--shadow);">
+        <div class="mini-icon">🧾</div>
+        <h3>Compatible con Verifactu / Perifacto</h3>
+        <p>EXORA se diseña para alinearse con las nuevas exigencias de la Agencia Tributaria, facilitando el cumplimiento sin tecnicismos ni complicaciones.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="beneficios" class="section alt">
+    <h2>Lo que ganas usando EXORA en tu día a día</h2>
+    <p>Enfocado a propietarios de barberías y peluquerías que quieren vender más, organizar mejor a su equipo y dar una experiencia digital a la altura.</p>
+    <div class="benefits">
+      <div class="card">
+        <div class="mini-icon">☎️</div>
+        <h4>Menos tiempo al teléfono</h4>
+        <p>Las reservas entran solas mientras tú sigues atendiendo en el sillón.</p>
+      </div>
+      <div class="card">
+        <div class="mini-icon">✅</div>
+        <h4>Más reservas confirmadas</h4>
+        <p>Recordatorios automáticos y pagos anticipados para reducir ausencias.</p>
+      </div>
+      <div class="card">
+        <div class="mini-icon">👥</div>
+        <h4>Mejor organización del equipo</h4>
+        <p>Agenda compartida, horarios claros y fichajes digitales.</p>
+      </div>
+      <div class="card">
+        <div class="mini-icon">💳</div>
+        <h4>Control total de ingresos</h4>
+        <p>Ventas, caja y facturas en el mismo panel para no perder detalle.</p>
+      </div>
+      <div class="card">
+        <div class="mini-icon">✨</div>
+        <h4>Imagen digital moderna</h4>
+        <p>Una app propia que refuerza tu marca y fideliza a tus clientes.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="testimonios" class="section">
+    <h2>Testimonios</h2>
+    <p>Historias reales de barberías y peluquerías que ya trabajan con EXORA.</p>
+    <div class="testimonial-wrap">
+      <div class="quote">
+        “Hemos reducido a la mitad las llamadas y las ausencias apenas existen. Los recordatorios automáticos nos han salvado la agenda.”
+        <strong>Barbería Central</strong>
+      </div>
+      <div class="quote">
+        “El panel de administración me dice cada día cuánto he vendido y quién necesita refuerzo. Ahora decido con datos.”
+        <strong>Peluquería Urban Cut</strong>
+      </div>
+      <div class="quote">
+        “Con el control horario y la facturación integrada todo está registrado y listo para la gestoría. Menos tareas repetitivas.”
+        <strong>Studio Línea</strong>
+      </div>
+    </div>
+  </section>
+
+  <section id="contacto" class="section">
+    <div class="cta-final">
+      <h2>¿Quieres ver cómo encaja EXORA en tu barbería?</h2>
+      <p>Déjanos tus datos y te enseñamos cómo integrar reservas, control horario y facturación en una sola plataforma.</p>
+      <form>
+        <div>
+          <label>Nombre del negocio</label>
+          <input type="text" placeholder="Tu barbería o peluquería" required>
+        </div>
+        <div>
+          <label>Nombre y apellidos</label>
+          <input type="text" placeholder="Nombre completo" required>
+        </div>
+        <div>
+          <label>Teléfono</label>
+          <input type="tel" placeholder="Tu número" required>
+        </div>
+        <div>
+          <label>Email</label>
+          <input type="email" placeholder="correo@ejemplo.com" required>
+        </div>
+        <div>
+          <label>Tipo de negocio</label>
+          <select required>
+            <option>Barbería</option>
+            <option>Peluquería</option>
+            <option>Centro de estética</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <div>
+          <label>Nº de empleados</label>
+          <select required>
+            <option>1–2</option>
+            <option>3–5</option>
+            <option>6–10</option>
+            <option>+10</option>
+          </select>
+        </div>
+        <div>
+          <label>Mensaje (opcional)</label>
+          <textarea placeholder="Cuéntanos qué necesitas"></textarea>
+        </div>
+        <div style="display:flex; align-items:flex-end;">
+          <button type="submit" class="btn btn-primary" style="width:100%;">Quiero información</button>
+        </div>
+      </form>
+      <div class="note">Nos pondremos en contacto contigo en menos de 24 horas laborables.</div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="logo">EXORA</div>
+    <div class="footer-links">
+      <a href="#">Términos</a>
+      <a href="#">Privacidad</a>
+      <a href="#">Cookies</a>
+    </div>
+    <div class="footer-social">
+      <a href="#">Instagram</a>
+      <a href="#">LinkedIn</a>
+    </div>
+    <div style="font-weight:600; color: var(--text);">Tu manera de trabajar define tu negocio y crea marca.</div>
+  </footer>
+</body>
+</html>
