@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #555BF6;
+      --primary: #1A28D7;
       --accent: #FD778B;
       --text: #0F0F1A;
       --muted: #5B5D75;
@@ -43,6 +43,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
     }
 
     .logo {
@@ -58,6 +60,8 @@
       font-weight: 600;
       color: var(--muted);
       font-size: 14px;
+      flex-wrap: wrap;
+      row-gap: 8px;
     }
 
     .btn {
@@ -82,7 +86,7 @@
 
     .btn-primary:hover {
       transform: translateY(-2px);
-      box-shadow: 0 12px 50px rgba(85, 91, 246, 0.35);
+      box-shadow: 0 12px 50px rgba(26, 40, 215, 0.35);
     }
 
     .btn-secondary {
@@ -153,7 +157,7 @@
       width: 28px;
       height: 28px;
       border-radius: 10px;
-      background: linear-gradient(135deg, var(--primary), var(--accent));
+      background: var(--accent);
       display: grid;
       place-items: center;
       color: #fff;
@@ -168,11 +172,11 @@
     }
 
     .mockup {
-      background: linear-gradient(145deg, rgba(85,91,246,0.12), rgba(253,119,139,0.12));
+      background: rgba(255, 255, 255, 0.08);
       border-radius: 28px;
       padding: 28px;
       min-height: 360px;
-      border: 1px solid var(--border);
+      border: 1px solid rgba(255, 255, 255, 0.28);
       box-shadow: 0 16px 40px rgba(15, 15, 26, 0.06);
       position: relative;
       overflow: hidden;
@@ -189,7 +193,7 @@
     .mockup:before {
       width: 180px;
       height: 180px;
-      background: rgba(85, 91, 246, 0.25);
+      background: rgba(255, 255, 255, 0.16);
       top: -40px;
       right: -20px;
     }
@@ -197,7 +201,7 @@
     .mockup:after {
       width: 140px;
       height: 140px;
-      background: rgba(253, 119, 139, 0.25);
+      background: rgba(253, 119, 139, 0.2);
       bottom: -30px;
       left: -10px;
     }
@@ -263,11 +267,11 @@
     .panel .chart {
       height: 180px;
       border-radius: 16px;
-      background: linear-gradient(135deg, rgba(85, 91, 246, 0.12), rgba(253, 119, 139, 0.12));
-      border: 1px dashed rgba(85, 91, 246, 0.3);
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px dashed rgba(255, 255, 255, 0.4);
       display: grid;
       place-items: center;
-      color: var(--muted);
+      color: rgba(26, 40, 60, 0.75);
       font-weight: 600;
     }
 
@@ -467,8 +471,66 @@
       color: var(--primary);
     }
 
+    .top-section {
+      background: var(--primary);
+      color: #fff;
+      padding-bottom: 32px;
+    }
+
+    .top-section header {
+      color: #fff;
+    }
+
+    .top-section .logo {
+      color: #fff;
+    }
+
+    .top-section nav {
+      color: rgba(255, 255, 255, 0.86);
+    }
+
+    .top-section nav a { color: rgba(255, 255, 255, 0.9); }
+
+    .top-section .btn-primary {
+      background: var(--accent);
+      color: #1A1B2E;
+      box-shadow: 0 10px 30px rgba(253, 119, 139, 0.4);
+    }
+
+    .top-section .btn-primary:hover { box-shadow: 0 12px 38px rgba(253, 119, 139, 0.5); }
+
+    .top-section .btn-secondary {
+      background: rgba(255, 255, 255, 0.14);
+      color: #fff;
+    }
+
+    .top-section .btn-secondary:hover { background: rgba(255, 255, 255, 0.2); }
+
+    .top-section .badge {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.18);
+      color: #fff;
+    }
+
+    .top-section .hero h1 { color: #fff; }
+
+    .top-section .hero p {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
     @media (max-width: 768px) {
-      header { padding: 20px 22px 8px; }
+      header {
+        padding: 20px 22px 10px;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      nav {
+        width: 100%;
+        gap: 12px;
+        justify-content: flex-start;
+      }
+
       .hero { padding: 18px 22px 48px; }
       .section { padding: 56px 22px; }
       footer { padding: 28px 22px 40px; }
@@ -477,54 +539,56 @@
   </style>
 </head>
 <body>
-  <header>
-    <div class="logo">EXORA</div>
-    <nav>
-      <a href="#plataforma">Plataforma</a>
-      <a href="#beneficios">Beneficios</a>
-      <a href="#testimonios">Testimonios</a>
-      <a href="#contacto">Contacto</a>
-    </nav>
-    <button class="btn btn-primary">Hablar con un experto</button>
-  </header>
+  <div class="top-section">
+    <header>
+      <div class="logo">EXORA</div>
+      <nav>
+        <a href="#plataforma">Plataforma</a>
+        <a href="#beneficios">Beneficios</a>
+        <a href="#testimonios">Testimonios</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+      <button class="btn btn-primary">Hablar con un experto</button>
+    </header>
 
-  <section class="hero">
-    <div class="hero-copy">
-      <div class="badge">Plataforma de gestión integral para barberías y peluquerías</div>
-      <h1>La plataforma que controla tu barbería de arriba abajo</h1>
-      <p>EXORA une reservas online, administración, control horario digital y facturación en una sola herramienta pensada para barberías y peluquerías.</p>
-      <div class="hero-bullets">
-        <div class="item"><span class="tick">✓</span>Reservas 24/7 desde el móvil</div>
-        <div class="item"><span class="tick">✓</span>Menos ausencias y cancelaciones</div>
-        <div class="item"><span class="tick">✓</span>Control total de empleados y caja</div>
-        <div class="item"><span class="tick">✓</span>Listo para la nueva normativa de facturación</div>
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="badge">Plataforma de gestión integral para barberías y peluquerías</div>
+        <h1>La plataforma que controla tu barbería de arriba abajo</h1>
+        <p>EXORA une reservas online, administración, control horario digital y facturación en una sola herramienta pensada para barberías y peluquerías.</p>
+        <div class="hero-bullets">
+          <div class="item"><span class="tick">✓</span>Reservas 24/7 desde el móvil</div>
+          <div class="item"><span class="tick">✓</span>Menos ausencias y cancelaciones</div>
+          <div class="item"><span class="tick">✓</span>Control total de empleados y caja</div>
+          <div class="item"><span class="tick">✓</span>Listo para la nueva normativa de facturación</div>
+        </div>
+        <div class="hero-actions">
+          <button class="btn btn-primary">Quiero más información</button>
+          <button class="btn btn-secondary">Ver cómo funciona</button>
+        </div>
       </div>
-      <div class="hero-actions">
-        <button class="btn btn-primary">Quiero más información</button>
-        <button class="btn btn-secondary">Ver cómo funciona</button>
-      </div>
-    </div>
-    <div class="mockup">
-      <div class="placeholder">
-        <div class="device">
-          <div class="pill"></div>
-          <div>
-            <h4>Reservas hoy</h4>
-            <ul>
-              <li>Corte + Perfilado · 17:00h · Mario</li>
-              <li>Afeitado tradicional · 17:45h · Pablo</li>
-              <li>Color + Peinado · 18:30h · Ana</li>
-            </ul>
+      <div class="mockup">
+        <div class="placeholder">
+          <div class="device">
+            <div class="pill"></div>
+            <div>
+              <h4>Reservas hoy</h4>
+              <ul>
+                <li>Corte + Perfilado · 17:00h · Mario</li>
+                <li>Afeitado tradicional · 17:45h · Pablo</li>
+                <li>Color + Peinado · 18:30h · Ana</li>
+              </ul>
+            </div>
+            <div class="pill" style="width: 52px; opacity: 0.6;"></div>
           </div>
-          <div class="pill" style="width: 52px; opacity: 0.6;"></div>
-        </div>
-        <div class="panel">
-          <h4>Panel de administración</h4>
-          <div class="chart">Espacio para el panel en portátil</div>
+          <div class="panel">
+            <h4>Panel de administración</h4>
+            <div class="chart">Espacio para el panel en portátil</div>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 
   <section id="plataforma" class="section alt">
     <h2>Mucho más que una app de reservas</h2>
