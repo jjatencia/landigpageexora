@@ -12,6 +12,7 @@
     :root {
       --primary: #242CD2;
       --accent: #FD778B;
+      --highlight: #FCFFA8;
       --text: #0F0F1A;
       --muted: #5B5D75;
       --bg: #F7F8FB;
@@ -130,13 +131,14 @@
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      background: rgba(36, 44, 210, 0.08);
+      background: linear-gradient(120deg, rgba(36, 44, 210, 0.08), rgba(252, 255, 168, 0.65));
       color: var(--primary);
       padding: 10px 14px;
       border-radius: 999px;
       font-weight: 700;
       font-size: 12px;
       margin-bottom: 16px;
+      box-shadow: 0 12px 26px rgba(252, 255, 168, 0.25);
     }
 
     .hero-bullets {
@@ -163,12 +165,13 @@
       width: 28px;
       height: 28px;
       border-radius: 10px;
-      background: var(--accent);
+      background: linear-gradient(135deg, var(--accent), var(--highlight));
       display: grid;
       place-items: center;
-      color: #fff;
+      color: #0F0F1A;
       font-weight: 800;
       font-size: 14px;
+      border: 1px solid rgba(15, 15, 26, 0.08);
     }
 
     .hero-actions {
@@ -355,14 +358,14 @@
 
     .visual-placeholder {
       height: 360px;
-      background: linear-gradient(135deg, rgba(36, 44, 210, 0.12), rgba(253, 119, 139, 0.12));
+      background: linear-gradient(135deg, rgba(36, 44, 210, 0.12), rgba(253, 119, 139, 0.12), rgba(252, 255, 168, 0.18));
       border-radius: 26px;
       border: 1px dashed rgba(36, 44, 210, 0.35);
       display: grid;
       place-items: center;
       color: var(--muted);
       font-weight: 700;
-      box-shadow: var(--shadow);
+      box-shadow: 0 18px 44px rgba(252, 255, 168, 0.25);
     }
 
     .list {
@@ -383,8 +386,8 @@
       width: 10px;
       height: 10px;
       border-radius: 50%;
-      background: var(--primary);
-      box-shadow: 0 0 0 6px rgba(36, 44, 210, 0.12);
+      background: linear-gradient(135deg, var(--primary), var(--highlight));
+      box-shadow: 0 0 0 6px rgba(252, 255, 168, 0.35);
     }
 
     .benefits {
@@ -414,11 +417,11 @@
     }
 
     .cta-final {
-      background: linear-gradient(120deg, rgba(36, 44, 210, 0.12), rgba(253, 119, 139, 0.1));
+      background: linear-gradient(120deg, rgba(36, 44, 210, 0.12), rgba(253, 119, 139, 0.1), rgba(252, 255, 168, 0.2));
       border-radius: 28px;
       padding: 48px;
       border: 1px solid var(--border);
-      box-shadow: 0 18px 40px rgba(15, 15, 26, 0.08);
+      box-shadow: 0 18px 40px rgba(15, 15, 26, 0.08), 0 12px 40px rgba(252, 255, 168, 0.28);
     }
 
     form {
