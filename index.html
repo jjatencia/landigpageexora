@@ -329,6 +329,12 @@
       margin-bottom: 10px;
     }
 
+    .mini-icon svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
     .two-column {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -594,22 +600,45 @@
     <p>EXORA es el motor que hace que tu espacio de belleza funcione solo: agenda, cobros, equipo y facturación unidos para que ganes control, tiempo y clientes desde el primer día.</p>
     <div class="diagram">
       <div class="card">
-        <div class="mini-icon">Σ</div>
+        <div class="mini-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" role="img" focusable="false">
+            <rect x="4" y="12" width="3" height="8" rx="1"></rect>
+            <rect x="10" y="8" width="3" height="12" rx="1"></rect>
+            <rect x="16" y="5" width="3" height="15" rx="1"></rect>
+          </svg>
+        </div>
         <h4>Administración</h4>
         <p>Agenda, caja, ventas y métricas clave siempre visibles para decidir rápido.</p>
       </div>
       <div class="card">
-        <div class="mini-icon">R</div>
+        <div class="mini-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" role="img" focusable="false">
+            <rect x="5" y="6" width="14" height="12" rx="2"></rect>
+            <path d="M8 4v3M16 4v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+            <polyline points="9 13 11 15 15 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline>
+          </svg>
+        </div>
         <h4>Reservas online</h4>
         <p>Tu app corporativa para que los clientes reserven sin llamadas ni esperas.</p>
       </div>
       <div class="card">
-        <div class="mini-icon">H</div>
+        <div class="mini-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" role="img" focusable="false">
+            <circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"></circle>
+            <path d="M12 8v4l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </div>
         <h4>Control horario</h4>
         <p>Fichajes digitales y reportes listos para cualquier inspección.</p>
       </div>
       <div class="card">
-        <div class="mini-icon">F</div>
+        <div class="mini-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" role="img" focusable="false">
+            <path d="M7 4h10a2 2 0 0 1 2 2v12a1 1 0 0 1-1 1H7a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="2"></path>
+            <path d="M9 8h6M9 12h6M9 16h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+            <path d="M15 4v2a2 2 0 0 0 2 2h2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+          </svg>
+        </div>
         <h4>Facturación</h4>
         <p>Tickets y facturas preparados para entornos Verifactu (disponible a partir del 1 de enero de 2027).</p>
       </div>
@@ -661,7 +690,12 @@
         </div>
       </div>
       <div class="card" style="box-shadow: var(--shadow);">
-        <div class="mini-icon">H</div>
+        <div class="mini-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" role="img" focusable="false">
+            <circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"></circle>
+            <path d="M12 7v5l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </div>
         <h3>Tranquilidad legal</h3>
         <p>Digitaliza el control horario y olvídate de hojas de firmas. EXORA registra, guarda y exporta cada fichaje con trazabilidad completa.</p>
         <div class="list">
@@ -685,7 +719,13 @@
         </div>
       </div>
       <div class="card" style="box-shadow: var(--shadow);">
-        <div class="mini-icon">F</div>
+        <div class="mini-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" role="img" focusable="false">
+            <path d="M7 4h10a2 2 0 0 1 2 2v12a1 1 0 0 1-1 1H7a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="2"></path>
+            <path d="M9 8h6M9 12h6M9 16h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+            <path d="M15 4v2a2 2 0 0 0 2 2h2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+          </svg>
+        </div>
         <h3>Compatible con Verifactu</h3>
         <p>EXORA se diseña para alinearse con las nuevas exigencias de la Agencia Tributaria: tendrás cumplimiento Verifactu desde el 1 de enero de 2027, sin tecnicismos ni complicaciones y con total trazabilidad.</p>
       </div>
@@ -695,29 +735,58 @@
   <section id="beneficios" class="section alt">
     <h2>Lo que ganas usando EXORA en tu día a día</h2>
     <p>Propietarios de salones —peluquerías, barberías y negocios de imagen— que quieren vender más, trabajar tranquilos y ofrecer una experiencia digital moderna lo eligen por esto:</p>
-    <div class="benefits">
+      <div class="benefits">
       <div class="card">
-        <div class="mini-icon">T</div>
+        <div class="mini-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" role="img" focusable="false">
+            <circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"></circle>
+            <path d="M12 8v4l2.5 1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M10 5.5 8.5 4M14 5.5 15.5 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+          </svg>
+        </div>
         <h4>Menos tiempo al teléfono</h4>
         <p>Las reservas entran solas mientras atiendes: más tiempo facturando, menos llamadas.</p>
       </div>
       <div class="card">
-        <div class="mini-icon">OK</div>
+        <div class="mini-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" role="img" focusable="false">
+            <circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"></circle>
+            <polyline points="9 12 11 14 15 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline>
+          </svg>
+        </div>
         <h4>Más reservas confirmadas</h4>
         <p>Recordatorios automáticos y pagos anticipados que reducen ausencias y cancelaciones.</p>
       </div>
       <div class="card">
-        <div class="mini-icon">EQ</div>
+        <div class="mini-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" role="img" focusable="false">
+            <circle cx="8.5" cy="12" r="2.5" fill="none" stroke="currentColor" stroke-width="2"></circle>
+            <circle cx="15.5" cy="10" r="2.5" fill="none" stroke="currentColor" stroke-width="2"></circle>
+            <path d="M10.8 13.4 13.3 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+            <path d="M6 14.4c-1.2.6-2 1.7-2 2.9v1.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+            <path d="M18 12.7c1 .5 1.7 1.5 1.7 2.6v1.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+          </svg>
+        </div>
         <h4>Mejor organización del equipo</h4>
         <p>Agenda compartida, horarios claros y fichajes digitales sin discusiones.</p>
       </div>
       <div class="card">
-        <div class="mini-icon">€</div>
+        <div class="mini-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" role="img" focusable="false">
+            <path d="M16.5 6.5c-1.2-.9-2.9-1.2-4.5-1.2-2.7 0-4.8 1.5-4.8 4s2.1 4 4.8 4c1.6 0 3.3-.3 4.5-1.2" fill="none" stroke="currentColor" stroke-width="2"></path>
+            <path d="M7 10h7M7 13h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+            <path d="M12 5v14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+          </svg>
+        </div>
         <h4>Control total de ingresos</h4>
         <p>Ventas, caja y facturas en el mismo panel: control total sin esfuerzo.</p>
       </div>
       <div class="card">
-        <div class="mini-icon">BR</div>
+        <div class="mini-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" role="img" focusable="false">
+            <path d="M12 4 13.6 9H19l-4.5 3.4L16 17l-4-2.9L8 17l1.5-4.6L5 9h5.4Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path>
+          </svg>
+        </div>
         <h4>Imagen digital moderna</h4>
         <p>Una app propia que refuerza tu marca, fideliza y convierte más reservas.</p>
       </div>
