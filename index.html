@@ -221,10 +221,19 @@
     .mockup .placeholder {
       position: relative;
       z-index: 1;
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 16px;
+      display: flex;
       align-items: center;
+      justify-content: center;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .mockup .placeholder img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 18px;
+      box-shadow: 0 18px 40px rgba(15, 15, 26, 0.18);
     }
 
     .device, .panel {
@@ -643,22 +652,7 @@
       </div>
       <div class="mockup">
         <div class="placeholder">
-          <div class="device">
-            <div class="pill"></div>
-            <div>
-              <h4>Reservas hoy</h4>
-              <ul>
-                <li>Corte + Perfilado · 17:00h · Mario</li>
-                <li>Afeitado tradicional · 17:45h · Pablo</li>
-                <li>Color + Peinado · 18:30h · Ana</li>
-              </ul>
-            </div>
-            <div class="pill" style="width: 52px; opacity: 0.6;"></div>
-          </div>
-          <div class="panel">
-            <h4>Panel de administración</h4>
-            <div class="chart">Espacio para el panel en portátil</div>
-          </div>
+          <img src="assets/imageheader.png" alt="Mockups de exora sobre fondo liquidglass" loading="lazy" />
         </div>
       </div>
     </section>
