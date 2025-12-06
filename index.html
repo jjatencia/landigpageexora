@@ -482,6 +482,32 @@
       color: var(--primary);
     }
 
+    .floating-cta {
+      position: fixed;
+      right: 16px;
+      left: 16px;
+      bottom: 18px;
+      z-index: 50;
+      box-shadow: 0 12px 36px rgba(36, 44, 210, 0.35);
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(14px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+
+    .floating-cta.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    @media (min-width: 769px) {
+      .floating-cta {
+        display: none;
+      }
+    }
+
     .top-section {
       background: var(--primary);
       color: #fff;
@@ -878,14 +904,33 @@
     <div style="font-weight:600; color: var(--text);">Tu manera de trabajar define tu negocio y crea marca.</div>
   </footer>
 
+  <button class="btn btn-primary floating-cta cta-contact" aria-label="Quiero más información ahora">
+    Quiero más información
+  </button>
+
   <script>
     const contactButtons = document.querySelectorAll('.cta-contact');
     const contactSection = document.getElementById('contacto');
     const contactForm = document.getElementById('contact-form');
+    const floatingCta = document.querySelector('.floating-cta');
 
     const focusFirstField = () => {
       const firstInput = contactForm?.querySelector('input, select, textarea');
       firstInput?.focus({ preventScroll: true });
+    };
+
+    const toggleFloatingCta = () => {
+      if (!floatingCta) return;
+
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      if (scrollable <= 0) return;
+
+      const progress = window.scrollY / scrollable;
+      if (progress > 0.35) {
+        floatingCta.classList.add('visible');
+      } else {
+        floatingCta.classList.remove('visible');
+      }
     };
 
     contactButtons.forEach((button) => {
@@ -894,6 +939,10 @@
         setTimeout(focusFirstField, 400);
       });
     });
+
+    window.addEventListener('scroll', toggleFloatingCta, { passive: true });
+    window.addEventListener('resize', toggleFloatingCta);
+    toggleFloatingCta();
 
     if (contactForm) {
       contactForm.addEventListener('submit', (event) => {
