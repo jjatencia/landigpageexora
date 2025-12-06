@@ -371,6 +371,19 @@
       box-shadow: var(--shadow);
     }
 
+    .app-mockup {
+      background: url('assets/mockappdesk.png') center/cover no-repeat;
+      border: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (max-width: 768px) {
+      .app-mockup {
+        background-image: url('assets/mockappmov.png');
+      }
+    }
+
     .list {
       display: grid;
       gap: 10px;
@@ -708,7 +721,7 @@
 
   <section class="section alt">
     <div class="two-column">
-      <div class="visual-placeholder">Mockup de la app móvil con tu marca</div>
+      <div class="visual-placeholder app-mockup" role="img" aria-label="Mockup de la app móvil de exora con tu marca"></div>
       <div>
         <h2>Tu propia app de reservas, con tu logo y tus colores</h2>
         <p>Los clientes reservan en tu app, sin llamadas y sin competencia alrededor. Recordatorios automáticos, pagos anticipados y más fidelidad para llenar agenda.</p>
