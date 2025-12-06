@@ -60,6 +60,12 @@
       color: var(--primary);
     }
 
+    .logo img {
+      height: 32px;
+      width: auto;
+      display: block;
+    }
+
     nav {
       display: flex;
       gap: 24px;
@@ -584,7 +590,9 @@
 <body>
   <div class="top-section">
     <header>
-      <div class="logo">exora®</div>
+      <div class="logo" aria-label="exora">
+        <img src="assets/logoexoranegativo.png" alt="Logotipo de exora" />
+      </div>
       <nav>
         <a href="#plataforma">Plataforma</a>
         <a href="#beneficios">Beneficios</a>
