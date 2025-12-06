@@ -548,7 +548,7 @@
         <a href="#testimonios">Testimonios</a>
         <a href="#contacto">Contacto</a>
       </nav>
-      <button class="btn btn-primary">Hablar con un experto</button>
+      <button class="btn btn-primary cta-contact">Hablar con un experto</button>
     </header>
 
     <section class="hero">
@@ -563,8 +563,8 @@
           <div class="item"><span class="tick">✓</span>Listo para la nueva normativa de facturación</div>
         </div>
         <div class="hero-actions">
-          <button class="btn btn-primary">Quiero más información ahora</button>
-          <button class="btn btn-secondary">Ver cómo EXORA me ayuda</button>
+          <button class="btn btn-primary cta-contact">Quiero más información ahora</button>
+          <button class="btn btn-secondary cta-contact">Ver cómo EXORA me ayuda</button>
         </div>
       </div>
       <div class="mockup">
@@ -748,7 +748,7 @@
     <div class="cta-final">
       <h2>¿Quieres ver cómo encaja EXORA en tu negocio?</h2>
       <p>Déjanos tus datos y te mostramos en minutos cómo integrar reservas, control horario y facturación en una sola plataforma. Empieza a ahorrar tiempo y a llenar agenda desde el día uno.</p>
-      <form>
+      <form id="contact-form">
         <div>
           <label>Nombre del negocio</label>
           <input type="text" placeholder="Tu negocio (peluquería o barbería)" required>
@@ -808,5 +808,43 @@
     </div>
     <div style="font-weight:600; color: var(--text);">Tu manera de trabajar define tu negocio y crea marca.</div>
   </footer>
+
+  <script>
+    const contactButtons = document.querySelectorAll('.cta-contact');
+    const contactSection = document.getElementById('contacto');
+    const contactForm = document.getElementById('contact-form');
+
+    const focusFirstField = () => {
+      const firstInput = contactForm?.querySelector('input, select, textarea');
+      firstInput?.focus({ preventScroll: true });
+    };
+
+    contactButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        contactSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setTimeout(focusFirstField, 400);
+      });
+    });
+
+    if (contactForm) {
+      contactForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const submitButton = contactForm.querySelector('button[type="submit"]');
+
+        if (submitButton) {
+          submitButton.textContent = '¡Solicitud enviada!';
+          submitButton.disabled = true;
+        }
+
+        const confirmation = document.createElement('div');
+        confirmation.textContent = 'Gracias por tu interés. Te contactaremos en menos de 24 horas laborables.';
+        confirmation.style.marginTop = '12px';
+        confirmation.style.fontWeight = '700';
+        confirmation.style.color = 'var(--primary)';
+
+        contactForm.after(confirmation);
+      });
+    }
+  </script>
 </body>
 </html>
