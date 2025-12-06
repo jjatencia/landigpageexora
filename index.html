@@ -19,6 +19,7 @@
       --border: #E6E8F0;
       --shadow: 0 10px 40px rgba(13, 12, 34, 0.08);
       --radius: 18px;
+      --max-width: 1200px;
     }
 
     * {
@@ -45,12 +46,14 @@
     }
 
     header {
-      padding: 32px 64px 8px;
+      padding: clamp(18px, 4vw, 32px) clamp(18px, 5vw, 64px) 8px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 12px;
       flex-wrap: wrap;
+      max-width: var(--max-width);
+      margin: 0 auto;
     }
 
     .logo {
@@ -112,11 +115,13 @@
     }
 
     .hero {
-      padding: 32px 64px 64px;
+      padding: clamp(18px, 5vw, 36px) clamp(18px, 5vw, 64px) clamp(42px, 8vw, 72px);
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       align-items: center;
-      gap: 48px;
+      gap: clamp(22px, 6vw, 48px);
+      max-width: var(--max-width);
+      margin: 0 auto;
     }
 
     .hero h1 {
@@ -186,7 +191,7 @@
     .mockup {
       background: rgba(255, 255, 255, 0.08);
       border-radius: 28px;
-      padding: 28px;
+      padding: clamp(18px, 4vw, 28px);
       min-height: 360px;
       border: 1px solid rgba(255, 255, 255, 0.28);
       box-shadow: 0 16px 40px rgba(15, 15, 26, 0.06);
@@ -234,6 +239,7 @@
       display: block;
       border-radius: 18px;
       box-shadow: 0 18px 40px rgba(15, 15, 26, 0.18);
+      animation: float 8s ease-in-out infinite;
     }
 
     .device, .panel {
@@ -297,7 +303,7 @@
     }
 
     .section {
-      padding: 72px 64px;
+      padding: clamp(52px, 8vw, 84px) clamp(18px, 5vw, 64px);
     }
 
     .section.alt {
@@ -364,12 +370,14 @@
     .two-column {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 32px;
+      gap: clamp(18px, 4vw, 32px);
       align-items: center;
+      max-width: var(--max-width);
+      margin: 0 auto;
     }
 
     .visual-placeholder {
-      height: 360px;
+      min-height: 320px;
       background: linear-gradient(135deg, rgba(36, 44, 210, 0.12), rgba(253, 119, 139, 0.12));
       border-radius: 26px;
       border: 1px dashed rgba(36, 44, 210, 0.35);
@@ -378,6 +386,7 @@
       color: var(--muted);
       font-weight: 700;
       box-shadow: var(--shadow);
+      overflow: hidden;
     }
 
     .admin-mockup {
@@ -426,16 +435,29 @@
       box-shadow: 0 0 0 6px rgba(36, 44, 210, 0.12);
     }
 
+    .section-header {
+      max-width: var(--max-width);
+      margin: 0 auto 26px;
+    }
+
+    .section-header.center {
+      text-align: center;
+    }
+
     .benefits {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 16px;
+      max-width: var(--max-width);
+      margin: 0 auto;
     }
 
     .testimonial-wrap {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 18px;
+      max-width: var(--max-width);
+      margin: 0 auto;
     }
 
     .quote {
@@ -455,9 +477,11 @@
     .cta-final {
       background: #FFFDF0;
       border-radius: 28px;
-      padding: 48px;
+      padding: clamp(32px, 6vw, 48px);
       border: 1px solid var(--border);
       box-shadow: 0 18px 40px rgba(15, 15, 26, 0.08), 0 12px 40px rgba(252, 255, 168, 0.28);
+      max-width: var(--max-width);
+      margin: 0 auto;
     }
 
     form {
@@ -506,13 +530,15 @@
     }
 
     footer {
-      padding: 32px 64px 48px;
+      padding: clamp(24px, 4vw, 32px) clamp(18px, 5vw, 64px) clamp(32px, 5vw, 48px);
       border-top: 1px solid var(--border);
       color: var(--muted);
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 16px;
       align-items: center;
+      max-width: var(--max-width);
+      margin: 0 auto;
     }
 
     .footer-links, .footer-social {
@@ -539,6 +565,10 @@
       pointer-events: none;
       transform: translateY(14px);
       transition: opacity 0.25s ease, transform 0.25s ease;
+      width: clamp(240px, 90vw, 480px);
+      margin: 0 auto;
+      left: 0;
+      right: 0;
     }
 
     .floating-cta.visible {
@@ -556,7 +586,7 @@
     .top-section {
       background: var(--primary);
       color: #fff;
-      padding-bottom: 32px;
+      padding-bottom: clamp(24px, 5vw, 32px);
     }
 
     .top-section header {
@@ -600,29 +630,86 @@
       color: rgba(255, 255, 255, 0.9);
     }
 
-    @media (max-width: 768px) {
-      header {
-        padding: 20px 22px 10px;
-        flex-direction: column;
-        align-items: flex-start;
-      }
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+      100% { transform: translateY(0); }
+    }
 
+    @keyframes softPulse {
+      0% { box-shadow: 0 10px 40px rgba(36, 44, 210, 0.2); }
+      50% { box-shadow: 0 16px 46px rgba(36, 44, 210, 0.35); }
+      100% { box-shadow: 0 10px 40px rgba(36, 44, 210, 0.2); }
+    }
+
+    .animate {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+      will-change: transform, opacity;
+    }
+
+    .animate.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .floating-cta.visible { animation: softPulse 3s ease-in-out infinite; }
+
+    @media (max-width: 900px) {
       nav {
         width: 100%;
         gap: 12px;
         justify-content: flex-start;
       }
 
-      .hero { padding: 18px 22px 48px; }
-      .section { padding: 56px 22px; }
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: left;
+      }
+
+      .hero-bullets {
+        grid-template-columns: 1fr;
+      }
+
+      .visual-placeholder,
+      .mockup {
+        min-height: 280px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      header {
+        padding: 18px 22px 8px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .badge { font-size: 11px; }
+
+      .hero h1 { font-size: clamp(30px, 8vw, 40px); }
+
+      .section { padding: clamp(44px, 10vw, 56px) 22px; }
       footer { padding: 28px 22px 40px; }
-      textarea { grid-column: span 1; }
+      textarea { grid-column: 1 / -1; }
+
+      form { grid-template-columns: 1fr; }
+
+      .visual-placeholder { min-height: 240px; }
+    }
+
+    @media (max-width: 520px) {
+      .hero-actions { width: 100%; }
+      .hero-actions .btn { flex: 1 1 100%; }
+      .mockup { padding: 16px; }
+      .floating-cta { width: 92%; }
     }
   </style>
 </head>
 <body>
   <div class="top-section">
-    <header>
+    <header data-animate>
       <div class="logo" aria-label="exora">
         <img src="assets/logoexoranegativo.png" alt="Logotipo de exora" />
       </div>
@@ -636,7 +723,7 @@
     </header>
 
     <section class="hero">
-      <div class="hero-copy">
+      <div class="hero-copy" data-animate>
         <div class="badge">Plataforma integral para salones de peluquería y barbería · Desde solo 34,90 €/mes (más IVA) — sin permanencias</div>
         <h1>Control total de tu negocio, sin complicaciones ni llamadas perdidas</h1>
         <p>exora® centraliza reservas, administración, control horario digital y facturación en un único panel para que ganes tranquilidad, más clientes reservando y un negocio siempre bajo control.</p>
@@ -650,7 +737,7 @@
           <button class="btn btn-primary cta-contact">Quiero más información ahora</button>
         </div>
       </div>
-      <div class="mockup">
+      <div class="mockup" data-animate>
         <div class="placeholder">
           <img src="assets/imageheader.png" alt="Mockups de exora sobre fondo liquidglass" loading="lazy" />
         </div>
@@ -659,7 +746,7 @@
   </div>
 
   <section id="plataforma" class="section alt">
-    <h2>Mucho más que una app de reservas</h2>
+    <h2 data-animate>Mucho más que una app de reservas</h2>
     <p>exora® es el motor que hace que tu espacio de belleza funcione solo: agenda, cobros, equipo y facturación unidos para que ganes control, tiempo y clientes desde el primer día.</p>
     <div class="diagram">
       <div class="card">
@@ -710,7 +797,7 @@
 
   <section class="section">
     <div class="two-column">
-      <div>
+      <div data-animate>
         <h2>Administra tu negocio sin perderte en el papeleo</h2>
         <p>Consulta agenda, caja y ventas al instante y entiende el rendimiento de cada profesional con datos claros. Toma decisiones con confianza y gana tiempo para tus clientes.</p>
         <div class="list">
@@ -727,7 +814,7 @@
   <section class="section alt">
     <div class="two-column">
       <div class="visual-placeholder app-mockup" role="img" aria-label="Mockup de la app móvil de exora con tu marca"></div>
-      <div>
+      <div data-animate>
         <h2>Tu propia app de reservas, con tu logo y tus colores</h2>
         <p>Los clientes reservan en tu app, sin llamadas y sin competencia alrededor. Recordatorios automáticos, pagos anticipados y más fidelidad para llenar agenda.</p>
         <div class="list">
@@ -742,7 +829,7 @@
 
   <section class="section" style="background: #F3F5FA;">
     <div class="two-column">
-      <div>
+      <div data-animate>
         <h2>Control horario digital para todo tu equipo</h2>
         <p>Fichajes desde móvil, tablet o PC con historial seguro y descargas inmediatas. Cumple la ley sin papeles ni discusiones y gana tranquilidad diaria.</p>
         <div class="list">
@@ -772,7 +859,7 @@
 
   <section class="section">
     <div class="two-column">
-      <div>
+      <div data-animate>
         <h2>Tu facturación preparada para la nueva era digital</h2>
         <p>Emite tickets y facturas desde el mismo lugar donde cobras y gestionas reservas. Menos errores, control total y cumplimiento automático para Verifactu (disponible a partir del 1 de enero de 2027) con registro seguro y trazable.</p>
         <div class="list">
@@ -796,8 +883,10 @@
   </section>
 
   <section id="beneficios" class="section alt">
-    <h2>Lo que ganas usando exora® en tu día a día</h2>
-    <p>Propietarios de salones —peluquerías, barberías y negocios de imagen— que quieren vender más, trabajar tranquilos y ofrecer una experiencia digital moderna lo eligen por esto:</p>
+    <div class="section-header center" data-animate>
+      <h2>Lo que ganas usando exora® en tu día a día</h2>
+      <p>Propietarios de salones —peluquerías, barberías y negocios de imagen— que quieren vender más, trabajar tranquilos y ofrecer una experiencia digital moderna lo eligen por esto:</p>
+    </div>
       <div class="benefits">
       <div class="card">
         <div class="mini-icon" aria-hidden="true">
@@ -853,8 +942,10 @@
   </section>
 
   <section id="testimonios" class="section">
-    <h2>Testimonios</h2>
-    <p>Salones de peluquería y barbería que ya usan exora® y han ganado control, reservas y tranquilidad.</p>
+    <div class="section-header center" data-animate>
+      <h2>Testimonios</h2>
+      <p>Salones de peluquería y barbería que ya usan exora® y han ganado control, reservas y tranquilidad.</p>
+    </div>
     <div class="testimonial-wrap">
       <div class="quote">
         “Hemos reducido a la mitad las llamadas y las ausencias apenas existen. Los recordatorios automáticos mantienen la agenda llena sin perseguir a nadie.”
@@ -872,7 +963,7 @@
   </section>
 
   <section id="contacto" class="section">
-    <div class="cta-final">
+    <div class="cta-final" data-animate>
       <h2>¿Quieres ver cómo encaja exora® en tu negocio?</h2>
       <p>Déjanos tus datos y te mostramos en minutos cómo integrar reservas, control horario y facturación en una sola plataforma. Empieza a ahorrar tiempo y a llenar agenda desde el día uno.</p>
       <form id="contact-form">
@@ -950,6 +1041,22 @@
       const firstInput = contactForm?.querySelector('input, select, textarea');
       firstInput?.focus({ preventScroll: true });
     };
+
+    const animatedElements = document.querySelectorAll('[data-animate], .card, .quote, .hero-bullets .item, .visual-placeholder, .mockup, .list .row');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+
+    animatedElements.forEach((element) => {
+      element.classList.add('animate');
+      observer.observe(element);
+    });
 
     const toggleFloatingCta = () => {
       if (!floatingCta) return;
