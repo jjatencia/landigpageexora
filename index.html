@@ -371,6 +371,13 @@
       box-shadow: var(--shadow);
     }
 
+    .admin-mockup {
+      background: url('assets/mockupdesk.png') center/cover no-repeat;
+      border: none;
+      position: relative;
+      overflow: hidden;
+    }
+
     .app-mockup {
       background: url('assets/mockappdesk.png') center/cover no-repeat;
       border: none;
@@ -381,6 +388,10 @@
     @media (max-width: 768px) {
       .app-mockup {
         background-image: url('assets/mockappmov.png');
+      }
+
+      .admin-mockup {
+        background-image: url('assets/mockupmov.png');
       }
     }
 
@@ -715,7 +726,7 @@
           <div class="row"><span class="dot"></span>Informes listos para tu gestoría en segundos</div>
         </div>
       </div>
-      <div class="visual-placeholder">Fotografía o mockup del panel de administración</div>
+      <div class="visual-placeholder admin-mockup" role="img" aria-label="Mockup del panel de administración de exora"></div>
     </div>
   </section>
 
