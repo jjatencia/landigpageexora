@@ -1,8 +1,8 @@
 /**
  * Apps Script que recibe los datos del formulario y los añade como nueva fila en Google Sheets.
  */
-const SHEET_ID = 'TU_SHEET_ID_AQUÍ';
-const SHEET_NAME = 'Respuestas';
+const SHEET_ID = 1pZiW0Aeob95EcbG4SJHqzfJj4DIbFNz8qpv1mGhZiMo;
+const SHEET_NAME = leads;
 
 const buildResponse = (payload, statusCode) => {
   const output = ContentService.createTextOutput(JSON.stringify(payload))
