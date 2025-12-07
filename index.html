@@ -1132,7 +1132,16 @@
       submitButton.textContent = 'Enviando...';
       setStatusMessage('Enviando datos...');
 
-      const payload = Object.fromEntries(new FormData(contactForm));
+      const formData = new FormData(contactForm);
+      const payload = {
+        businessName: formData.get('businessName')?.toString().trim() || '',
+        fullName: formData.get('fullName')?.toString().trim() || '',
+        phone: formData.get('phone')?.toString().trim() || '',
+        email: formData.get('email')?.toString().trim() || '',
+        businessType: formData.get('businessType')?.toString().trim() || '',
+        employees: formData.get('employees')?.toString().trim() || '',
+        message: formData.get('message')?.toString().trim() || '',
+      };
 
       try {
         const response = await fetch(SHEETS_ENDPOINT, {
