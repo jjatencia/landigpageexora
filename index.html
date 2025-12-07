@@ -519,6 +519,36 @@
       font-size: 13px;
     }
 
+    .form-status {
+      grid-column: span 2;
+      margin-top: 6px;
+      font-weight: 600;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .form-status.is-success {
+      color: #1b8a4b;
+    }
+
+    .form-status.is-error {
+      color: #c02222;
+    }
+
+    .form-status .retry-btn {
+      appearance: none;
+      border: none;
+      background: transparent;
+      color: var(--primary);
+      font-weight: 700;
+      cursor: pointer;
+      padding: 0;
+      text-decoration: underline;
+    }
+
     footer {
       padding: clamp(24px, 4vw, 32px) clamp(18px, 5vw, 64px) clamp(32px, 5vw, 48px);
       border-top: 1px solid var(--border);
@@ -959,23 +989,23 @@
       <form id="contact-form">
         <div>
           <label>Nombre del negocio</label>
-          <input type="text" placeholder="Tu negocio (peluquería o barbería)" required>
+          <input name="businessName" type="text" placeholder="Tu negocio (peluquería o barbería)" required>
         </div>
         <div>
           <label>Nombre y apellidos</label>
-          <input type="text" placeholder="Nombre completo" required>
+          <input name="fullName" type="text" placeholder="Nombre completo" required>
         </div>
         <div>
           <label>Teléfono</label>
-          <input type="tel" placeholder="Tu número" required>
+          <input name="phone" type="tel" placeholder="Tu número" required>
         </div>
         <div>
           <label>Email</label>
-          <input type="email" placeholder="correo@ejemplo.com" required>
+          <input name="email" type="email" placeholder="correo@ejemplo.com" required>
         </div>
         <div>
           <label>Tipo de negocio</label>
-          <select required>
+          <select name="businessType" required>
             <option>Barbería</option>
             <option>Peluquería</option>
             <option>Centro de estética</option>
@@ -984,7 +1014,7 @@
         </div>
         <div>
           <label>Nº de empleados</label>
-          <select required>
+          <select name="employees" required>
             <option>1–2</option>
             <option>3–5</option>
             <option>6–10</option>
@@ -993,11 +1023,12 @@
         </div>
         <div>
           <label>Mensaje (opcional)</label>
-          <textarea placeholder="Cuéntanos qué necesitas"></textarea>
+          <textarea name="message" placeholder="Cuéntanos qué necesitas"></textarea>
         </div>
         <div style="display:flex; align-items:flex-end;">
           <button type="submit" class="btn btn-primary" style="width:100%;">Quiero información</button>
         </div>
+        <div class="form-status" role="status" aria-live="polite"></div>
       </form>
       <div class="note">Nos pondremos en contacto contigo en menos de 24 horas laborables para que empieces a ganar tiempo cuanto antes.</div>
     </div>
@@ -1024,10 +1055,14 @@
   </button>
 
   <script>
+    const SHEETS_ENDPOINT = 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec';
     const contactButtons = document.querySelectorAll('.cta-contact');
     const contactSection = document.getElementById('contacto');
     const contactForm = document.getElementById('contact-form');
     const floatingCta = document.querySelector('.floating-cta');
+    const statusMessage = contactForm?.querySelector('.form-status');
+    const submitButton = contactForm?.querySelector('button[type="submit"]');
+    const submitDefaultText = submitButton?.textContent || 'Enviar';
 
     const focusFirstField = () => {
       const firstInput = contactForm?.querySelector('input, select, textarea');
@@ -1064,6 +1099,64 @@
       }
     };
 
+    const setStatusMessage = (message, type) => {
+      if (!statusMessage) return;
+      statusMessage.textContent = '';
+      statusMessage.className = 'form-status';
+      if (type) {
+        statusMessage.classList.add(`is-${type}`);
+      }
+      statusMessage.textContent = message;
+    };
+
+    const setErrorStatus = (message) => {
+      if (!statusMessage) return;
+      statusMessage.textContent = '';
+      statusMessage.className = 'form-status is-error';
+      const text = document.createElement('span');
+      text.textContent = message;
+      const retry = document.createElement('button');
+      retry.type = 'button';
+      retry.className = 'retry-btn';
+      retry.textContent = 'Reintentar';
+      retry.addEventListener('click', () => contactForm?.requestSubmit());
+
+      statusMessage.append(text, retry);
+    };
+
+    const handleSubmit = async (event) => {
+      event.preventDefault();
+      if (!contactForm || !submitButton) return;
+
+      submitButton.disabled = true;
+      submitButton.textContent = 'Enviando...';
+      setStatusMessage('Enviando datos...');
+
+      const payload = Object.fromEntries(new FormData(contactForm));
+
+      try {
+        const response = await fetch(SHEETS_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) {
+          throw new Error('La solicitud al servidor falló');
+        }
+
+        setStatusMessage('¡Solicitud enviada! Te contactaremos en menos de 24 horas laborables.', 'success');
+        submitButton.disabled = false;
+        submitButton.textContent = submitDefaultText;
+        contactForm.reset();
+      } catch (error) {
+        console.error(error);
+        setErrorStatus('No se pudo enviar el formulario. Comprueba tu conexión e inténtalo de nuevo.');
+        submitButton.disabled = false;
+        submitButton.textContent = submitDefaultText;
+      }
+    };
+
     contactButtons.forEach((button) => {
       button.addEventListener('click', () => {
         contactSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1076,23 +1169,7 @@
     toggleFloatingCta();
 
     if (contactForm) {
-      contactForm.addEventListener('submit', (event) => {
-        event.preventDefault();
-        const submitButton = contactForm.querySelector('button[type="submit"]');
-
-        if (submitButton) {
-          submitButton.textContent = '¡Solicitud enviada!';
-          submitButton.disabled = true;
-        }
-
-        const confirmation = document.createElement('div');
-        confirmation.textContent = 'Gracias por tu interés. Te contactaremos en menos de 24 horas laborables.';
-        confirmation.style.marginTop = '12px';
-        confirmation.style.fontWeight = '700';
-        confirmation.style.color = 'var(--primary)';
-
-        contactForm.after(confirmation);
-      });
+      contactForm.addEventListener('submit', handleSubmit);
     }
   </script>
 </body>
