@@ -523,6 +523,55 @@
       font-size: 13px;
     }
 
+    .legal-section {
+      background: #ffffff;
+    }
+
+    .legal-wrapper {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: grid;
+      gap: 18px;
+    }
+
+    .legal-block {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 10px 26px rgba(15, 15, 26, 0.04);
+    }
+
+    .legal-block h3 {
+      margin-top: 0;
+      margin-bottom: 12px;
+    }
+
+    .legal-block h4 {
+      margin-bottom: 8px;
+      margin-top: 18px;
+    }
+
+    .legal-block p {
+      margin: 0 0 10px;
+      color: var(--muted);
+    }
+
+    .legal-block ul {
+      margin: 0 0 12px 18px;
+      color: var(--muted);
+      padding-left: 16px;
+    }
+
+    .legal-block li { margin-bottom: 6px; }
+
+    .legal-note {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+
     .form-status {
       grid-column: 1 / -1;
       margin-top: 6px;
@@ -1042,6 +1091,7 @@
         <div class="form-actions">
           <button type="submit" class="btn btn-primary">Quiero que me contactéis</button>
         </div>
+        <p class="legal-note">Al enviar este formulario aceptas nuestra <a href="legales.html#privacidad">Política de Privacidad</a> y consientes que te contactemos para enviarte información sobre exora® por los medios indicados.</p>
         <div class="form-status" role="status" aria-live="polite"></div>
       </form>
       <div class="note">Te contactaremos en menos de 24 horas laborables para ver juntos si exora® encaja en tu salón.</div>
@@ -1053,9 +1103,9 @@
       <img src="assets/Logo exora.png" alt="Logotipo de exora" />
     </div>
     <div class="footer-links">
-      <a href="#">Términos</a>
-      <a href="#">Privacidad</a>
-      <a href="#">Cookies</a>
+      <a href="legales.html#aviso-legal">Términos</a>
+      <a href="legales.html#privacidad">Privacidad</a>
+      <a href="legales.html#cookies">Cookies</a>
     </div>
     <div class="footer-social">
       <a href="https://www.instagram.com/exora.app?igsh=MThiMGVncWozOGM3dg==">Instagram</a>
