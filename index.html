@@ -1124,6 +1124,7 @@
   <script>
     const SHEETS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxbfpXkmqYXLh7bdGetBA4e0mr0AbuwtoJA-QlOJNSmsBPx4FcvIAlHUKrpVYOSin7dQg/exec';
     const contactButtons = document.querySelectorAll('.cta-contact');
+    const navLinks = document.querySelectorAll('nav a[href^="#"]');
     const contactSection = document.getElementById('contacto');
     const contactForm = document.getElementById('contact-form');
     const floatingCta = document.querySelector('.floating-cta');
@@ -1159,7 +1160,10 @@
       if (scrollable <= 0) return;
 
       const progress = window.scrollY / scrollable;
-      if (progress > 0.35) {
+      const contactRect = contactSection?.getBoundingClientRect();
+      const contactInView = contactRect && contactRect.top < window.innerHeight && contactRect.bottom > 0;
+
+      if (progress > 0.35 && !contactInView) {
         floatingCta.classList.add('visible');
       } else {
         floatingCta.classList.remove('visible');
@@ -1227,6 +1231,17 @@
       button.addEventListener('click', () => {
         contactSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
         setTimeout(focusFirstField, 400);
+      });
+    });
+
+    navLinks.forEach((link) => {
+      link.addEventListener('click', (event) => {
+        const targetId = link.getAttribute('href');
+        if (!targetId || !targetId.startsWith('#')) return;
+
+        event.preventDefault();
+        const targetElement = document.querySelector(targetId);
+        targetElement?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
     });
 
