@@ -23,8 +23,9 @@
       --shadow: 0 10px 40px rgba(13, 12, 34, 0.08);
       --radius: 18px;
       --max-width: 1200px;
-      --app-header-height: 52px;
-      --app-nav-height: 72px;
+      --app-header-height: 46px;
+      --app-nav-height: 62px;
+      --step-bar-height: 40px;
     }
 
     * {
@@ -261,7 +262,7 @@
       height: 100%;
     }
 
-    .step-header { display: grid; gap: 8px; }
+    .step-header { display: grid; gap: 6px; }
 
     .step--form {
       background: var(--primary);
@@ -390,6 +391,33 @@
     .card p {
       margin: 0;
       color: var(--muted);
+    }
+
+    .compact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      align-items: start;
+    }
+
+    .mini-block {
+      background: rgba(36, 44, 210, 0.04);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 10px 12px;
+      color: var(--text);
+      box-shadow: 0 6px 18px rgba(15, 15, 26, 0.04);
+    }
+
+    .mini-block h4 {
+      margin: 0 0 6px;
+      font-size: 15px;
+    }
+
+    .mini-block p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
     }
 
     .mini-icon {
@@ -675,9 +703,9 @@
 
     @media (max-width: 768px) {
       :root {
-        --app-header-height: 56px;
-      --app-nav-height: 68px;
-      --step-bar-height: 44px;
+        --app-header-height: 46px;
+        --app-nav-height: 60px;
+        --step-bar-height: 34px;
       }
 
       body {
@@ -689,12 +717,12 @@
       }
 
       header {
-        padding: 10px 14px;
-        padding-top: calc(10px + env(safe-area-inset-top));
+        padding: 8px 12px;
+        padding-top: calc(8px + env(safe-area-inset-top));
         flex-direction: row;
         align-items: center;
         flex-wrap: nowrap;
-        gap: 12px;
+        gap: 14px;
         min-height: var(--app-header-height);
         position: sticky;
         top: 0;
@@ -710,8 +738,8 @@
 
       .header-phrase {
         display: block;
-        font-size: 15px;
-        line-height: 1.35;
+        font-size: 14px;
+        line-height: 1.25;
         flex: 1 1 0;
         min-width: 0;
         max-width: none;
@@ -725,10 +753,10 @@
 
       .mobile-step-bar {
         display: flex;
-        padding: 6px 14px 8px;
+        padding: 6px 12px 6px;
         position: sticky;
         top: calc(var(--app-header-height) + env(safe-area-inset-top));
-        background: linear-gradient(180deg, rgba(36, 44, 210, 0.9) 0%, rgba(36, 44, 210, 0.75) 100%);
+        background: linear-gradient(180deg, rgba(36, 44, 210, 0.92) 0%, rgba(36, 44, 210, 0.82) 100%);
         z-index: 5;
         min-height: var(--step-bar-height);
       }
@@ -740,53 +768,53 @@
       .stepper-track { height: 100%; }
 
       .step {
-        padding: 14px 14px 10px;
+        padding: 12px 12px 8px;
       }
 
       .step-inner {
-        padding: 16px;
-        border-radius: 18px;
-        gap: 12px;
+        padding: 14px;
+        border-radius: 16px;
+        gap: 10px;
       }
 
-      .step-header h1 { font-size: 26px; line-height: 1.15; }
-      .step-header h2 { font-size: 22px; line-height: 1.2; }
-      .step-header p { font-size: 14px; margin-bottom: 2px; }
+      .step-header h1 { font-size: 24px; line-height: 1.12; }
+      .step-header h2 { font-size: 20px; line-height: 1.16; }
+      .step-header p { font-size: 13px; margin-bottom: 0; }
 
       .step-content {
-        gap: 10px;
-        padding-bottom: 12px;
+        gap: 8px;
+        padding-bottom: 10px;
       }
 
-      .btn { padding: 10px 12px; font-size: 13px; }
-      .step-footer .btn { min-height: 40px; }
-      .pill-note { font-size: 12px; padding: 8px 10px; }
+      .btn { padding: 9px 12px; font-size: 13px; }
+      .step-footer .btn { min-height: 38px; }
+      .pill-note { font-size: 12px; padding: 6px 10px; }
       .price-tag { font-size: 13px; padding: 8px 12px; }
 
       .card {
-        padding: 14px;
+        padding: 12px;
         border-radius: 14px;
       }
 
-      .list { gap: 8px; }
+      .list { gap: 7px; }
       .list .row { font-size: 13px; }
 
-      .hero-img { max-height: 220px; }
+      .hero-img { max-height: 200px; }
 
       form {
         grid-template-columns: 1fr;
         gap: 10px;
       }
 
-      textarea { grid-column: 1 / -1; min-height: 96px; }
+      textarea { grid-column: 1 / -1; min-height: 88px; }
 
       .step-footer {
         position: sticky;
         bottom: 0;
-        padding: 8px 12px calc(10px + env(safe-area-inset-bottom));
+        padding: 6px 12px calc(8px + env(safe-area-inset-bottom));
         background: #fff;
         border-top: 1px solid var(--border);
-        box-shadow: 0 -6px 26px rgba(15, 15, 26, 0.06);
+        box-shadow: 0 -6px 22px rgba(15, 15, 26, 0.05);
       }
     }
 
@@ -889,54 +917,27 @@
           <div class="step-inner" data-step-title tabindex="-1">
             <div class="step-header">
               <div class="pill-note">Paso 2 · Qué es exora®</div>
-              <h2>Una plataforma única para reservas, equipo y caja</h2>
-              <p>exora® conecta agenda, cobros, fichajes y facturación en un panel diseñado solo para salones. Sin saltar entre apps ni pelearte con hojas de cálculo.</p>
+              <h2>Agenda llena y caja controlada en un solo sitio</h2>
+              <p>exora® concentra reservas, cobros, fichajes y facturación para que no pierdas tiempo ni datos.</p>
               <div class="price-tag">Desde 34,90 €/mes + IVA · Sin permanencias</div>
             </div>
             <div class="step-content">
-              <div class="grid-two">
-                <div class="card">
-                  <div class="mini-icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" role="img" focusable="false">
-                      <rect x="4" y="12" width="3" height="8" rx="1"></rect>
-                      <rect x="10" y="8" width="3" height="12" rx="1"></rect>
-                      <rect x="16" y="5" width="3" height="15" rx="1"></rect>
-                    </svg>
-                  </div>
-                  <h4>Visión total</h4>
-                  <p>Agenda, caja y ventas se actualizan en tiempo real para que sepas cada día cómo va tu negocio.</p>
+              <div class="compact-grid">
+                <div class="mini-block">
+                  <h4>Reservas sin ruido</h4>
+                  <p>App propia 24/7 con tu marca. Clientes reservan sin comparar y con recordatorios automáticos.</p>
                 </div>
-                <div class="card">
-                  <div class="mini-icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" role="img" focusable="false">
-                      <rect x="5" y="6" width="14" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2"></rect>
-                      <path d="M8 4v3M16 4v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
-                      <polyline points="9 13 11 15 15 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline>
-                    </svg>
-                  </div>
-                  <h4>Reservas sin competencia</h4>
-                  <p>Tu propia app para que los clientes reserven 24/7 con tu marca, sin ver a otros salones.</p>
+                <div class="mini-block">
+                  <h4>Caja clara</h4>
+                  <p>Ventas, cobros y medios de pago visibles al momento. Sin descuadres ni hojas sueltas.</p>
                 </div>
-                <div class="card">
-                  <div class="mini-icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" role="img" focusable="false">
-                      <circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"></circle>
-                      <path d="M12 8v4l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                    </svg>
-                  </div>
-                  <h4>Control horario digital</h4>
-                  <p>Fichajes y reportes listos para inspección. Todo guardado en la nube con trazabilidad.</p>
+                <div class="mini-block">
+                  <h4>Equipo alineado</h4>
+                  <p>Agenda compartida, turnos y fichajes digitales listos para inspección.</p>
                 </div>
-                <div class="card">
-                  <div class="mini-icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" role="img" focusable="false">
-                      <path d="M7 4h10a2 2 0 0 1 2 2v12a1 1 0 0 1-1 1H7a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="2"></path>
-                      <path d="M9 8h6M9 12h6M9 16h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
-                      <path d="M15 4v2a2 2 0 0 0 2 2h2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
-                    </svg>
-                  </div>
+                <div class="mini-block">
                   <h4>Facturación segura</h4>
-                  <p>Tickets y facturas desde el mismo panel, preparada para Verifactu desde el 1 de enero de 2027.</p>
+                  <p>Tickets y facturas desde el panel, preparada para Verifactu el 1 de enero de 2027.</p>
                 </div>
               </div>
               <div class="hero-img">
@@ -950,46 +951,26 @@
           <div class="step-inner" data-step-title tabindex="-1">
             <div class="step-header">
               <div class="pill-note">Paso 3 · Módulos clave</div>
-              <h2>4 módulos pensados para salones ocupados</h2>
-              <p>Usa solo lo que necesitas: todo está conectado para que no pierdas tiempo ni datos.</p>
+              <h2>4 módulos listos para usar en minutos</h2>
+              <p>Activa solo lo que necesitas, todo queda sincronizado.</p>
             </div>
             <div class="step-content">
-              <div class="grid-two">
-                <div class="card">
-                  <div class="mini-icon" aria-hidden="true"><span class="mini-icon-symbol">📊</span></div>
+              <div class="compact-grid">
+                <div class="mini-block">
                   <h4>Administración</h4>
-                  <div class="list">
-                    <div class="row"><span class="dot"></span>Ventas, caja y servicios en un vistazo diario.</div>
-                    <div class="row"><span class="dot"></span>Métricas por profesional sin hojas de cálculo.</div>
-                    <div class="row"><span class="dot"></span>Informes listos para tu gestoría en segundos.</div>
-                  </div>
+                  <p>Ventas, caja y servicios en un vistazo diario con informes listos para gestoría.</p>
                 </div>
-                <div class="card">
-                  <div class="mini-icon" aria-hidden="true"><span class="mini-icon-symbol">📱</span></div>
+                <div class="mini-block">
                   <h4>App de reservas</h4>
-                  <div class="list">
-                    <div class="row"><span class="dot"></span>Reservas 24/7 con tu marca y tus precios.</div>
-                    <div class="row"><span class="dot"></span>Pagos y recordatorios que reducen los no-shows.</div>
-                    <div class="row"><span class="dot"></span>Sin comparativas: solo aparece tu negocio.</div>
-                  </div>
+                  <p>Reservas 24/7 con tu logo, pagos anticipados y recordatorios que reducen los no-shows.</p>
                 </div>
-                <div class="card">
-                  <div class="mini-icon" aria-hidden="true"><span class="mini-icon-symbol">⏱️</span></div>
-                  <h4>Control horario digital</h4>
-                  <div class="list">
-                    <div class="row"><span class="dot"></span>Fichajes desde móvil, tablet o PC.</div>
-                    <div class="row"><span class="dot"></span>Historial seguro y exportable para inspecciones.</div>
-                    <div class="row"><span class="dot"></span>Alertas para fichajes pendientes.</div>
-                  </div>
+                <div class="mini-block">
+                  <h4>Control horario</h4>
+                  <p>Fichajes desde móvil, tablet o PC con historial seguro y exportable.</p>
                 </div>
-                <div class="card">
-                  <div class="mini-icon" aria-hidden="true"><span class="mini-icon-symbol">€</span></div>
+                <div class="mini-block">
                   <h4>Facturación / Verifactu</h4>
-                  <div class="list">
-                    <div class="row"><span class="dot"></span>Tickets y facturas sin salir del panel.</div>
-                    <div class="row"><span class="dot"></span>Trazabilidad y seguridad antifraude.</div>
-                    <div class="row"><span class="dot"></span>Preparada para Verifactu el 1 de enero de 2027.</div>
-                  </div>
+                  <p>Tickets y facturas desde el panel con trazabilidad y preparación para Verifactu 2027.</p>
                 </div>
               </div>
             </div>
@@ -1001,59 +982,29 @@
             <div class="step-header">
               <div class="pill-note">Paso 4 · Beneficios rápidos</div>
               <h2>Lo que notas en el día a día</h2>
-              <p>Propietarios de peluquerías, barberías y centros de imagen usan exora® para trabajar tranquilos y vender más sin depender del teléfono.</p>
+              <p>Resultados tangibles en menos llamadas, más citas y un equipo alineado.</p>
             </div>
             <div class="step-content">
-              <div class="grid-two">
-                <div class="card">
-                  <div class="mini-icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" role="img" focusable="false">
-                      <circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"></circle>
-                      <path d="M12 8v4l2.5 1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                      <path d="M10 5.5 8.5 4M14 5.5 15.5 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
-                    </svg>
-                  </div>
+              <div class="compact-grid">
+                <div class="mini-block">
                   <h4>Menos tiempo al teléfono</h4>
-                  <p>Las reservas entran solas y puedes enfocarte en atender y facturar.</p>
+                  <p>Reservas automáticas para enfocarte en facturar.</p>
                 </div>
-                <div class="card">
-                  <div class="mini-icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" role="img" focusable="false">
-                      <circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"></circle>
-                      <polyline points="9 12 11 14 15 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline>
-                    </svg>
-                  </div>
+                <div class="mini-block">
                   <h4>Más citas confirmadas</h4>
-                  <p>Recordatorios y pagos anticipados que reducen ausencias y huecos vacíos.</p>
+                  <p>Recordatorios y pagos anticipados evitan huecos vacíos.</p>
                 </div>
-                <div class="card">
-                  <div class="mini-icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" role="img" focusable="false">
-                      <rect x="10" y="4" width="4" height="3" rx="1" fill="none" stroke="currentColor" stroke-width="2"></rect>
-                      <rect x="5" y="15" width="4" height="4" rx="1" fill="none" stroke="currentColor" stroke-width="2"></rect>
-                      <rect x="10" y="15" width="4" height="4" rx="1" fill="none" stroke="currentColor" stroke-width="2"></rect>
-                      <rect x="15" y="15" width="4" height="4" rx="1" fill="none" stroke="currentColor" stroke-width="2"></rect>
-                      <path d="M12 7v4m0 0H7m5 0h5M7 11v2m5-2v2m5-2v2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                    </svg>
-                  </div>
+                <div class="mini-block">
                   <h4>Equipo alineado</h4>
-                  <p>Agenda compartida y fichajes digitales que evitan malentendidos.</p>
+                  <p>Agenda compartida y fichajes digitales sin fricciones.</p>
                 </div>
-                <div class="card">
-                  <div class="mini-icon" aria-hidden="true">
-                    <span class="mini-icon-symbol">€</span>
-                  </div>
+                <div class="mini-block">
                   <h4>Ingresos claros</h4>
-                  <p>Ventas, caja y facturas en un panel: sabes qué funciona cada día.</p>
+                  <p>Caja y facturas en un panel para decidir con datos.</p>
                 </div>
-                <div class="card">
-                  <div class="mini-icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" role="img" focusable="false">
-                      <path d="M12 4 13.6 9H19l-4.5 3.4L16 17l-4-2.9L8 17l1.5-4.6L5 9h5.4Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path>
-                    </svg>
-                  </div>
+                <div class="mini-block">
                   <h4>Imagen moderna</h4>
-                  <p>App propia que refuerza tu marca y fideliza sin depender de terceros.</p>
+                  <p>Una app propia refuerza tu marca y fideliza.</p>
                 </div>
               </div>
               <div class="cta-actions">
@@ -1068,7 +1019,7 @@
             <div class="step-header">
               <div class="pill-note">Paso 5 · Historias y cierre</div>
               <h2>Lo que dicen otros salones</h2>
-              <p>Resultados reales: menos ausencias, más control y equipo alineado sin caos de herramientas.</p>
+              <p>Menos ausencias, más control y equipo alineado sin caos de herramientas.</p>
             </div>
             <div class="step-content">
               <div class="testimonial-wrap">
