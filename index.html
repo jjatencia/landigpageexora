@@ -1204,7 +1204,6 @@
       submitButton.textContent = 'Enviado';
       submitButton.disabled = true;
       hasSubmitted = true;
-      localStorage.setItem('exoraLeadSubmitted', '1');
       setStatusMessage('¡Solicitud enviada! Te contactamos en menos de 24 horas laborables.', 'success');
       resetFormButton?.classList.remove('hidden');
       toggleNextAvailability();
@@ -1325,10 +1324,9 @@
     }
 
     function restoreFormState() {
-      if (localStorage.getItem('exoraLeadSubmitted') === '1') {
-        unlockForm(true);
-        currentStep = 1;
-      }
+      localStorage.removeItem('exoraLeadSubmitted');
+      unlockForm(false);
+      currentStep = 1;
     }
 
     function initNavigation() {
