@@ -714,6 +714,9 @@
 
       .app-shell {
         height: 100dvh;
+        display: grid;
+        grid-template-rows: auto auto 1fr auto;
+        overflow: hidden;
       }
 
       header {
@@ -724,14 +727,14 @@
         flex-wrap: nowrap;
         gap: 14px;
         min-height: var(--app-header-height);
-        position: sticky;
-        top: 0;
+        position: relative;
         z-index: 6;
         backdrop-filter: blur(10px);
       }
 
       .top-section {
         padding-bottom: 0;
+        position: relative;
       }
 
       nav { display: none; }
@@ -754,15 +757,15 @@
       .mobile-step-bar {
         display: flex;
         padding: 6px 12px 6px;
-        position: sticky;
-        top: calc(var(--app-header-height) + env(safe-area-inset-top));
+        position: relative;
+        top: 0;
         background: linear-gradient(180deg, rgba(36, 44, 210, 0.92) 0%, rgba(36, 44, 210, 0.82) 100%);
         z-index: 5;
         min-height: var(--step-bar-height);
       }
 
       .stepper-viewport {
-        height: calc(100dvh - var(--app-header-height) - var(--step-bar-height) - var(--app-nav-height));
+        height: 100%;
       }
 
       .stepper-track { height: 100%; }
@@ -820,7 +823,7 @@
 
     @media (max-width: 520px) {
       .step-inner { padding: 14px; }
-      .stepper-viewport { height: calc(100dvh - var(--app-header-height) - var(--step-bar-height) - var(--app-nav-height)); }
+      .stepper-viewport { height: 100%; }
     }
   </style>
 </head>
