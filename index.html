@@ -24,7 +24,7 @@
       --radius: 18px;
       --max-width: 1200px;
       --app-header-height: 54px;
-      --app-nav-height: 82px;
+      --app-nav-height: 72px;
     }
 
     * {
@@ -516,24 +516,25 @@
     .cta-actions .btn { flex: 1 1 180px; }
 
     footer {
-      padding: clamp(14px, 3vw, 18px) clamp(14px, 4vw, 22px) clamp(18px, 4vw, 22px);
+      padding: 10px 14px 12px;
       border-top: 1px solid var(--border);
       color: var(--muted);
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 8px;
       align-items: center;
       max-width: var(--max-width);
       margin: 0 auto;
-      font-size: 13px;
+      font-size: 12px;
+      line-height: 1.4;
     }
 
     .footer-links, .footer-social {
       display: flex;
-      gap: 18px;
+      gap: 12px;
       flex-wrap: wrap;
       font-weight: 600;
-      font-size: 14px;
+      font-size: 13px;
     }
 
     .footer-social a { color: var(--primary); }
@@ -590,8 +591,8 @@
     @media (max-width: 768px) {
       :root {
         --app-header-height: 56px;
-        --app-nav-height: 82px;
-        --step-bar-height: 44px;
+      --app-nav-height: 68px;
+      --step-bar-height: 44px;
       }
 
       body {
@@ -659,8 +660,8 @@
         padding-bottom: 12px;
       }
 
-      .btn { padding: 12px 14px; }
-      .step-footer .btn { min-height: 46px; }
+      .btn { padding: 10px 12px; font-size: 13px; }
+      .step-footer .btn { min-height: 40px; }
       .pill-note { font-size: 12px; padding: 8px 10px; }
       .price-tag { font-size: 13px; padding: 8px 12px; }
 
@@ -684,10 +685,10 @@
       .step-footer {
         position: sticky;
         bottom: 0;
-        padding: 10px 14px calc(12px + env(safe-area-inset-bottom));
+        padding: 8px 12px calc(10px + env(safe-area-inset-bottom));
         background: #fff;
         border-top: 1px solid var(--border);
-        box-shadow: 0 -6px 30px rgba(15, 15, 26, 0.08);
+        box-shadow: 0 -6px 26px rgba(15, 15, 26, 0.06);
       }
     }
 
