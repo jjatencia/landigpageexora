@@ -693,8 +693,8 @@
         padding: 10px 14px;
         padding-top: calc(10px + env(safe-area-inset-top));
         flex-direction: row;
-        align-items: center;
-        gap: 8px;
+        align-items: flex-start;
+        gap: 10px;
         min-height: var(--app-header-height);
         position: sticky;
         top: 0;
@@ -710,13 +710,15 @@
 
       .header-phrase {
         display: block;
-        font-size: 13px;
-        max-width: 100%;
+        font-size: 14px;
+        line-height: 1.35;
+        flex: 1 1 auto;
+        max-width: 70vw;
         color: rgba(255, 255, 255, 0.92);
         white-space: normal;
         overflow: visible;
         text-overflow: clip;
-        line-height: 1.2;
+        text-align: right;
       }
 
       .logo img { height: 22px; }
