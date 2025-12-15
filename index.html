@@ -108,6 +108,9 @@
       text-align: right;
       max-width: 260px;
       line-height: 1.3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .btn {
@@ -706,7 +709,12 @@
 
       nav { display: none; }
 
-      .header-phrase { display: none; }
+      .header-phrase {
+        display: block;
+        font-size: 11px;
+        max-width: 62%;
+        color: rgba(255, 255, 255, 0.9);
+      }
 
       .logo img { height: 22px; }
 
