@@ -1243,8 +1243,8 @@
 
     function updateFooterVisibility() {
       if (!stepFooter) return;
-      const shouldHide = currentStep === 1 && !hasSubmitted;
-      stepFooter.classList.toggle('hidden', shouldHide || window.innerWidth >= DESKTOP_BREAKPOINT);
+      const shouldHide = currentStep === 1 || window.innerWidth >= DESKTOP_BREAKPOINT;
+      stepFooter.classList.toggle('hidden', shouldHide);
     }
 
     function handleNext() {
