@@ -696,7 +696,6 @@
         align-items: center;
         gap: 8px;
         min-height: var(--app-header-height);
-        max-height: calc(var(--app-header-height) + env(safe-area-inset-top));
         position: sticky;
         top: 0;
         z-index: 6;
@@ -711,9 +710,13 @@
 
       .header-phrase {
         display: block;
-        font-size: 11px;
-        max-width: 62%;
-        color: rgba(255, 255, 255, 0.9);
+        font-size: 13px;
+        max-width: 100%;
+        color: rgba(255, 255, 255, 0.92);
+        white-space: normal;
+        overflow: visible;
+        text-overflow: clip;
+        line-height: 1.2;
       }
 
       .logo img { height: 22px; }
