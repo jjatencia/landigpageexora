@@ -23,6 +23,8 @@
       --shadow: 0 10px 40px rgba(13, 12, 34, 0.08);
       --radius: 18px;
       --max-width: 1200px;
+      --app-header-height: 64px;
+      --app-nav-height: 82px;
     }
 
     * {
@@ -40,7 +42,7 @@
 
     body.no-scroll {
       overflow: hidden;
-      height: 100vh;
+      height: 100dvh;
     }
 
     h1, h2, h3, h4, h5, h6, .logo {
@@ -57,6 +59,9 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      position: relative;
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: env(safe-area-inset-bottom);
     }
 
     .hidden { display: none !important; }
@@ -137,6 +142,7 @@
       position: sticky;
       top: 0;
       z-index: 4;
+      flex: 0 0 auto;
     }
 
     .top-section header {
@@ -207,23 +213,25 @@
       position: relative;
       overflow: hidden;
       background: linear-gradient(180deg, rgba(36,44,210,0.06) 0%, rgba(255,255,255,0.9) 28%);
-      flex: 1;
+      flex: 1 1 auto;
+      height: 100%;
     }
 
     .stepper-track {
       display: flex;
       width: 100%;
+      height: 100%;
       transition: transform 0.5s ease, opacity 0.4s ease;
     }
 
     .step {
       width: 100%;
-      min-height: calc(100vh - 150px);
+      height: 100%;
       padding: clamp(22px, 6vw, 42px) clamp(18px, 5vw, 24px) clamp(120px, 10vw, 140px);
       display: flex;
       justify-content: center;
       flex: 0 0 100%;
-      overflow-y: auto;
+      overflow: hidden;
     }
 
     .step-inner {
@@ -231,11 +239,24 @@
       background: rgba(255,255,255,0.98);
       border-radius: 22px;
       box-shadow: 0 16px 36px rgba(15, 15, 26, 0.08);
-      padding: clamp(20px, 4vw, 36px);
+      padding: clamp(20px, 4vw, 32px);
       border: 1px solid rgba(255,255,255,0.65);
-      display: grid;
-      gap: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
       position: relative;
+      height: 100%;
+    }
+
+    .step-header { display: grid; gap: 8px; }
+
+    .step-content {
+      flex: 1 1 auto;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+      display: grid;
+      gap: 12px;
+      padding-right: 4px;
     }
 
     .step-inner h1, .step-inner h2 {
@@ -452,6 +473,7 @@
       justify-content: space-between;
       gap: 10px;
       z-index: 5;
+      flex: 0 0 auto;
     }
 
     .step-footer .btn { flex: 1; }
@@ -540,6 +562,8 @@
       .stepper-track { flex-direction: column; transform: none !important; }
       .step {
         min-height: unset;
+        height: auto;
+        overflow: visible;
         padding: clamp(48px, 6vw, 72px) clamp(18px, 5vw, 64px);
       }
       .step-inner {
@@ -547,6 +571,7 @@
         background: transparent;
         border: none;
         padding: 0;
+        height: auto;
       }
       .top-section { position: static; }
       header { padding-bottom: 18px; }
@@ -561,23 +586,112 @@
     }
 
     @media (max-width: 768px) {
+      :root {
+        --app-header-height: 56px;
+        --app-nav-height: 82px;
+        --step-bar-height: 44px;
+      }
+
+      body {
+        overflow: hidden;
+      }
+
+      .app-shell {
+        height: 100dvh;
+      }
+
       header {
-        padding: 18px 18px 8px;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
+        padding: 10px 14px;
+        padding-top: calc(10px + env(safe-area-inset-top));
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+        min-height: var(--app-header-height);
+        max-height: calc(var(--app-header-height) + env(safe-area-inset-top));
+        position: sticky;
+        top: 0;
+        z-index: 6;
+        backdrop-filter: blur(10px);
+      }
+
+      .top-section {
+        padding-bottom: 0;
       }
 
       nav { display: none; }
-      .mobile-step-bar { display: flex; }
-      .hero-img { display: none; }
-      form { grid-template-columns: 1fr; }
-      textarea { grid-column: 1 / -1; }
+
+      .logo img { height: 22px; }
+
+      .mobile-step-bar {
+        display: flex;
+        padding: 6px 14px 8px;
+        position: sticky;
+        top: calc(var(--app-header-height) + env(safe-area-inset-top));
+        background: linear-gradient(180deg, rgba(36, 44, 210, 0.9) 0%, rgba(36, 44, 210, 0.75) 100%);
+        z-index: 5;
+        min-height: var(--step-bar-height);
+      }
+
+      .stepper-viewport {
+        height: calc(100dvh - var(--app-header-height) - var(--step-bar-height) - var(--app-nav-height));
+      }
+
+      .stepper-track { height: 100%; }
+
+      .step {
+        padding: 14px 14px 10px;
+      }
+
+      .step-inner {
+        padding: 16px;
+        border-radius: 18px;
+        gap: 12px;
+      }
+
+      .step-header h1 { font-size: 26px; line-height: 1.15; }
+      .step-header h2 { font-size: 22px; line-height: 1.2; }
+      .step-header p { font-size: 14px; margin-bottom: 2px; }
+
+      .step-content {
+        gap: 10px;
+        padding-bottom: 12px;
+      }
+
+      .btn { padding: 12px 14px; }
+      .step-footer .btn { min-height: 46px; }
+      .pill-note { font-size: 12px; padding: 8px 10px; }
+      .price-tag { font-size: 13px; padding: 8px 12px; }
+
+      .card {
+        padding: 14px;
+        border-radius: 14px;
+      }
+
+      .list { gap: 8px; }
+      .list .row { font-size: 13px; }
+
+      .hero-img { max-height: 220px; }
+
+      form {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      textarea { grid-column: 1 / -1; min-height: 110px; }
+
+      .step-footer {
+        position: sticky;
+        bottom: 0;
+        padding: 10px 14px calc(12px + env(safe-area-inset-bottom));
+        background: #fff;
+        border-top: 1px solid var(--border);
+        box-shadow: 0 -6px 30px rgba(15, 15, 26, 0.08);
+      }
     }
 
     @media (max-width: 520px) {
-      .step-inner { padding: 18px; }
-      .step-footer { padding: 12px 14px 20px; }
+      .step-inner { padding: 14px; }
+      .stepper-viewport { height: calc(100dvh - var(--app-header-height) - var(--step-bar-height) - var(--app-nav-height)); }
     }
   </style>
 </head>
@@ -616,155 +730,167 @@
       <div class="stepper-track" id="stepper-track">
         <section class="step" data-step="1" id="step-1">
           <div class="step-inner" data-step-title tabindex="-1">
-            <div class="pill-note">Paso 1 · Agenda tu llamada</div>
-            <h1>Cuéntanos sobre tu salón y te llamamos</h1>
-            <p>La conversación dura 7 minutos. Te enseñamos cómo llenar agenda, reducir ausencias y tener caja, equipo y facturas en un único panel.</p>
-            <form id="contact-form">
-              <div>
-                <label>Nombre del negocio</label>
-                <input name="businessName" type="text" placeholder="Nombre de tu peluquería o barbería" required>
-              </div>
-              <div>
-                <label>Nombre y apellidos</label>
-                <input name="fullName" type="text" placeholder="Tu nombre completo" required>
-              </div>
-              <div>
-                <label>Teléfono</label>
-                <input name="phone" type="tel" placeholder="Número para contactar contigo" required>
-              </div>
-              <div>
-                <label>Email</label>
-                <input name="email" type="email" placeholder="correo@ejemplo.com" required>
-              </div>
-              <div>
-                <label>Tipo de negocio</label>
-                <select name="businessType" required>
-                  <option>Barbería</option>
-                  <option>Peluquería</option>
-                  <option>Centro de estética</option>
-                  <option>Otro</option>
-                </select>
-              </div>
-              <div>
-                <label>Nº de empleados</label>
-                <select name="employees" required>
-                  <option>1–2</option>
-                  <option>3–5</option>
-                  <option>6–10</option>
-                  <option>+10</option>
-                </select>
-              </div>
-              <div>
-                <label>Mensaje (opcional)</label>
-                <textarea name="message" placeholder="Agenda, ausencias, control horario… cuéntanos en 2 líneas"></textarea>
-              </div>
-              <div class="form-actions">
-                <button type="submit" class="btn btn-primary" id="submit-button">Quiero que me contactes</button>
-              </div>
-              <p class="legal-note">Al enviar este formulario aceptas nuestra <a href="legales.html#privacidad">Política de Privacidad</a> y consientes que te contactemos para enviarte información sobre exora® por los medios indicados.</p>
-              <div class="form-status" role="status" aria-live="polite"></div>
-            </form>
-            <div class="note" style="color: var(--muted); font-weight: 600;">Te contactamos en menos de 24 horas laborables.</div>
+            <div class="step-header">
+              <div class="pill-note">Paso 1 · Agenda tu llamada</div>
+              <h1>Cuéntanos sobre tu salón y te llamamos</h1>
+              <p>La conversación dura 7 minutos. Te enseñamos cómo llenar agenda, reducir ausencias y tener caja, equipo y facturas en un único panel.</p>
+            </div>
+            <div class="step-content">
+              <form id="contact-form">
+                <div>
+                  <label>Nombre del negocio</label>
+                  <input name="businessName" type="text" placeholder="Nombre de tu peluquería o barbería" required>
+                </div>
+                <div>
+                  <label>Nombre y apellidos</label>
+                  <input name="fullName" type="text" placeholder="Tu nombre completo" required>
+                </div>
+                <div>
+                  <label>Teléfono</label>
+                  <input name="phone" type="tel" placeholder="Número para contactar contigo" required>
+                </div>
+                <div>
+                  <label>Email</label>
+                  <input name="email" type="email" placeholder="correo@ejemplo.com" required>
+                </div>
+                <div>
+                  <label>Tipo de negocio</label>
+                  <select name="businessType" required>
+                    <option>Barbería</option>
+                    <option>Peluquería</option>
+                    <option>Centro de estética</option>
+                    <option>Otro</option>
+                  </select>
+                </div>
+                <div>
+                  <label>Nº de empleados</label>
+                  <select name="employees" required>
+                    <option>1–2</option>
+                    <option>3–5</option>
+                    <option>6–10</option>
+                    <option>+10</option>
+                  </select>
+                </div>
+                <div>
+                  <label>Mensaje (opcional)</label>
+                  <textarea name="message" placeholder="Agenda, ausencias, control horario… cuéntanos en 2 líneas"></textarea>
+                </div>
+                <div class="form-actions">
+                  <button type="submit" class="btn btn-primary" id="submit-button">Quiero que me contactes</button>
+                </div>
+                <p class="legal-note">Al enviar este formulario aceptas nuestra <a href="legales.html#privacidad">Política de Privacidad</a> y consientes que te contactemos para enviarte información sobre exora® por los medios indicados.</p>
+                <div class="form-status" role="status" aria-live="polite"></div>
+              </form>
+              <div class="note" style="color: var(--muted); font-weight: 600;">Te contactamos en menos de 24 horas laborables.</div>
+            </div>
           </div>
         </section>
 
         <section class="step" data-step="2" id="step-2">
           <div class="step-inner" data-step-title tabindex="-1">
-            <div class="pill-note">Paso 2 · Qué es exora®</div>
-            <h2>Una plataforma única para reservas, equipo y caja</h2>
-            <p>exora® conecta agenda, cobros, fichajes y facturación en un panel diseñado solo para salones. Sin saltar entre apps ni pelearte con hojas de cálculo.</p>
-            <div class="price-tag">Desde 34,90 €/mes + IVA · Sin permanencias</div>
-            <div class="grid-two">
-              <div class="card">
-                <div class="mini-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" role="img" focusable="false">
-                    <rect x="4" y="12" width="3" height="8" rx="1"></rect>
-                    <rect x="10" y="8" width="3" height="12" rx="1"></rect>
-                    <rect x="16" y="5" width="3" height="15" rx="1"></rect>
-                  </svg>
-                </div>
-                <h4>Visión total</h4>
-                <p>Agenda, caja y ventas se actualizan en tiempo real para que sepas cada día cómo va tu negocio.</p>
-              </div>
-              <div class="card">
-                <div class="mini-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" role="img" focusable="false">
-                    <rect x="5" y="6" width="14" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2"></rect>
-                    <path d="M8 4v3M16 4v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
-                    <polyline points="9 13 11 15 15 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline>
-                  </svg>
-                </div>
-                <h4>Reservas sin competencia</h4>
-                <p>Tu propia app para que los clientes reserven 24/7 con tu marca, sin ver a otros salones.</p>
-              </div>
-              <div class="card">
-                <div class="mini-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" role="img" focusable="false">
-                    <circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"></circle>
-                    <path d="M12 8v4l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                  </svg>
-                </div>
-                <h4>Control horario digital</h4>
-                <p>Fichajes y reportes listos para inspección. Todo guardado en la nube con trazabilidad.</p>
-              </div>
-              <div class="card">
-                <div class="mini-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" role="img" focusable="false">
-                    <path d="M7 4h10a2 2 0 0 1 2 2v12a1 1 0 0 1-1 1H7a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="2"></path>
-                    <path d="M9 8h6M9 12h6M9 16h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
-                    <path d="M15 4v2a2 2 0 0 0 2 2h2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
-                  </svg>
-                </div>
-                <h4>Facturación segura</h4>
-                <p>Tickets y facturas desde el mismo panel, preparada para Verifactu desde el 1 de enero de 2027.</p>
-              </div>
+            <div class="step-header">
+              <div class="pill-note">Paso 2 · Qué es exora®</div>
+              <h2>Una plataforma única para reservas, equipo y caja</h2>
+              <p>exora® conecta agenda, cobros, fichajes y facturación en un panel diseñado solo para salones. Sin saltar entre apps ni pelearte con hojas de cálculo.</p>
+              <div class="price-tag">Desde 34,90 €/mes + IVA · Sin permanencias</div>
             </div>
-            <div class="hero-img">
-              <img src="assets/imageheader.png" alt="Mockups de exora" loading="lazy" />
+            <div class="step-content">
+              <div class="grid-two">
+                <div class="card">
+                  <div class="mini-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" role="img" focusable="false">
+                      <rect x="4" y="12" width="3" height="8" rx="1"></rect>
+                      <rect x="10" y="8" width="3" height="12" rx="1"></rect>
+                      <rect x="16" y="5" width="3" height="15" rx="1"></rect>
+                    </svg>
+                  </div>
+                  <h4>Visión total</h4>
+                  <p>Agenda, caja y ventas se actualizan en tiempo real para que sepas cada día cómo va tu negocio.</p>
+                </div>
+                <div class="card">
+                  <div class="mini-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" role="img" focusable="false">
+                      <rect x="5" y="6" width="14" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2"></rect>
+                      <path d="M8 4v3M16 4v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+                      <polyline points="9 13 11 15 15 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                    </svg>
+                  </div>
+                  <h4>Reservas sin competencia</h4>
+                  <p>Tu propia app para que los clientes reserven 24/7 con tu marca, sin ver a otros salones.</p>
+                </div>
+                <div class="card">
+                  <div class="mini-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" role="img" focusable="false">
+                      <circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"></circle>
+                      <path d="M12 8v4l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                  </div>
+                  <h4>Control horario digital</h4>
+                  <p>Fichajes y reportes listos para inspección. Todo guardado en la nube con trazabilidad.</p>
+                </div>
+                <div class="card">
+                  <div class="mini-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" role="img" focusable="false">
+                      <path d="M7 4h10a2 2 0 0 1 2 2v12a1 1 0 0 1-1 1H7a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="2"></path>
+                      <path d="M9 8h6M9 12h6M9 16h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+                      <path d="M15 4v2a2 2 0 0 0 2 2h2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+                    </svg>
+                  </div>
+                  <h4>Facturación segura</h4>
+                  <p>Tickets y facturas desde el mismo panel, preparada para Verifactu desde el 1 de enero de 2027.</p>
+                </div>
+              </div>
+              <div class="hero-img">
+                <img src="assets/imageheader.png" alt="Mockups de exora" loading="lazy" />
+              </div>
             </div>
           </div>
         </section>
 
         <section class="step" data-step="3" id="step-3">
           <div class="step-inner" data-step-title tabindex="-1">
-            <div class="pill-note">Paso 3 · Módulos clave</div>
-            <h2>4 módulos pensados para salones ocupados</h2>
-            <p>Usa solo lo que necesitas: todo está conectado para que no pierdas tiempo ni datos.</p>
-            <div class="grid-two">
-              <div class="card">
-                <div class="mini-icon" aria-hidden="true"><span class="mini-icon-symbol">📊</span></div>
-                <h4>Administración</h4>
-                <div class="list">
-                  <div class="row"><span class="dot"></span>Ventas, caja y servicios en un vistazo diario.</div>
-                  <div class="row"><span class="dot"></span>Métricas por profesional sin hojas de cálculo.</div>
-                  <div class="row"><span class="dot"></span>Informes listos para tu gestoría en segundos.</div>
+            <div class="step-header">
+              <div class="pill-note">Paso 3 · Módulos clave</div>
+              <h2>4 módulos pensados para salones ocupados</h2>
+              <p>Usa solo lo que necesitas: todo está conectado para que no pierdas tiempo ni datos.</p>
+            </div>
+            <div class="step-content">
+              <div class="grid-two">
+                <div class="card">
+                  <div class="mini-icon" aria-hidden="true"><span class="mini-icon-symbol">📊</span></div>
+                  <h4>Administración</h4>
+                  <div class="list">
+                    <div class="row"><span class="dot"></span>Ventas, caja y servicios en un vistazo diario.</div>
+                    <div class="row"><span class="dot"></span>Métricas por profesional sin hojas de cálculo.</div>
+                    <div class="row"><span class="dot"></span>Informes listos para tu gestoría en segundos.</div>
+                  </div>
                 </div>
-              </div>
-              <div class="card">
-                <div class="mini-icon" aria-hidden="true"><span class="mini-icon-symbol">📱</span></div>
-                <h4>App de reservas</h4>
-                <div class="list">
-                  <div class="row"><span class="dot"></span>Reservas 24/7 con tu marca y tus precios.</div>
-                  <div class="row"><span class="dot"></span>Pagos y recordatorios que reducen los no-shows.</div>
-                  <div class="row"><span class="dot"></span>Sin comparativas: solo aparece tu negocio.</div>
+                <div class="card">
+                  <div class="mini-icon" aria-hidden="true"><span class="mini-icon-symbol">📱</span></div>
+                  <h4>App de reservas</h4>
+                  <div class="list">
+                    <div class="row"><span class="dot"></span>Reservas 24/7 con tu marca y tus precios.</div>
+                    <div class="row"><span class="dot"></span>Pagos y recordatorios que reducen los no-shows.</div>
+                    <div class="row"><span class="dot"></span>Sin comparativas: solo aparece tu negocio.</div>
+                  </div>
                 </div>
-              </div>
-              <div class="card">
-                <div class="mini-icon" aria-hidden="true"><span class="mini-icon-symbol">⏱️</span></div>
-                <h4>Control horario digital</h4>
-                <div class="list">
-                  <div class="row"><span class="dot"></span>Fichajes desde móvil, tablet o PC.</div>
-                  <div class="row"><span class="dot"></span>Historial seguro y exportable para inspecciones.</div>
-                  <div class="row"><span class="dot"></span>Alertas para fichajes pendientes.</div>
+                <div class="card">
+                  <div class="mini-icon" aria-hidden="true"><span class="mini-icon-symbol">⏱️</span></div>
+                  <h4>Control horario digital</h4>
+                  <div class="list">
+                    <div class="row"><span class="dot"></span>Fichajes desde móvil, tablet o PC.</div>
+                    <div class="row"><span class="dot"></span>Historial seguro y exportable para inspecciones.</div>
+                    <div class="row"><span class="dot"></span>Alertas para fichajes pendientes.</div>
+                  </div>
                 </div>
-              </div>
-              <div class="card">
-                <div class="mini-icon" aria-hidden="true"><span class="mini-icon-symbol">€</span></div>
-                <h4>Facturación / Verifactu</h4>
-                <div class="list">
-                  <div class="row"><span class="dot"></span>Tickets y facturas sin salir del panel.</div>
-                  <div class="row"><span class="dot"></span>Trazabilidad y seguridad antifraude.</div>
-                  <div class="row"><span class="dot"></span>Preparada para Verifactu el 1 de enero de 2027.</div>
+                <div class="card">
+                  <div class="mini-icon" aria-hidden="true"><span class="mini-icon-symbol">€</span></div>
+                  <h4>Facturación / Verifactu</h4>
+                  <div class="list">
+                    <div class="row"><span class="dot"></span>Tickets y facturas sin salir del panel.</div>
+                    <div class="row"><span class="dot"></span>Trazabilidad y seguridad antifraude.</div>
+                    <div class="row"><span class="dot"></span>Preparada para Verifactu el 1 de enero de 2027.</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -773,96 +899,104 @@
 
         <section class="step" data-step="4" id="step-4">
           <div class="step-inner" data-step-title tabindex="-1">
-            <div class="pill-note">Paso 4 · Beneficios rápidos</div>
-            <h2>Lo que notas en el día a día</h2>
-            <p>Propietarios de peluquerías, barberías y centros de imagen usan exora® para trabajar tranquilos y vender más sin depender del teléfono.</p>
-            <div class="grid-two">
-              <div class="card">
-                <div class="mini-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" role="img" focusable="false">
-                    <circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"></circle>
-                    <path d="M12 8v4l2.5 1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                    <path d="M10 5.5 8.5 4M14 5.5 15.5 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
-                  </svg>
-                </div>
-                <h4>Menos tiempo al teléfono</h4>
-                <p>Las reservas entran solas y puedes enfocarte en atender y facturar.</p>
-              </div>
-              <div class="card">
-                <div class="mini-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" role="img" focusable="false">
-                    <circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"></circle>
-                    <polyline points="9 12 11 14 15 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline>
-                  </svg>
-                </div>
-                <h4>Más citas confirmadas</h4>
-                <p>Recordatorios y pagos anticipados que reducen ausencias y huecos vacíos.</p>
-              </div>
-              <div class="card">
-                <div class="mini-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" role="img" focusable="false">
-                    <rect x="10" y="4" width="4" height="3" rx="1" fill="none" stroke="currentColor" stroke-width="2"></rect>
-                    <rect x="5" y="15" width="4" height="4" rx="1" fill="none" stroke="currentColor" stroke-width="2"></rect>
-                    <rect x="10" y="15" width="4" height="4" rx="1" fill="none" stroke="currentColor" stroke-width="2"></rect>
-                    <rect x="15" y="15" width="4" height="4" rx="1" fill="none" stroke="currentColor" stroke-width="2"></rect>
-                    <path d="M12 7v4m0 0H7m5 0h5M7 11v2m5-2v2m5-2v2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                  </svg>
-                </div>
-                <h4>Equipo alineado</h4>
-                <p>Agenda compartida y fichajes digitales que evitan malentendidos.</p>
-              </div>
-              <div class="card">
-                <div class="mini-icon" aria-hidden="true">
-                  <span class="mini-icon-symbol">€</span>
-                </div>
-                <h4>Ingresos claros</h4>
-                <p>Ventas, caja y facturas en un panel: sabes qué funciona cada día.</p>
-              </div>
-              <div class="card">
-                <div class="mini-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" role="img" focusable="false">
-                    <path d="M12 4 13.6 9H19l-4.5 3.4L16 17l-4-2.9L8 17l1.5-4.6L5 9h5.4Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path>
-                  </svg>
-                </div>
-                <h4>Imagen moderna</h4>
-                <p>App propia que refuerza tu marca y fideliza sin depender de terceros.</p>
-              </div>
+            <div class="step-header">
+              <div class="pill-note">Paso 4 · Beneficios rápidos</div>
+              <h2>Lo que notas en el día a día</h2>
+              <p>Propietarios de peluquerías, barberías y centros de imagen usan exora® para trabajar tranquilos y vender más sin depender del teléfono.</p>
             </div>
-            <div class="cta-actions">
-              <button class="btn btn-primary" id="benefits-next">Siguiente</button>
+            <div class="step-content">
+              <div class="grid-two">
+                <div class="card">
+                  <div class="mini-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" role="img" focusable="false">
+                      <circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"></circle>
+                      <path d="M12 8v4l2.5 1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                      <path d="M10 5.5 8.5 4M14 5.5 15.5 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+                    </svg>
+                  </div>
+                  <h4>Menos tiempo al teléfono</h4>
+                  <p>Las reservas entran solas y puedes enfocarte en atender y facturar.</p>
+                </div>
+                <div class="card">
+                  <div class="mini-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" role="img" focusable="false">
+                      <circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"></circle>
+                      <polyline points="9 12 11 14 15 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                    </svg>
+                  </div>
+                  <h4>Más citas confirmadas</h4>
+                  <p>Recordatorios y pagos anticipados que reducen ausencias y huecos vacíos.</p>
+                </div>
+                <div class="card">
+                  <div class="mini-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" role="img" focusable="false">
+                      <rect x="10" y="4" width="4" height="3" rx="1" fill="none" stroke="currentColor" stroke-width="2"></rect>
+                      <rect x="5" y="15" width="4" height="4" rx="1" fill="none" stroke="currentColor" stroke-width="2"></rect>
+                      <rect x="10" y="15" width="4" height="4" rx="1" fill="none" stroke="currentColor" stroke-width="2"></rect>
+                      <rect x="15" y="15" width="4" height="4" rx="1" fill="none" stroke="currentColor" stroke-width="2"></rect>
+                      <path d="M12 7v4m0 0H7m5 0h5M7 11v2m5-2v2m5-2v2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                  </div>
+                  <h4>Equipo alineado</h4>
+                  <p>Agenda compartida y fichajes digitales que evitan malentendidos.</p>
+                </div>
+                <div class="card">
+                  <div class="mini-icon" aria-hidden="true">
+                    <span class="mini-icon-symbol">€</span>
+                  </div>
+                  <h4>Ingresos claros</h4>
+                  <p>Ventas, caja y facturas en un panel: sabes qué funciona cada día.</p>
+                </div>
+                <div class="card">
+                  <div class="mini-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" role="img" focusable="false">
+                      <path d="M12 4 13.6 9H19l-4.5 3.4L16 17l-4-2.9L8 17l1.5-4.6L5 9h5.4Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path>
+                    </svg>
+                  </div>
+                  <h4>Imagen moderna</h4>
+                  <p>App propia que refuerza tu marca y fideliza sin depender de terceros.</p>
+                </div>
+              </div>
+              <div class="cta-actions">
+                <button class="btn btn-primary" id="benefits-next">Siguiente</button>
+              </div>
             </div>
           </div>
         </section>
 
         <section class="step" data-step="5" id="step-5">
           <div class="step-inner" data-step-title tabindex="-1">
-            <div class="pill-note">Paso 5 · Historias y cierre</div>
-            <h2>Lo que dicen otros salones</h2>
-            <p>Resultados reales: menos ausencias, más control y equipo alineado sin caos de herramientas.</p>
-            <div class="testimonial-wrap">
-              <div class="quote">
-                “Hemos reducido a la mitad las llamadas y las ausencias casi han desaparecido. Los recordatorios automáticos mantienen la agenda llena.”
-                <strong>Barbería Central</strong>
-              </div>
-              <div class="quote">
-                “El panel me dice cuánto he vendido y qué servicios funcionan mejor. Decido con datos, no con intuición.”
-                <strong>Peluquería Urban Cut</strong>
-              </div>
-              <div class="quote">
-                “Con el control horario y la facturación integrada todo está registrado y listo para la gestoría. Más orden y tranquilidad.”
-                <strong>Studio Línea</strong>
-              </div>
+            <div class="step-header">
+              <div class="pill-note">Paso 5 · Historias y cierre</div>
+              <h2>Lo que dicen otros salones</h2>
+              <p>Resultados reales: menos ausencias, más control y equipo alineado sin caos de herramientas.</p>
             </div>
-            <div class="cta-final">
-              <h3>Listo. ¿Qué pasa ahora?</h3>
-              <div class="list">
-                <div class="row"><span class="dot"></span>Te contactamos en &lt;24h laborables</div>
-                <div class="row"><span class="dot"></span>Demo rápida de 7 minutos</div>
-                <div class="row"><span class="dot"></span>Sin compromiso</div>
+            <div class="step-content">
+              <div class="testimonial-wrap">
+                <div class="quote">
+                  “Hemos reducido a la mitad las llamadas y las ausencias casi han desaparecido. Los recordatorios automáticos mantienen la agenda llena.”
+                  <strong>Barbería Central</strong>
+                </div>
+                <div class="quote">
+                  “El panel me dice cuánto he vendido y qué servicios funcionan mejor. Decido con datos, no con intuición.”
+                  <strong>Peluquería Urban Cut</strong>
+                </div>
+                <div class="quote">
+                  “Con el control horario y la facturación integrada todo está registrado y listo para la gestoría. Más orden y tranquilidad.”
+                  <strong>Studio Línea</strong>
+                </div>
               </div>
-              <div class="cta-actions">
-                <a class="btn btn-primary" id="open-exora" href="https://exora.app" target="_blank" rel="noopener">Guardar exora en mi móvil</a>
-                <button class="btn btn-secondary" id="back-to-start" type="button">Volver al inicio</button>
+              <div class="cta-final">
+                <h3>Listo. ¿Qué pasa ahora?</h3>
+                <div class="list">
+                  <div class="row"><span class="dot"></span>Te contactamos en &lt;24h laborables</div>
+                  <div class="row"><span class="dot"></span>Demo rápida de 7 minutos</div>
+                  <div class="row"><span class="dot"></span>Sin compromiso</div>
+                </div>
+                <div class="cta-actions">
+                  <a class="btn btn-primary" id="open-exora" href="https://exora.app" target="_blank" rel="noopener">Guardar exora en mi móvil</a>
+                  <button class="btn btn-secondary" id="back-to-start" type="button">Volver al inicio</button>
+                </div>
               </div>
             </div>
           </div>
