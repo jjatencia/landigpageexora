@@ -23,7 +23,7 @@
       --shadow: 0 10px 40px rgba(13, 12, 34, 0.08);
       --radius: 18px;
       --max-width: 1200px;
-      --app-header-height: 64px;
+      --app-header-height: 54px;
       --app-nav-height: 82px;
     }
 
@@ -67,7 +67,7 @@
     .hidden { display: none !important; }
 
     header {
-      padding: clamp(18px, 4vw, 32px) clamp(18px, 5vw, 64px) 8px;
+      padding: clamp(10px, 3vw, 14px) clamp(14px, 4vw, 24px) 6px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -79,13 +79,13 @@
 
     .logo {
       font-weight: 800;
-      font-size: 20px;
+      font-size: 18px;
       letter-spacing: 0.6px;
       color: var(--primary);
     }
 
     .logo img {
-      height: 32px;
+      height: 22px;
       width: auto;
       display: block;
     }
@@ -138,7 +138,7 @@
     .top-section {
       background: var(--primary);
       color: #fff;
-      padding-bottom: clamp(12px, 4vw, 24px);
+      padding-bottom: 6px;
       position: sticky;
       top: 0;
       z-index: 4;
@@ -181,6 +181,7 @@
       padding: 10px 16px 12px;
       color: #fff;
       gap: 12px;
+      min-height: var(--app-header-height);
     }
 
     .step-indicator {
@@ -227,7 +228,7 @@
     .step {
       width: 100%;
       height: 100%;
-      padding: clamp(22px, 6vw, 42px) clamp(18px, 5vw, 24px) clamp(120px, 10vw, 140px);
+      padding: clamp(18px, 5vw, 32px) clamp(16px, 4vw, 22px) clamp(110px, 10vw, 130px);
       display: flex;
       justify-content: center;
       flex: 0 0 100%;
@@ -239,7 +240,7 @@
       background: rgba(255,255,255,0.98);
       border-radius: 22px;
       box-shadow: 0 16px 36px rgba(15, 15, 26, 0.08);
-      padding: clamp(20px, 4vw, 32px);
+      padding: clamp(18px, 3.5vw, 28px);
       border: 1px solid rgba(255,255,255,0.65);
       display: flex;
       flex-direction: column;
@@ -319,7 +320,7 @@
     .card {
       background: var(--card);
       border-radius: var(--radius);
-      padding: 18px;
+      padding: 16px;
       border: 1px solid var(--border);
       box-shadow: 0 10px 30px rgba(15, 15, 26, 0.04);
     }
@@ -467,7 +468,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      padding: 12px 14px 18px;
+      padding: 10px 14px 14px;
       background: linear-gradient(180deg, rgba(255,255,255,0) 0%, #fff 28%);
       display: flex;
       justify-content: space-between;
@@ -515,15 +516,16 @@
     .cta-actions .btn { flex: 1 1 180px; }
 
     footer {
-      padding: clamp(24px, 4vw, 32px) clamp(18px, 5vw, 64px) clamp(32px, 5vw, 48px);
+      padding: clamp(14px, 3vw, 18px) clamp(14px, 4vw, 22px) clamp(18px, 4vw, 22px);
       border-top: 1px solid var(--border);
       color: var(--muted);
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
       align-items: center;
       max-width: var(--max-width);
       margin: 0 auto;
+      font-size: 13px;
     }
 
     .footer-links, .footer-social {
@@ -711,7 +713,6 @@
         <button class="btn btn-primary cta-contact">Hablar con un experto</button>
       </header>
       <div class="mobile-step-bar" aria-live="polite">
-        <button class="btn btn-secondary" id="back-button" aria-label="Volver" disabled>Atrás</button>
         <div class="step-indicator">
           <span id="step-counter">1/5</span>
           <div class="step-dots" aria-hidden="true">
@@ -722,7 +723,6 @@
             <span class="step-dot"></span>
           </div>
         </div>
-        <button class="btn btn-primary" id="next-button" aria-label="Siguiente" disabled>Siguiente</button>
       </div>
     </div>
 
@@ -1032,8 +1032,8 @@
     const contactForm = document.getElementById('contact-form');
     const statusMessage = contactForm?.querySelector('.form-status');
     const submitButton = document.getElementById('submit-button');
-    const backButtons = [document.getElementById('back-button'), document.getElementById('back-button-footer')];
-    const nextButtons = [document.getElementById('next-button'), document.getElementById('next-button-footer')];
+    const backButtons = [document.getElementById('back-button-footer')];
+    const nextButtons = [document.getElementById('next-button-footer')];
     const stepCounter = document.getElementById('step-counter');
     const stepDots = document.querySelectorAll('.step-dot');
     const stepperTrack = document.getElementById('stepper-track');
@@ -1086,6 +1086,7 @@
       localStorage.setItem('exoraLeadSubmitted', '1');
       setStatusMessage('¡Solicitud enviada! Te contactamos en menos de 24 horas laborables.', 'success');
       toggleNextAvailability();
+      updateFooterVisibility();
     }
 
     async function handleSubmit(event) {
@@ -1150,6 +1151,7 @@
       });
 
       toggleNextAvailability();
+      updateFooterVisibility();
       focusStepTitle();
       if (options.track) {
         track('lp_step_view', { step: currentStep });
@@ -1174,6 +1176,12 @@
           btn.disabled = false;
         }
       });
+    }
+
+    function updateFooterVisibility() {
+      if (!stepFooter) return;
+      const shouldHide = currentStep === 1 && !hasSubmitted;
+      stepFooter.classList.toggle('hidden', shouldHide || window.innerWidth >= DESKTOP_BREAKPOINT);
     }
 
     function handleNext() {
@@ -1216,7 +1224,7 @@
       const isMobile = window.innerWidth < DESKTOP_BREAKPOINT;
       document.body.classList.toggle('no-scroll', isMobile);
       mobileStepBar?.classList.toggle('hidden', !isMobile);
-      stepFooter?.classList.toggle('hidden', !isMobile);
+      stepFooter?.classList.toggle('hidden', !isMobile || (currentStep === 1 && !hasSubmitted));
       if (!isMobile) {
         stepSections.forEach((section) => { section.inert = false; section.style.opacity = '1'; });
         window.scrollTo({ top: 0 });
