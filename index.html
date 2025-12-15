@@ -265,18 +265,19 @@
       padding: clamp(12px, 3vw, 16px);
     }
 
-    .step--form .step-header { gap: 6px; }
+    .step--form .step-header { gap: 4px; }
 
     .step--form .step-header h1 {
-      font-size: clamp(22px, 6vw, 26px);
-      line-height: 1.15;
-      margin-bottom: 2px;
+      font-size: clamp(20px, 5.5vw, 24px);
+      line-height: 1.1;
+      margin-bottom: 0;
       color: #fff;
     }
 
     .step--form .step-header p {
-      color: rgba(255,255,255,0.8);
-      font-size: 14px;
+      color: rgba(255,255,255,0.75);
+      font-size: 13px;
+      margin-top: 0;
     }
 
     .step--form .pill-note {
@@ -769,7 +770,6 @@
           <a href="#step-4">Beneficios</a>
           <a href="#step-5">Testimonios</a>
         </nav>
-        <button class="btn btn-primary cta-contact">Hablar con un experto</button>
       </header>
       <div class="mobile-step-bar" aria-live="polite">
         <div class="step-indicator">
@@ -790,9 +790,9 @@
         <section class="step step--form" data-step="1" id="step-1">
           <div class="step-inner" data-step-title tabindex="-1">
             <div class="step-header">
-              <div class="pill-note">Paso 1 · Completa y avanzas</div>
-              <h1>Reserva tu demo en 1 minuto</h1>
-              <p>Este formulario es el paso imprescindible. Déjanos tus datos y desbloquea el resto del recorrido.</p>
+              <div class="pill-note">Paso 1 · Formulario</div>
+              <h1>Completa y avanza</h1>
+              <p>Déjanos tus datos en un minuto para desbloquear el resto.</p>
             </div>
             <div class="step-content">
               <form id="contact-form">
@@ -1243,7 +1243,7 @@
 
     function updateFooterVisibility() {
       if (!stepFooter) return;
-      const shouldHide = currentStep === 1;
+      const shouldHide = currentStep === 1 && !hasSubmitted;
       stepFooter.classList.toggle('hidden', shouldHide || window.innerWidth >= DESKTOP_BREAKPOINT);
     }
 
@@ -1265,7 +1265,7 @@
       if (localStorage.getItem('exoraLeadSubmitted') === '1') {
         hasSubmitted = true;
         lockForm();
-        currentStep = 2;
+        currentStep = 1;
       }
     }
 
@@ -1288,7 +1288,7 @@
       const isMobile = window.innerWidth < DESKTOP_BREAKPOINT;
       document.body.classList.toggle('no-scroll', isMobile);
       mobileStepBar?.classList.toggle('hidden', !isMobile);
-      stepFooter?.classList.toggle('hidden', !isMobile || currentStep === 1);
+      stepFooter?.classList.toggle('hidden', !isMobile || (currentStep === 1 && !hasSubmitted));
       if (!isMobile) {
         stepSections.forEach((section) => { section.inert = false; section.style.opacity = '1'; });
         window.scrollTo({ top: 0 });
