@@ -568,25 +568,31 @@
     .cta-actions .btn { flex: 1 1 180px; }
 
     footer {
-      padding: 10px 14px 12px;
+      padding: 6px 10px;
       border-top: 1px solid var(--border);
       color: var(--muted);
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 8px;
+      display: flex;
       align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 6px 10px;
       max-width: var(--max-width);
       margin: 0 auto;
-      font-size: 12px;
-      line-height: 1.4;
+      font-size: 11px;
+      line-height: 1.3;
+    }
+
+    footer .logo img {
+      height: 18px;
     }
 
     .footer-links, .footer-social {
-      display: flex;
-      gap: 12px;
+      display: inline-flex;
+      gap: 8px;
       flex-wrap: wrap;
       font-weight: 600;
-      font-size: 13px;
+      font-size: 11px;
+      align-items: center;
     }
 
     .footer-social a { color: var(--primary); }
