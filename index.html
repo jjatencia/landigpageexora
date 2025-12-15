@@ -516,6 +516,20 @@
       text-decoration: underline;
     }
 
+    .reset-form-btn {
+      background: transparent;
+      color: #fff;
+      border: 1px dashed rgba(255,255,255,0.6);
+      padding: 6px 10px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 12px;
+      cursor: pointer;
+      align-self: flex-start;
+    }
+
+    .reset-form-btn.hidden { display: none; }
+
     .step-footer {
       position: fixed;
       left: 0;
@@ -839,6 +853,7 @@
                 </div>
                 <p class="legal-note">Al enviar este formulario aceptas nuestra <a href="legales.html#privacidad">Política de Privacidad</a> y consientes que te contactemos para enviarte información sobre exora® por los medios indicados.</p>
                 <div class="form-status" role="status" aria-live="polite"></div>
+                <button type="button" class="reset-form-btn hidden" id="reset-form">Reiniciar formulario</button>
               </form>
               <div class="note" style="color: var(--muted); font-weight: 600;">Respuesta en &lt;24h laborables.</div>
             </div>
@@ -1091,6 +1106,7 @@
     const contactForm = document.getElementById('contact-form');
     const statusMessage = contactForm?.querySelector('.form-status');
     const submitButton = document.getElementById('submit-button');
+    const submitDefaultText = submitButton?.textContent || 'Quiero que me contactes';
     const backButtons = [document.getElementById('back-button-footer')];
     const nextButtons = [document.getElementById('next-button-footer')];
     const stepCounter = document.getElementById('step-counter');
@@ -1103,6 +1119,7 @@
     const mobileStepBar = document.querySelector('.mobile-step-bar');
     const stepFooter = document.querySelector('.step-footer');
     const ctaButtons = document.querySelectorAll('.cta-contact');
+    const resetFormButton = document.getElementById('reset-form');
     const DESKTOP_BREAKPOINT = 769;
     let currentStep = 1;
     let hasSubmitted = false;
@@ -1134,6 +1151,27 @@
       statusMessage.append(text, retry);
     }
 
+    function unlockForm(clearStorage = true) {
+      if (clearStorage) {
+        localStorage.removeItem('exoraLeadSubmitted');
+      }
+      if (contactForm) {
+        contactForm.querySelectorAll('input, select, textarea').forEach((field) => {
+          field.removeAttribute('disabled');
+        });
+        contactForm.reset();
+      }
+      if (submitButton) {
+        submitButton.textContent = submitDefaultText;
+        submitButton.disabled = false;
+      }
+      hasSubmitted = false;
+      resetFormButton?.classList.add('hidden');
+      setStatusMessage('');
+      toggleNextAvailability();
+      updateFooterVisibility();
+    }
+
     function lockForm() {
       if (!contactForm || !submitButton) return;
       contactForm.querySelectorAll('input, select, textarea').forEach((field) => {
@@ -1144,6 +1182,7 @@
       hasSubmitted = true;
       localStorage.setItem('exoraLeadSubmitted', '1');
       setStatusMessage('¡Solicitud enviada! Te contactamos en menos de 24 horas laborables.', 'success');
+      resetFormButton?.classList.remove('hidden');
       toggleNextAvailability();
       updateFooterVisibility();
     }
@@ -1263,8 +1302,7 @@
 
     function restoreFormState() {
       if (localStorage.getItem('exoraLeadSubmitted') === '1') {
-        hasSubmitted = true;
-        lockForm();
+        unlockForm(true);
         currentStep = 1;
       }
     }
@@ -1275,6 +1313,11 @@
       benefitsNext?.addEventListener('click', () => goToStep(5));
       backToStart?.addEventListener('click', () => goToStep(1));
       openExora?.addEventListener('click', () => track('lp_open_exora'));
+      resetFormButton?.addEventListener('click', () => {
+        unlockForm();
+        setStatusMessage('Formulario listo para completar.');
+        goToStep(1, { track: false });
+      });
       ctaButtons.forEach((button) => {
         button.addEventListener('click', (event) => {
           event.preventDefault();
