@@ -23,7 +23,7 @@
       --shadow: 0 10px 40px rgba(13, 12, 34, 0.08);
       --radius: 18px;
       --max-width: 1200px;
-      --app-header-height: 54px;
+      --app-header-height: 52px;
       --app-nav-height: 72px;
     }
 
@@ -67,7 +67,7 @@
     .hidden { display: none !important; }
 
     header {
-      padding: clamp(10px, 3vw, 14px) clamp(14px, 4vw, 24px) 6px;
+      padding: clamp(8px, 3vw, 12px) clamp(12px, 4vw, 22px) 4px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -79,13 +79,13 @@
 
     .logo {
       font-weight: 800;
-      font-size: 18px;
+      font-size: 16px;
       letter-spacing: 0.6px;
       color: var(--primary);
     }
 
     .logo img {
-      height: 22px;
+      height: 20px;
       width: auto;
       display: block;
     }
@@ -105,11 +105,11 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      padding: 14px 18px;
+      padding: 12px 14px;
       border-radius: 999px;
       border: none;
       font-weight: 700;
-      font-size: 14px;
+      font-size: 13px;
       cursor: pointer;
       transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, color 0.25s ease;
     }
@@ -251,6 +251,51 @@
 
     .step-header { display: grid; gap: 8px; }
 
+    .step--form {
+      background: var(--primary);
+      align-items: stretch;
+    }
+
+    .step--form .step-inner {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: none;
+      border: none;
+      gap: 10px;
+      padding: clamp(12px, 3vw, 16px);
+    }
+
+    .step--form .step-header { gap: 6px; }
+
+    .step--form .step-header h1 {
+      font-size: clamp(22px, 6vw, 26px);
+      line-height: 1.15;
+      margin-bottom: 2px;
+      color: #fff;
+    }
+
+    .step--form .step-header p {
+      color: rgba(255,255,255,0.8);
+      font-size: 14px;
+    }
+
+    .step--form .pill-note {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+    }
+
+    .step--form .step-content {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.16);
+      padding: 12px;
+      gap: 10px;
+    }
+
+    .step--form label {
+      color: var(--text);
+    }
+
     .step-content {
       flex: 1 1 auto;
       overflow: auto;
@@ -387,6 +432,11 @@
       margin-top: 10px;
     }
 
+    .step--form form {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
     form > div { min-width: 0; }
 
     label {
@@ -434,6 +484,8 @@
       align-items: flex-end;
       grid-column: 1 / -1;
     }
+
+    .step--form .form-actions { margin-top: 0; }
 
     .form-actions .btn { width: 100%; }
 
@@ -729,12 +781,12 @@
 
     <div class="stepper-viewport">
       <div class="stepper-track" id="stepper-track">
-        <section class="step" data-step="1" id="step-1">
+        <section class="step step--form" data-step="1" id="step-1">
           <div class="step-inner" data-step-title tabindex="-1">
             <div class="step-header">
-              <div class="pill-note">Paso 1 · Agenda tu llamada</div>
-              <h1>Cuéntanos sobre tu salón y te llamamos</h1>
-              <p>La conversación dura 7 minutos. Te enseñamos cómo llenar agenda, reducir ausencias y tener caja, equipo y facturas en un único panel.</p>
+              <div class="pill-note">Paso 1 · Completa y avanzas</div>
+              <h1>Reserva tu demo en 1 minuto</h1>
+              <p>Este formulario es el paso imprescindible. Déjanos tus datos y desbloquea el resto del recorrido.</p>
             </div>
             <div class="step-content">
               <form id="contact-form">
@@ -1126,7 +1178,11 @@
 
     function goToStep(step, options = { track: true }) {
       const targetStep = Math.max(1, Math.min(STEP_TOTAL, step));
-      currentStep = targetStep;
+      if (targetStep > 1 && !hasSubmitted) {
+        currentStep = 1;
+      } else {
+        currentStep = targetStep;
+      }
       const isMobile = window.innerWidth < DESKTOP_BREAKPOINT;
       if (stepperTrack) {
         if (isMobile) {
@@ -1181,7 +1237,7 @@
 
     function updateFooterVisibility() {
       if (!stepFooter) return;
-      const shouldHide = currentStep === 1 && !hasSubmitted;
+      const shouldHide = currentStep === 1;
       stepFooter.classList.toggle('hidden', shouldHide || window.innerWidth >= DESKTOP_BREAKPOINT);
     }
 
@@ -1203,6 +1259,7 @@
       if (localStorage.getItem('exoraLeadSubmitted') === '1') {
         hasSubmitted = true;
         lockForm();
+        currentStep = 2;
       }
     }
 
@@ -1225,7 +1282,7 @@
       const isMobile = window.innerWidth < DESKTOP_BREAKPOINT;
       document.body.classList.toggle('no-scroll', isMobile);
       mobileStepBar?.classList.toggle('hidden', !isMobile);
-      stepFooter?.classList.toggle('hidden', !isMobile || (currentStep === 1 && !hasSubmitted));
+      stepFooter?.classList.toggle('hidden', !isMobile || currentStep === 1);
       if (!isMobile) {
         stepSections.forEach((section) => { section.inert = false; section.style.opacity = '1'; });
         window.scrollTo({ top: 0 });
