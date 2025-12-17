@@ -1127,13 +1127,8 @@
     }
 
     function setAppHeight() {
-      const viewport = window.visualViewport;
-      const height = viewport?.height || window.innerHeight;
+      const height = Math.max(window.innerHeight, document.documentElement.clientHeight || 0);
       document.documentElement.style.setProperty('--app-height', `${height}px`);
-    }
-
-    function stabilizeViewport() {
-      setAppHeight();
     }
 
     function setErrorStatus(message) {
@@ -1340,19 +1335,6 @@
       }
     }
 
-    function bindViewportWatchers() {
-      const viewport = window.visualViewport;
-      const handler = () => {
-        stabilizeViewport();
-        goToStep(currentStep, { track: false, focus: false });
-      };
-      viewport?.addEventListener('resize', handler);
-      viewport?.addEventListener('scroll', handler);
-      window.addEventListener('orientationchange', handler);
-      window.addEventListener('focusin', () => setTimeout(handler, 40));
-      window.addEventListener('focusout', () => setTimeout(handler, 40));
-    }
-
     function initAnimation() {
       const animatedElements = document.querySelectorAll('.card, .quote, .hero-img, .list .row, .pill-note, .price-tag');
       const observer = new IntersectionObserver((entries) => {
@@ -1374,15 +1356,18 @@
       track('lp_view');
       restoreFormState();
       initNavigation();
-      stabilizeViewport();
+      setAppHeight();
       toggleMobileMode();
-      bindViewportWatchers();
       goToStep(currentStep);
       initAnimation();
       if (contactForm) {
         contactForm.addEventListener('submit', handleSubmit);
       }
-      window.addEventListener('resize', toggleMobileMode);
+      window.addEventListener('resize', () => {
+        setAppHeight();
+        toggleMobileMode();
+      });
+      window.addEventListener('orientationchange', setAppHeight);
     }
 
     document.addEventListener('DOMContentLoaded', init);
