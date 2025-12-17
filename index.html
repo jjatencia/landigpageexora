@@ -631,19 +631,20 @@
     .cta-actions .btn { flex: 1 1 180px; }
 
     footer {
-      padding: 6px 10px;
+      padding: 6px 14px;
       border-top: 1px solid var(--border);
       color: var(--muted);
       display: flex;
       align-items: center;
       justify-content: center;
       flex-wrap: wrap;
-      gap: 6px 10px;
+      gap: 8px 14px;
       max-width: var(--max-width);
       margin: 0 auto;
-      font-size: 11px;
-      line-height: 1.3;
+      font-size: 12px;
+      line-height: 1.35;
       background: #fff;
+      text-align: center;
     }
 
     footer .logo img {
@@ -652,11 +653,13 @@
 
     .footer-links, .footer-social {
       display: inline-flex;
-      gap: 8px;
+      gap: 10px;
       flex-wrap: wrap;
       font-weight: 600;
-      font-size: 11px;
+      font-size: 12px;
       align-items: center;
+      justify-content: center;
+      flex: 1 1 100%;
     }
 
     .footer-social a { color: var(--primary); }
@@ -831,18 +834,16 @@
       }
 
       footer {
-        padding: 4px 12px calc(6px + env(safe-area-inset-bottom));
-        font-size: 10px;
-        line-height: 1.25;
-        gap: 6px 8px;
+        padding: 6px 12px calc(8px + env(safe-area-inset-bottom));
+        font-size: 12px;
+        line-height: 1.35;
+        gap: 6px 10px;
         justify-content: center;
         width: 100%;
         background: #fff;
         position: relative;
         z-index: 3;
       }
-
-      footer .footer-social { display: none; }
     }
 
     @media (max-width: 520px) {
@@ -1098,7 +1099,6 @@
         <a href="https://www.instagram.com/exora.app?igsh=MThiMGVncWozOGM3dg==">Instagram</a>
         <a href="https://es.linkedin.com/company/exoraapp">LinkedIn</a>
       </div>
-      <div style="font-weight:600; color: var(--text);">Tu manera de trabajar define tu negocio y crea marca.</div>
     </footer>
   </div>
 
