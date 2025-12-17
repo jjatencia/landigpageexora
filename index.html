@@ -1242,7 +1242,7 @@
         const employees = formData.get('employees');
         track('lp_lead_submitted', { businessType, employees });
         lockForm();
-        setTimeout(() => goToStep(2), 700);
+        goToStep(2);
       } catch (error) {
         console.error(error);
         track('lp_lead_error');
@@ -1278,6 +1278,10 @@
         section.style.opacity = index + 1 === currentStep ? '1' : isMobile ? '0.35' : '1';
         section.inert = isMobile && index + 1 !== currentStep;
       });
+
+      if (!isMobile) {
+        stepSections[currentStep - 1]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
 
       backButtons.forEach((btn) => {
         if (!btn) return;
