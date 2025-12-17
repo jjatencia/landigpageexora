@@ -1212,7 +1212,8 @@
       }
     }
 
-    function goToStep(step, options = { track: true }) {
+    function goToStep(step, options = { track: true, focus: true }) {
+      const { track = true, focus = true } = options || {};
       const targetStep = Math.max(1, Math.min(STEP_TOTAL, step));
       if (targetStep > 1 && !hasSubmitted) {
         currentStep = 1;
@@ -1245,8 +1246,10 @@
 
       toggleNextAvailability();
       updateFooterVisibility();
-      focusStepTitle();
-      if (options.track) {
+      if (focus) {
+        focusStepTitle();
+      }
+      if (track) {
         track('lp_step_view', { step: currentStep });
       }
     }
@@ -1326,7 +1329,7 @@
         stepSections.forEach((section) => { section.inert = false; section.style.opacity = '1'; });
         window.scrollTo({ top: 0 });
       } else {
-        goToStep(currentStep, { track: false });
+        goToStep(currentStep, { track: false, focus: false });
       }
     }
 
@@ -1334,7 +1337,7 @@
       const viewport = window.visualViewport;
       const handler = () => {
         stabilizeViewport();
-        goToStep(currentStep, { track: false });
+        goToStep(currentStep, { track: false, focus: false });
       };
       viewport?.addEventListener('resize', handler);
       viewport?.addEventListener('scroll', handler);
