@@ -643,6 +643,7 @@
       margin: 0 auto;
       font-size: 11px;
       line-height: 1.3;
+      background: #fff;
     }
 
     footer .logo img {
@@ -829,7 +830,19 @@
         box-shadow: 0 -6px 22px rgba(15, 15, 26, 0.05);
       }
 
-      footer { display: none; }
+      footer {
+        padding: 4px 12px calc(6px + env(safe-area-inset-bottom));
+        font-size: 10px;
+        line-height: 1.25;
+        gap: 6px 8px;
+        justify-content: center;
+        width: 100%;
+        background: #fff;
+        position: relative;
+        z-index: 3;
+      }
+
+      footer .footer-social { display: none; }
     }
 
     @media (max-width: 520px) {
