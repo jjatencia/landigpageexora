@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>exora® | Plataforma integral para salones, peluquerías y barberías</title>
   <link rel="icon" type="image/png" href="assets/favicon.png?v=2">
   <link rel="shortcut icon" href="assets/favicon.png?v=2">
@@ -23,6 +23,9 @@
       --shadow: 0 10px 40px rgba(13, 12, 34, 0.08);
       --radius: 18px;
       --max-width: 1200px;
+      --app-header-height: 46px;
+      --app-nav-height: 62px;
+      --step-bar-height: 40px;
     }
 
     * {
@@ -38,6 +41,11 @@
       overflow-x: hidden;
     }
 
+    body.no-scroll {
+      overflow: hidden;
+      height: 100dvh;
+    }
+
     h1, h2, h3, h4, h5, h6, .logo {
       font-family: 'Bricolage Grotesque', 'General Sans', 'Inter', system-ui, -apple-system, sans-serif;
       font-weight: 800;
@@ -48,38 +56,69 @@
       text-decoration: none;
     }
 
+    .app-shell {
+      height: var(--app-height, 100vh);
+      min-height: var(--app-height, 100vh);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: env(safe-area-inset-bottom);
+      width: 100%;
+      max-width: 100vw;
+    }
+
+    .hidden { display: none !important; }
+
     header {
-      padding: clamp(18px, 4vw, 32px) clamp(18px, 5vw, 64px) 8px;
+      padding: 10px clamp(14px, 4vw, 24px) 6px;
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
       gap: 12px;
       flex-wrap: wrap;
       max-width: var(--max-width);
       margin: 0 auto;
+      min-height: 48px;
     }
 
     .logo {
       font-weight: 800;
-      font-size: 20px;
+      font-size: 18px;
       letter-spacing: 0.6px;
       color: var(--primary);
+      flex: 0 0 auto;
     }
 
     .logo img {
-      height: 32px;
+      height: 22px;
       width: auto;
       display: block;
     }
 
     nav {
       display: flex;
-      gap: 24px;
+      gap: 18px;
       font-weight: 600;
       color: var(--muted);
       font-size: 14px;
       flex-wrap: wrap;
       row-gap: 8px;
+      flex: 1 1 220px;
+      min-width: 0;
+      justify-content: flex-end;
+    }
+
+    .header-phrase {
+      margin-left: auto;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.94);
+      font-size: 13px;
+      text-align: right;
+      max-width: 420px;
+      line-height: 1.35;
+      white-space: normal;
+      overflow: visible;
     }
 
     .btn {
@@ -87,13 +126,13 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      padding: 14px 18px;
+      padding: 12px 14px;
       border-radius: 999px;
       border: none;
       font-weight: 700;
-      font-size: 14px;
+      font-size: 13px;
       cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, color 0.25s ease;
     }
 
     .btn-primary {
@@ -117,562 +156,15 @@
       transform: translateY(-1px);
     }
 
-    .hero {
-      padding: clamp(18px, 5vw, 36px) clamp(18px, 5vw, 64px) clamp(42px, 8vw, 72px);
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      align-items: center;
-      gap: clamp(22px, 6vw, 48px);
-      max-width: var(--max-width);
-      margin: 0 auto;
-    }
-
-    .hero h1 {
-      font-size: clamp(32px, 4vw, 48px);
-      line-height: 1.1;
-      margin: 0 0 16px;
-      letter-spacing: -0.5px;
-    }
-
-    .hero p {
-      color: var(--muted);
-      margin: 0 0 24px;
-      font-size: 16px;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: rgba(36, 44, 210, 0.08);
-      color: var(--primary);
-      padding: 10px 14px;
-      border-radius: 999px;
-      font-weight: 700;
-      font-size: 12px;
-      margin-bottom: 16px;
-    }
-
-    .hero-bullets {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 12px 18px;
-      margin: 20px 0 28px;
-      color: var(--text);
-      font-weight: 600;
-    }
-
-    .hero-bullets .item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      background: var(--card);
-      padding: 12px 14px;
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
-      box-shadow: 0 12px 30px rgba(15, 15, 26, 0.03);
-    }
-
-    .tick {
-      width: 28px;
-      height: 28px;
-      border-radius: 10px;
-      background: var(--accent);
-      display: grid;
-      place-items: center;
-      color: #fff;
-      font-weight: 800;
-      font-size: 14px;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-
-    .mockup {
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 28px;
-      padding: clamp(18px, 4vw, 28px);
-      min-height: 360px;
-      border: 1px solid rgba(255, 255, 255, 0.28);
-      box-shadow: 0 16px 40px rgba(15, 15, 26, 0.06);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .mockup:before, .mockup:after {
-      content: "";
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(40px);
-      opacity: 0.6;
-    }
-
-    .mockup:before {
-      width: 180px;
-      height: 180px;
-      background: rgba(255, 255, 255, 0.16);
-      top: -40px;
-      right: -20px;
-    }
-
-    .mockup:after {
-      width: 140px;
-      height: 140px;
-      background: rgba(253, 119, 139, 0.2);
-      bottom: -30px;
-      left: -10px;
-    }
-
-    .mockup .placeholder {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      max-width: 720px;
-      margin: 0 auto;
-    }
-
-    .mockup .placeholder img {
-      width: 100%;
-      height: auto;
-      display: block;
-      border-radius: 18px;
-      box-shadow: 0 18px 40px rgba(15, 15, 26, 0.18);
-      animation: float 8s ease-in-out infinite;
-    }
-
-    .device, .panel {
-      background: #fff;
-      border-radius: 22px;
-      box-shadow: 0 20px 50px rgba(13, 12, 34, 0.12);
-      border: 1px solid rgba(255,255,255,0.8);
-      padding: 18px;
-    }
-
-    .device {
-      height: 320px;
-      display: grid;
-      align-content: space-between;
-    }
-
-    .pill {
-      height: 10px;
-      width: 70px;
-      background: var(--border);
-      border-radius: 999px;
-      margin: 0 auto;
-    }
-
-    .device h4 {
-      margin: 0 0 8px;
-      font-size: 16px;
-      color: var(--text);
-    }
-
-    .device ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: grid;
-      gap: 10px;
-    }
-
-    .device li {
-      background: var(--bg);
-      border-radius: 12px;
-      padding: 10px 12px;
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    .panel h4 {
-      margin: 0 0 12px;
-      font-size: 16px;
-    }
-
-    .panel .chart {
-      height: 180px;
-      border-radius: 16px;
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px dashed rgba(255, 255, 255, 0.4);
-      display: grid;
-      place-items: center;
-      color: rgba(26, 40, 60, 0.75);
-      font-weight: 600;
-    }
-
-    .section {
-      padding: clamp(52px, 8vw, 84px) clamp(18px, 5vw, 64px);
-    }
-
-    .section.alt {
-      background: var(--bg);
-    }
-
-    .section h2 {
-      font-size: 32px;
-      margin: 0 0 16px;
-      letter-spacing: -0.3px;
-    }
-
-    .section p {
-      color: var(--muted);
-      margin: 0 0 28px;
-      max-width: 860px;
-    }
-
-    .diagram {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-    }
-
-    .card {
-      background: var(--card);
-      border-radius: var(--radius);
-      padding: 22px;
-      border: 1px solid var(--border);
-      box-shadow: 0 10px 30px rgba(15, 15, 26, 0.04);
-    }
-
-    .card h3, .card h4 {
-      margin: 0 0 10px;
-    }
-
-    .card p {
-      margin: 0 0 12px;
-    }
-
-    .mini-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: 12px;
-      display: grid;
-      place-items: center;
-      background: rgba(36, 44, 210, 0.12);
-      color: var(--primary);
-      font-weight: 800;
-      margin-bottom: 10px;
-    }
-
-    .mini-icon svg {
-      width: 20px;
-      height: 20px;
-      fill: currentColor;
-    }
-
-    .mini-icon-symbol {
-      font-size: 18px;
-      line-height: 1;
-    }
-
-    .two-column {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: clamp(18px, 4vw, 32px);
-      align-items: center;
-      max-width: var(--max-width);
-      margin: 0 auto;
-    }
-
-    .visual-placeholder {
-      min-height: 320px;
-      background: linear-gradient(135deg, rgba(36, 44, 210, 0.12), rgba(253, 119, 139, 0.12));
-      border-radius: 26px;
-      border: 1px dashed rgba(36, 44, 210, 0.35);
-      display: grid;
-      place-items: center;
-      color: var(--muted);
-      font-weight: 700;
-      box-shadow: var(--shadow);
-      overflow: hidden;
-    }
-
-    .admin-mockup {
-      background: url('assets/mockupdesk.png') center/cover no-repeat;
-      border: none;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .app-mockup {
-      background: url('assets/mockappdesk.png') center/cover no-repeat;
-      border: none;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .list {
-      display: grid;
-      gap: 10px;
-      margin-top: 12px;
-    }
-
-    .list .row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      color: var(--muted);
-      font-weight: 600;
-    }
-
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: var(--primary);
-      box-shadow: 0 0 0 6px rgba(36, 44, 210, 0.12);
-    }
-
-    .section-header {
-      max-width: var(--max-width);
-      margin: 0 auto 26px;
-    }
-
-    .section-header.center {
-      text-align: center;
-    }
-
-    .benefits {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-      max-width: var(--max-width);
-      margin: 0 auto;
-    }
-
-    .testimonial-wrap {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 18px;
-      max-width: var(--max-width);
-      margin: 0 auto;
-    }
-
-    .quote {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px;
-      box-shadow: 0 14px 30px rgba(15, 15, 26, 0.05);
-    }
-
-    .quote strong {
-      display: block;
-      margin-top: 12px;
-      color: var(--primary);
-    }
-
-    .cta-final {
-      background: #FFFDF0;
-      border-radius: 28px;
-      padding: clamp(32px, 6vw, 48px);
-      border: 1px solid var(--border);
-      box-shadow: 0 18px 40px rgba(15, 15, 26, 0.08), 0 12px 40px rgba(252, 255, 168, 0.28);
-      max-width: var(--max-width);
-      margin: 0 auto;
-    }
-
-    form {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 16px 14px;
-      margin-top: 24px;
-    }
-
-    form > div {
-      min-width: 0;
-    }
-
-    label {
-      display: block;
-      font-weight: 700;
-      font-size: 14px;
-      margin-bottom: 6px;
-      color: var(--text);
-    }
-
-    input, select, textarea {
-      width: 100%;
-      padding: 12px 14px;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      background: #fff;
-      font-size: 14px;
-      font-family: inherit;
-      color: var(--text);
-      transition: border 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    input:focus, select:focus, textarea:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 4px rgba(36, 44, 210, 0.18);
-    }
-
-    textarea {
-      min-height: 120px;
-      grid-column: 1 / -1;
-      resize: vertical;
-    }
-
-    .note {
-      margin-top: 10px;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .legal-section {
-      background: #ffffff;
-    }
-
-    .legal-wrapper {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      display: grid;
-      gap: 18px;
-    }
-
-    .legal-block {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 22px;
-      box-shadow: 0 10px 26px rgba(15, 15, 26, 0.04);
-    }
-
-    .legal-block h3 {
-      margin-top: 0;
-      margin-bottom: 12px;
-    }
-
-    .legal-block h4 {
-      margin-bottom: 8px;
-      margin-top: 18px;
-    }
-
-    .legal-block p {
-      margin: 0 0 10px;
-      color: var(--muted);
-    }
-
-    .legal-block ul {
-      margin: 0 0 12px 18px;
-      color: var(--muted);
-      padding-left: 16px;
-    }
-
-    .legal-block li { margin-bottom: 6px; }
-
-    .legal-note {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 6px;
-      line-height: 1.5;
-    }
-
-    .form-status {
-      grid-column: 1 / -1;
-      margin-top: 6px;
-      font-weight: 600;
-      color: var(--muted);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .form-actions {
-      display: flex;
-      align-items: flex-end;
-      grid-column: 1 / -1;
-    }
-
-    .form-actions .btn {
-      width: 100%;
-    }
-
-    .form-status.is-success {
-      color: #1b8a4b;
-    }
-
-    .form-status.is-error {
-      color: #c02222;
-    }
-
-    .form-status .retry-btn {
-      appearance: none;
-      border: none;
-      background: transparent;
-      color: var(--primary);
-      font-weight: 700;
-      cursor: pointer;
-      padding: 0;
-      text-decoration: underline;
-    }
-
-    footer {
-      padding: clamp(24px, 4vw, 32px) clamp(18px, 5vw, 64px) clamp(32px, 5vw, 48px);
-      border-top: 1px solid var(--border);
-      color: var(--muted);
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 16px;
-      align-items: center;
-      max-width: var(--max-width);
-      margin: 0 auto;
-    }
-
-    .footer-links, .footer-social {
-      display: flex;
-      gap: 18px;
-      flex-wrap: wrap;
-      font-weight: 600;
-      font-size: 14px;
-    }
-
-    .footer-social a {
-      color: var(--primary);
-    }
-
-    .floating-cta {
-      position: fixed;
-      right: 16px;
-      left: 16px;
-      bottom: 18px;
-      z-index: 50;
-      box-shadow: 0 12px 36px rgba(36, 44, 210, 0.35);
-      justify-content: center;
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(14px);
-      transition: opacity 0.25s ease, transform 0.25s ease;
-      width: clamp(240px, 90vw, 480px);
-      margin: 0 auto;
-      left: 0;
-      right: 0;
-    }
-
-    .floating-cta.visible {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateY(0);
-    }
-
-    @media (min-width: 769px) {
-      .floating-cta {
-        display: none;
-      }
-    }
-
     .top-section {
       background: var(--primary);
       color: #fff;
-      padding-bottom: clamp(24px, 5vw, 32px);
+      padding-bottom: 6px;
+      position: sticky;
+      top: 0;
+      z-index: 4;
+      flex: 0 0 auto;
+      padding-top: env(safe-area-inset-top);
     }
 
     .top-section header {
@@ -704,29 +196,499 @@
 
     .top-section .btn-secondary:hover { background: rgba(255, 255, 255, 0.2); }
 
-    .top-section .badge {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(255, 255, 255, 0.18);
+    .mobile-step-bar {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px 12px;
+      color: #fff;
+      gap: 12px;
+      min-height: var(--app-header-height);
+    }
+
+    .step-indicator {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .step-dots {
+      display: inline-flex;
+      gap: 6px;
+    }
+
+    .step-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.35);
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .step-dot.active {
+      background: #fff;
+      transform: scale(1.1);
+    }
+
+    .stepper-viewport {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(36,44,210,0.06) 0%, rgba(255,255,255,0.9) 28%);
+      flex: 1 1 auto;
+      height: 100%;
+      min-height: 0;
+      width: 100%;
+    }
+
+    .stepper-track {
+      display: flex;
+      width: 100%;
+      max-width: 100%;
+      height: 100%;
+      transition: transform 0.5s ease, opacity 0.4s ease;
+      overflow: hidden;
+    }
+
+    .step {
+      width: 100%;
+      max-width: 100vw;
+      height: 100%;
+      padding: clamp(18px, 5vw, 32px) clamp(16px, 4vw, 22px) clamp(110px, 10vw, 130px);
+      display: none;
+      justify-content: center;
+      flex: 0 0 100%;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+
+    .step.is-active {
+      display: flex;
+    }
+
+    .step-inner {
+      width: min(960px, 100%);
+      max-width: 100%;
+      background: rgba(255,255,255,0.98);
+      border-radius: 22px;
+      box-shadow: 0 16px 36px rgba(15, 15, 26, 0.08);
+      padding: clamp(18px, 3.5vw, 28px);
+      border: 1px solid rgba(255,255,255,0.65);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      position: relative;
+      height: 100%;
+      box-sizing: border-box;
+      margin: 0 auto;
+    }
+
+    .step-header { display: grid; gap: 6px; }
+
+    .step--form {
+      background: var(--primary);
+      align-items: stretch;
+    }
+
+    .step--form .step-inner {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: none;
+      border: none;
+      gap: 10px;
+      padding: clamp(12px, 3vw, 16px);
+    }
+
+    .step--form .step-header { gap: 4px; }
+
+    .step--form .step-header h1 {
+      font-size: clamp(20px, 5.5vw, 24px);
+      line-height: 1.1;
+      margin-bottom: 0;
       color: #fff;
     }
 
-    .top-section .hero h1 { color: #fff; }
-
-    .top-section .hero p {
-      color: rgba(255, 255, 255, 0.9);
+    .step--form .step-header p {
+      color: rgba(255,255,255,0.75);
+      font-size: 13px;
+      margin-top: 0;
     }
 
-    @keyframes float {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-      100% { transform: translateY(0); }
+    .step--form .pill-note {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
     }
 
-    @keyframes softPulse {
-      0% { box-shadow: 0 10px 40px rgba(36, 44, 210, 0.2); }
-      50% { box-shadow: 0 16px 46px rgba(36, 44, 210, 0.35); }
-      100% { box-shadow: 0 10px 40px rgba(36, 44, 210, 0.2); }
+    .step--form .step-content {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.16);
+      padding: 10px;
+      gap: 8px;
+      width: 100%;
     }
+
+    .step--form label {
+      color: var(--text);
+    }
+
+    .step-content {
+      flex: 1 1 auto;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+      display: grid;
+      gap: 12px;
+      padding-right: 4px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .step-inner h1, .step-inner h2 {
+      margin: 0;
+      letter-spacing: -0.3px;
+    }
+
+    .step-inner p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .hero-img {
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 18px 40px rgba(15, 15, 26, 0.12);
+      border: 1px solid rgba(255,255,255,0.65);
+      background: #fff;
+    }
+
+    .hero-img img {
+      width: 100%;
+      display: block;
+      height: auto;
+    }
+
+    .price-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(36, 44, 210, 0.08);
+      color: var(--primary);
+      padding: 10px 14px;
+      border-radius: 14px;
+      font-weight: 800;
+      font-size: 14px;
+      margin-top: 8px;
+      box-shadow: 0 12px 30px rgba(36,44,210,0.08);
+    }
+
+    .pill-note {
+      background: rgba(36, 44, 210, 0.08);
+      color: var(--primary);
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 13px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .grid-two {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+      align-items: start;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 16px;
+      border: 1px solid var(--border);
+      box-shadow: 0 10px 30px rgba(15, 15, 26, 0.04);
+    }
+
+    .card h3, .card h4 {
+      margin: 0 0 6px;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .compact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      align-items: start;
+    }
+
+    .mini-block {
+      background: rgba(36, 44, 210, 0.04);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 10px 12px;
+      color: var(--text);
+      box-shadow: 0 6px 18px rgba(15, 15, 26, 0.04);
+    }
+
+    .mini-block h4 {
+      margin: 0 0 6px;
+      font-size: 15px;
+    }
+
+    .mini-block p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .mini-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: rgba(36, 44, 210, 0.12);
+      color: var(--primary);
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .mini-icon svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    .mini-icon-symbol {
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .list {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .list .row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--primary);
+      box-shadow: 0 0 0 6px rgba(36, 44, 210, 0.12);
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px 12px;
+      margin-top: 8px;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .step--form form {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    form > div { min-width: 0; }
+
+    label {
+      display: block;
+      font-weight: 700;
+      font-size: 13px;
+      margin-bottom: 4px;
+      color: var(--text);
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+      font-size: 16px;
+      font-family: inherit;
+      color: var(--text);
+      transition: border 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(36, 44, 210, 0.18);
+    }
+
+    textarea {
+      min-height: 104px;
+      grid-column: 1 / -1;
+      resize: vertical;
+    }
+
+    .legal-note {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+      line-height: 1.4;
+      grid-column: 1 / -1;
+    }
+
+    .form-actions {
+      display: flex;
+      align-items: flex-end;
+      grid-column: 1 / -1;
+    }
+
+    .step--form .form-actions { margin-top: 0; }
+
+    .form-actions .btn { width: 100%; }
+
+    .form-status {
+      grid-column: 1 / -1;
+      margin-top: 6px;
+      font-weight: 600;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .form-status.is-success { color: #1b8a4b; }
+
+    .form-status.is-error { color: #c02222; }
+
+    .form-status .retry-btn {
+      appearance: none;
+      border: none;
+      background: transparent;
+      color: var(--primary);
+      font-weight: 700;
+      cursor: pointer;
+      padding: 0;
+      text-decoration: underline;
+    }
+
+    .reset-form-btn {
+      background: transparent;
+      color: #fff;
+      border: 1px dashed rgba(255,255,255,0.6);
+      padding: 6px 10px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 12px;
+      cursor: pointer;
+      align-self: flex-start;
+    }
+
+    .reset-form-btn.hidden { display: none; }
+
+    .step-footer {
+      position: sticky;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 8px 12px 10px;
+      background: linear-gradient(180deg, rgba(255,255,255,0) 0%, #fff 40%);
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      z-index: 5;
+      flex: 0 0 auto;
+      box-shadow: 0 -8px 20px rgba(0, 0, 0, 0.04);
+    }
+
+    .step-footer .btn {
+      flex: 1;
+      padding: 10px 12px;
+      font-size: 13px;
+    }
+
+    .testimonial-wrap {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+      width: 100%;
+    }
+
+    .quote {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: 0 14px 30px rgba(15, 15, 26, 0.05);
+      color: var(--text);
+    }
+
+    .quote strong { display: block; margin-top: 12px; color: var(--primary); }
+
+    .cta-final {
+      background: #FFFDF0;
+      border-radius: 24px;
+      padding: clamp(22px, 4vw, 32px);
+      border: 1px solid var(--border);
+      box-shadow: 0 18px 40px rgba(15, 15, 26, 0.08), 0 12px 40px rgba(252, 255, 168, 0.28);
+      display: grid;
+      gap: 12px;
+    }
+
+    .cta-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .cta-actions .btn { flex: 1 1 180px; }
+
+    footer {
+      padding: 2px 10px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: nowrap;
+      gap: 10px;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      font-size: 12px;
+      line-height: 1.2;
+      background: #fff;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    footer .logo img {
+      height: 18px;
+    }
+
+    .footer-links, .footer-social {
+      display: inline-flex;
+      gap: 6px;
+      flex-wrap: nowrap;
+      font-weight: 600;
+      font-size: 12px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .footer-social a { color: var(--primary); }
+
+    .floating-cta { display: none; }
 
     .animate {
       opacity: 0;
@@ -740,447 +702,480 @@
       transform: translateY(0);
     }
 
-    .floating-cta.visible { animation: softPulse 3s ease-in-out infinite; }
+    @media (prefers-reduced-motion: reduce) {
+      .stepper-track { transition: none; }
+      .btn { transition: none; }
+      .animate { transition: none; }
+    }
+
+    @media (min-width: 769px) {
+      body.no-scroll { overflow: auto; height: auto; }
+      .mobile-step-bar { display: none; }
+      .app-shell { height: auto; min-height: auto; }
+      .stepper-viewport { overflow: visible; background: #fff; height: auto; min-height: 0; }
+      .stepper-track { flex-direction: column; transform: none !important; height: auto; overflow: visible; }
+      .step {
+        min-height: unset;
+        height: auto;
+        overflow: visible;
+        padding: clamp(48px, 6vw, 72px) clamp(18px, 5vw, 64px);
+        flex: 1 1 auto;
+      }
+      .step-inner {
+        box-shadow: none;
+        background: transparent;
+        border: none;
+        padding: 0;
+        height: auto;
+      }
+      .top-section { position: static; }
+      header { padding-bottom: 18px; }
+      nav { display: flex; }
+      .hero-img { max-width: 480px; }
+      .cta-actions .btn { flex: 0 0 auto; }
+    }
 
     @media (max-width: 900px) {
-      nav {
-        width: 100%;
-        gap: 12px;
-        justify-content: flex-start;
-      }
-
-      .hero {
-        grid-template-columns: 1fr;
-        text-align: left;
-      }
-
-      .hero-bullets {
-        grid-template-columns: 1fr;
-      }
-
-      .visual-placeholder,
-      .mockup {
-        min-height: 280px;
-      }
+      nav { width: 100%; gap: 12px; justify-content: flex-start; }
     }
 
     @media (max-width: 768px) {
+      :root {
+        --app-header-height: 46px;
+        --app-nav-height: 60px;
+        --step-bar-height: 34px;
+      }
+
+      body {
+        overflow: hidden;
+      }
+
+      .app-shell {
+        height: var(--app-height, 100dvh);
+        min-height: var(--app-height, 100dvh);
+        display: grid;
+        grid-template-rows: auto auto 1fr auto;
+        overflow: hidden;
+      }
+
       header {
-        padding: 18px 22px 8px;
-        flex-direction: column;
+        padding: 8px 14px;
+        padding-top: calc(10px + env(safe-area-inset-top));
+        flex-direction: row;
         align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 6px;
+        min-height: var(--app-header-height);
+        position: relative;
+        z-index: 6;
+        backdrop-filter: blur(10px);
+      }
+
+      .top-section {
+        padding-bottom: 0;
+        position: relative;
+      }
+
+      nav { display: none; }
+
+      .header-phrase {
+        display: block;
+        font-size: 13px;
+        line-height: 1.25;
+        flex: 1 1 180px;
+        min-width: 0;
+        max-width: none;
+        margin-left: auto;
+        color: rgba(255, 255, 255, 0.96);
+        white-space: normal;
+        text-align: right;
+      }
+
+      .logo img { height: 22px; }
+
+      .mobile-step-bar {
+        display: flex;
+        padding: 8px 12px 8px;
+        position: relative;
+        top: 0;
+        background: linear-gradient(180deg, rgba(36, 44, 210, 0.94) 0%, rgba(36, 44, 210, 0.86) 100%);
+        z-index: 5;
+        min-height: var(--step-bar-height);
+      }
+
+      .stepper-viewport {
+        height: 100%;
+        width: 100%;
+      }
+
+      .stepper-track { height: 100%; }
+
+      .step {
+        padding: 12px 12px 8px;
+        max-width: 100vw;
+      }
+
+      .step-inner {
+        padding: 14px;
+        border-radius: 16px;
+        gap: 10px;
+        width: 100%;
+        max-width: 540px;
+      }
+
+      .step-header h1 { font-size: 24px; line-height: 1.12; }
+      .step-header h2 { font-size: 20px; line-height: 1.16; }
+      .step-header p { font-size: 13px; margin-bottom: 0; }
+
+      .step-content {
+        gap: 6px;
+        padding-bottom: 10px;
+      }
+
+      .btn { padding: 9px 12px; font-size: 13px; }
+      .step-footer .btn { min-height: 38px; }
+      .pill-note { font-size: 12px; padding: 6px 10px; }
+      .price-tag { font-size: 13px; padding: 8px 12px; }
+
+      .card {
+        padding: 12px;
+        border-radius: 14px;
+      }
+
+      .list { gap: 7px; }
+      .list .row { font-size: 13px; }
+
+      .hero-img { max-height: 200px; }
+
+      form {
+        grid-template-columns: 1fr;
         gap: 10px;
       }
 
-      .badge { font-size: 11px; }
+      textarea { grid-column: 1 / -1; min-height: 88px; }
 
-      .hero h1 { font-size: clamp(30px, 8vw, 40px); }
+      .step-footer {
+        position: sticky;
+        bottom: 0;
+        padding: 6px 12px calc(8px + env(safe-area-inset-bottom));
+        background: #fff;
+        border-top: 1px solid var(--border);
+        box-shadow: 0 -6px 22px rgba(15, 15, 26, 0.05);
+      }
 
-      .section { padding: clamp(44px, 10vw, 56px) 22px; }
-      footer { padding: 28px 22px 40px; }
-      textarea { grid-column: 1 / -1; }
-
-      form { grid-template-columns: 1fr; }
-
-      .visual-placeholder { min-height: 240px; }
+      footer {
+        padding: 2px 8px calc(6px + env(safe-area-inset-bottom));
+        font-size: 11px;
+        line-height: 1.2;
+        gap: 6px;
+        justify-content: center;
+        width: 100%;
+        background: #fff;
+        position: relative;
+        z-index: 3;
+        white-space: nowrap;
+      }
     }
 
     @media (max-width: 520px) {
-      .hero-actions { width: 100%; }
-      .hero-actions .btn { flex: 1 1 100%; }
-      .mockup { padding: 16px; }
-      .floating-cta { width: 92%; }
+      .step-inner { padding: 14px; }
+      .stepper-viewport { height: 100%; }
     }
   </style>
 </head>
 <body>
-  <div class="top-section">
-    <header data-animate>
+  <div class="app-shell">
+    <div class="top-section">
+      <header>
+        <div class="logo" aria-label="exora">
+          <img src="assets/logoexoranegativo.png" alt="Logotipo de exora" />
+        </div>
+        <nav>
+          <a href="#step-1">Formulario</a>
+          <a href="#step-2">Plataforma</a>
+          <a href="#step-4">Beneficios</a>
+          <a href="#step-5">Testimonios</a>
+        </nav>
+        <div class="header-phrase" aria-hidden="true">Tu manera de trabajar define tu negocio y crea marca.</div>
+      </header>
+      <div class="mobile-step-bar" aria-live="polite">
+        <div class="step-indicator">
+          <span id="step-counter">1/5</span>
+          <div class="step-dots" aria-hidden="true">
+            <span class="step-dot active"></span>
+            <span class="step-dot"></span>
+            <span class="step-dot"></span>
+            <span class="step-dot"></span>
+            <span class="step-dot"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stepper-viewport">
+      <div class="stepper-track" id="stepper-track">
+        <section class="step step--form is-active" data-step="1" id="step-1">
+          <div class="step-inner" data-step-title tabindex="-1">
+            <div class="step-header">
+              <div class="pill-note">Paso 1 · Formulario</div>
+              <h1>Completa y avanza</h1>
+              <p>Déjanos tus datos en un minuto para desbloquear el resto.</p>
+            </div>
+            <div class="step-content">
+              <form id="contact-form">
+                <div>
+                  <label>Nombre del negocio</label>
+                  <input name="businessName" type="text" placeholder="Nombre de tu peluquería o barbería" required>
+                </div>
+                <div>
+                  <label>Nombre y apellidos</label>
+                  <input name="fullName" type="text" placeholder="Tu nombre completo" required>
+                </div>
+                <div>
+                  <label>Teléfono</label>
+                  <input name="phone" type="tel" placeholder="Número para contactar contigo" required>
+                </div>
+                <div>
+                  <label>Email</label>
+                  <input name="email" type="email" placeholder="correo@ejemplo.com" required>
+                </div>
+                <div>
+                  <label>Tipo de negocio</label>
+                  <select name="businessType" required>
+                    <option>Barbería</option>
+                    <option>Peluquería</option>
+                    <option>Centro de estética</option>
+                    <option>Otro</option>
+                  </select>
+                </div>
+                <div>
+                  <label>Nº de empleados</label>
+                  <select name="employees" required>
+                    <option>1–2</option>
+                    <option>3–5</option>
+                    <option>6–10</option>
+                    <option>+10</option>
+                  </select>
+                </div>
+                <div>
+                  <label>Mensaje (opcional)</label>
+                  <textarea name="message" placeholder="Agenda, ausencias, control horario… cuéntanos en 2 líneas"></textarea>
+                </div>
+                <div class="form-actions">
+                  <button type="submit" class="btn btn-primary" id="submit-button">Quiero que me contactes</button>
+                </div>
+                <p class="legal-note">Al enviar este formulario aceptas nuestra <a href="legales.html#privacidad">Política de Privacidad</a> y consientes que te contactemos para enviarte información sobre exora® por los medios indicados.</p>
+                <div class="form-status" role="status" aria-live="polite"></div>
+                <button type="button" class="reset-form-btn hidden" id="reset-form">Reiniciar formulario</button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <section class="step" data-step="2" id="step-2">
+          <div class="step-inner" data-step-title tabindex="-1">
+            <div class="step-header">
+              <div class="pill-note">Paso 2 · Qué es exora®</div>
+              <h2>Agenda llena y caja controlada en un solo sitio</h2>
+              <p>exora® concentra reservas, cobros, fichajes y facturación para que no pierdas tiempo ni datos.</p>
+              <div class="price-tag">Desde 34,90 €/mes + IVA · Sin permanencias</div>
+            </div>
+            <div class="step-content">
+              <div class="compact-grid">
+                <div class="mini-block">
+                  <h4>Reservas sin ruido</h4>
+                  <p>App propia 24/7 con tu marca. Clientes reservan sin comparar y con recordatorios automáticos.</p>
+                </div>
+                <div class="mini-block">
+                  <h4>Caja clara</h4>
+                  <p>Ventas, cobros y medios de pago visibles al momento. Sin descuadres ni hojas sueltas.</p>
+                </div>
+                <div class="mini-block">
+                  <h4>Equipo alineado</h4>
+                  <p>Agenda compartida, turnos y fichajes digitales listos para inspección.</p>
+                </div>
+                <div class="mini-block">
+                  <h4>Facturación segura</h4>
+                  <p>Tickets y facturas desde el panel, preparada para Verifactu el 1 de enero de 2027.</p>
+                </div>
+              </div>
+              <div class="hero-img">
+                <img src="assets/imageheader.png" alt="Mockups de exora" loading="lazy" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="step" data-step="3" id="step-3">
+          <div class="step-inner" data-step-title tabindex="-1">
+            <div class="step-header">
+              <div class="pill-note">Paso 3 · Módulos clave</div>
+              <h2>4 módulos listos para usar en minutos</h2>
+              <p>Activa solo lo que necesitas, todo queda sincronizado.</p>
+            </div>
+            <div class="step-content">
+              <div class="compact-grid">
+                <div class="mini-block">
+                  <h4>Administración</h4>
+                  <p>Ventas, caja y servicios en un vistazo diario con informes listos para gestoría.</p>
+                </div>
+                <div class="mini-block">
+                  <h4>App de reservas</h4>
+                  <p>Reservas 24/7 con tu logo, pagos anticipados y recordatorios que reducen los no-shows.</p>
+                </div>
+                <div class="mini-block">
+                  <h4>Control horario</h4>
+                  <p>Fichajes desde móvil, tablet o PC con historial seguro y exportable.</p>
+                </div>
+                <div class="mini-block">
+                  <h4>Facturación / Verifactu</h4>
+                  <p>Tickets y facturas desde el panel con trazabilidad y preparación para Verifactu 2027.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="step" data-step="4" id="step-4">
+          <div class="step-inner" data-step-title tabindex="-1">
+            <div class="step-header">
+              <div class="pill-note">Paso 4 · Beneficios rápidos</div>
+              <h2>Lo que notas en el día a día</h2>
+              <p>Resultados tangibles en menos llamadas, más citas y un equipo alineado.</p>
+            </div>
+            <div class="step-content">
+              <div class="compact-grid">
+                <div class="mini-block">
+                  <h4>Menos tiempo al teléfono</h4>
+                  <p>Reservas automáticas para enfocarte en facturar.</p>
+                </div>
+                <div class="mini-block">
+                  <h4>Más citas confirmadas</h4>
+                  <p>Recordatorios y pagos anticipados evitan huecos vacíos.</p>
+                </div>
+                <div class="mini-block">
+                  <h4>Equipo alineado</h4>
+                  <p>Agenda compartida y fichajes digitales sin fricciones.</p>
+                </div>
+                <div class="mini-block">
+                  <h4>Ingresos claros</h4>
+                  <p>Caja y facturas en un panel para decidir con datos.</p>
+                </div>
+                <div class="mini-block">
+                  <h4>Imagen moderna</h4>
+                  <p>Una app propia refuerza tu marca y fideliza.</p>
+                </div>
+              </div>
+              <div class="cta-actions">
+                <button class="btn btn-primary" id="benefits-next">Siguiente</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="step" data-step="5" id="step-5">
+          <div class="step-inner" data-step-title tabindex="-1">
+            <div class="step-header">
+              <div class="pill-note">Paso 5 · Historias y cierre</div>
+              <h2>Lo que dicen otros salones</h2>
+              <p>Menos ausencias, más control y equipo alineado sin caos de herramientas.</p>
+            </div>
+            <div class="step-content">
+              <div class="testimonial-wrap">
+                <div class="quote">
+                  “Hemos reducido a la mitad las llamadas y las ausencias casi han desaparecido. Los recordatorios automáticos mantienen la agenda llena.”
+                  <strong>Barbería Central</strong>
+                </div>
+                <div class="quote">
+                  “El panel me dice cuánto he vendido y qué servicios funcionan mejor. Decido con datos, no con intuición.”
+                  <strong>Peluquería Urban Cut</strong>
+                </div>
+                <div class="quote">
+                  “Con el control horario y la facturación integrada todo está registrado y listo para la gestoría. Más orden y tranquilidad.”
+                  <strong>Studio Línea</strong>
+                </div>
+              </div>
+              <div class="cta-final">
+                <h3>Listo. ¿Qué pasa ahora?</h3>
+                <div class="list">
+                  <div class="row"><span class="dot"></span>Demo rápida de 7 minutos</div>
+                  <div class="row"><span class="dot"></span>Sin compromiso</div>
+                </div>
+                <div class="cta-actions">
+                  <a class="btn btn-primary" id="open-exora" href="https://exora.app" target="_blank" rel="noopener">Guardar exora en mi móvil</a>
+                  <button class="btn btn-secondary" id="back-to-start" type="button">Volver al inicio</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div class="step-footer">
+      <button class="btn btn-secondary" id="back-button-footer" aria-label="Atrás" disabled>Atrás</button>
+      <button class="btn btn-primary" id="next-button-footer" aria-label="Siguiente" disabled>Siguiente</button>
+    </div>
+
+    <footer>
       <div class="logo" aria-label="exora">
-        <img src="assets/logoexoranegativo.png" alt="Logotipo de exora" />
+        <img src="assets/Logo exora.png" alt="Logotipo de exora" />
       </div>
-      <nav>
-        <a href="#plataforma">Plataforma</a>
-        <a href="#beneficios">Beneficios</a>
-        <a href="#testimonios">Testimonios</a>
-        <a href="#contacto">Contacto</a>
-      </nav>
-      <button class="btn btn-primary cta-contact">Hablar con un experto</button>
-    </header>
-
-    <section class="hero">
-      <div class="hero-copy" data-animate>
-        <div class="badge">Plataforma integral para salones de peluquería y barbería · Desde 34,90 €/mes (más IVA) — sin permanencias</div>
-        <h1>Llena tu agenda y controla tu salón sin vivir pegado al teléfono</h1>
-        <p>exora® une reservas, administración, control horario digital y facturación en un único panel pensado para salones. Menos caos con la agenda, menos ausencias y cada día sabrás exactamente cómo va tu negocio.</p>
-        <div class="hero-bullets">
-          <div class="item"><span class="tick">✓</span>Reservas 24/7 en tu propia app, sin llamadas ni WhatsApps eternos</div>
-          <div class="item"><span class="tick">✓</span>Pagos y recordatorios automáticos que reducen ausencias y huecos vacíos</div>
-          <div class="item"><span class="tick">✓</span>Ingresos, agenda y equipo bajo control en tiempo real</div>
-          <div class="item"><span class="tick">✓</span>Preparado para la nueva normativa de facturación (Verifactu a partir de 2027)</div>
-        </div>
-        <div class="hero-actions">
-          <button class="btn btn-primary cta-contact">Quiero que me expliquéis exora®</button>
-        </div>
+      <div class="footer-links">
+        <a href="legales.html#aviso-legal">Términos</a>
+        <a href="legales.html#privacidad">Privacidad</a>
+        <a href="legales.html#cookies">Cookies</a>
       </div>
-      <div class="mockup" data-animate>
-        <div class="placeholder">
-          <img src="assets/imageheader.png" alt="Mockups de exora sobre fondo liquidglass" loading="lazy" />
-        </div>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/exora.app?igsh=MThiMGVncWozOGM3dg==">Instagram</a>
+        <a href="https://es.linkedin.com/company/exoraapp">LinkedIn</a>
       </div>
-    </section>
+    </footer>
   </div>
-
-  <section id="plataforma" class="section alt">
-    <h2 data-animate>Mucho más que una app de reservas</h2>
-    <p>exora® es el sistema que coordina todo lo que pasa en tu salón: agenda, cobros, equipo y facturación conectados para que trabajes con seguridad, sin perder tiempo en herramientas diferentes ni en hojas de cálculo.</p>
-    <div class="diagram">
-      <div class="card">
-        <div class="mini-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" role="img" focusable="false">
-            <rect x="4" y="12" width="3" height="8" rx="1"></rect>
-            <rect x="10" y="8" width="3" height="12" rx="1"></rect>
-            <rect x="16" y="5" width="3" height="15" rx="1"></rect>
-          </svg>
-        </div>
-        <h4>Administración</h4>
-        <p>Agenda, caja, ventas y métricas clave juntas para que veas en segundos cómo ha ido el día.</p>
-      </div>
-      <div class="card">
-        <div class="mini-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" role="img" focusable="false">
-            <rect x="5" y="6" width="14" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2"></rect>
-            <path d="M8 4v3M16 4v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
-            <polyline points="9 13 11 15 15 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline>
-          </svg>
-        </div>
-        <h4>Reservas online</h4>
-        <p>Tu app corporativa para que los clientes reserven sin llamadas ni esperas y sin ver a tu competencia.</p>
-      </div>
-      <div class="card">
-        <div class="mini-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" role="img" focusable="false">
-            <circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"></circle>
-            <path d="M12 8v4l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-          </svg>
-        </div>
-        <h4>Control horario</h4>
-        <p>Fichajes digitales y reportes listos para cualquier inspección, sin papeles ni firmas dudosas.</p>
-      </div>
-      <div class="card">
-        <div class="mini-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" role="img" focusable="false">
-            <path d="M7 4h10a2 2 0 0 1 2 2v12a1 1 0 0 1-1 1H7a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="2"></path>
-            <path d="M9 8h6M9 12h6M9 16h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
-            <path d="M15 4v2a2 2 0 0 0 2 2h2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
-          </svg>
-        </div>
-        <h4>Facturación</h4>
-        <p>Tickets y facturas preparados para entornos Verifactu a partir del 1 de enero de 2027.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="two-column">
-      <div data-animate>
-        <h2>Administra tu negocio sin perderte en el papeleo</h2>
-        <p>Consulta agenda, caja y ventas en un vistazo y entiende el rendimiento de cada profesional con datos claros. Dejas de hacer números a mano y empiezas a decidir con información real.</p>
-        <div class="list">
-          <div class="row"><span class="dot"></span>Visión clara de la ocupación diaria y semanal por profesional</div>
-          <div class="row"><span class="dot"></span>Control de caja, ventas y medios de pago sin descuadres</div>
-          <div class="row"><span class="dot"></span>Métricas por servicio para detectar qué te hace ganar más</div>
-          <div class="row"><span class="dot"></span>Informes listos para tu gestoría en segundos</div>
-        </div>
-      </div>
-      <div class="visual-placeholder admin-mockup" role="img" aria-label="Mockup del panel de administración de exora"></div>
-    </div>
-  </section>
-
-  <section class="section alt">
-    <div class="two-column">
-      <div class="visual-placeholder app-mockup" role="img" aria-label="Mockup de la app móvil de exora con tu marca"></div>
-      <div data-animate>
-        <h2>Tu propia app de reservas, con tu logo y tus colores</h2>
-        <p>Los clientes reservan directamente en tu app, sin llamar y sin comparar con otros salones. Reciben recordatorios automáticos, pueden pagar por adelantado y tú llenas agenda con menos esfuerzo.</p>
-        <div class="list">
-          <div class="row"><span class="dot"></span>App corporativa con tu marca y servicios</div>
-          <div class="row"><span class="dot"></span>Reservas 24/7 y pagos opcionales desde el móvil</div>
-          <div class="row"><span class="dot"></span>Recordatorios por notificación, correo o SMS para evitar olvidos</div>
-          <div class="row"><span class="dot"></span>Sin distracciones: solo aparece tu negocio, no tu competencia</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" style="background: #F3F5FA;">
-    <div class="two-column">
-      <div data-animate>
-        <h2>Control horario digital para todo tu equipo</h2>
-        <p>Fichajes desde móvil, tablet o PC con historial seguro y descargas inmediatas. Cumples la ley, evitas discusiones sobre horas y tienes todo listo si un día hay inspección.</p>
-        <div class="list">
-          <div class="row"><span class="dot"></span>Registro de jornada conforme a la normativa vigente</div>
-          <div class="row"><span class="dot"></span>Informes descargables listos para inspecciones en segundos</div>
-          <div class="row"><span class="dot"></span>Visibilidad de horas por empleado y por servicio</div>
-          <div class="row"><span class="dot"></span>Alertas de fichajes pendientes para que nada se quede sin marcar</div>
-        </div>
-      </div>
-      <div class="card" style="box-shadow: var(--shadow);">
-        <div class="mini-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" role="img" focusable="false">
-            <circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"></circle>
-            <path d="M12 7v5l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-          </svg>
-        </div>
-        <h3>Tranquilidad legal</h3>
-        <p>Digitaliza el control horario y olvídate de hojas de firmas. exora® registra, guarda y exporta cada fichaje con trazabilidad completa para ti y para tu gestoría.</p>
-        <div class="list">
-          <div class="row"><span class="dot"></span>Fichajes desde cualquier dispositivo del salón</div>
-          <div class="row"><span class="dot"></span>Histórico inalterable y seguro en la nube</div>
-          <div class="row"><span class="dot"></span>Listo para compartir con tu gestoría cuando lo necesites</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="two-column">
-      <div data-animate>
-        <h2>Tu facturación lista para la nueva era digital</h2>
-        <p>Emite tickets y facturas desde el mismo sistema donde cobras y gestionas reservas. Menos errores, más control y cumplimiento automático para Verifactu (disponible a partir del 1 de enero de 2027) con registro seguro y trazable.</p>
-        <div class="list">
-          <div class="row"><span class="dot"></span>Facturas y tickets en segundos, desde el propio panel</div>
-          <div class="row"><span class="dot"></span>Trazabilidad y seguridad antifraude para cada venta</div>
-          <div class="row"><span class="dot"></span>Ingresos claros y ordenados en un único panel</div>
-        </div>
-      </div>
-      <div class="card" style="box-shadow: var(--shadow);">
-        <div class="mini-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" role="img" focusable="false">
-            <path d="M7 4h10a2 2 0 0 1 2 2v12a1 1 0 0 1-1 1H7a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="2"></path>
-            <path d="M9 8h6M9 12h6M9 16h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
-            <path d="M15 4v2a2 2 0 0 0 2 2h2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
-          </svg>
-        </div>
-        <h3>Compatible con Verifactu</h3>
-        <p>exora® se diseña para alinearse con las nuevas exigencias de la Agencia Tributaria: tendrás cumplimiento Verifactu desde el 1 de enero de 2027, sin tecnicismos ni cambios complicados en tu día a día.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="beneficios" class="section alt">
-    <div class="section-header center" data-animate>
-      <h2>Lo que ganas usando exora® en tu día a día</h2>
-      <p>Propietarios de salones —peluquerías, barberías y negocios de imagen— que quieren vender más, trabajar tranquilos y dar una experiencia moderna a sus clientes lo eligen por esto:</p>
-    </div>
-      <div class="benefits">
-      <div class="card">
-        <div class="mini-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" role="img" focusable="false">
-            <circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"></circle>
-            <path d="M12 8v4l2.5 1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-            <path d="M10 5.5 8.5 4M14 5.5 15.5 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
-          </svg>
-        </div>
-        <h4>Menos tiempo al teléfono</h4>
-        <p>Las reservas entran solas mientras atiendes en el sillón: más tiempo facturando, menos interrupciones.</p>
-      </div>
-      <div class="card">
-        <div class="mini-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" role="img" focusable="false">
-            <circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"></circle>
-            <polyline points="9 12 11 14 15 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline>
-          </svg>
-        </div>
-        <h4>Más reservas confirmadas</h4>
-        <p>Recordatorios automáticos y pagos anticipados que reducen ausencias, cambios de última hora y huecos vacíos.</p>
-      </div>
-      <div class="card">
-        <div class="mini-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" role="img" focusable="false">
-            <rect x="10" y="4" width="4" height="3" rx="1" fill="none" stroke="currentColor" stroke-width="2"></rect>
-            <rect x="5" y="15" width="4" height="4" rx="1" fill="none" stroke="currentColor" stroke-width="2"></rect>
-            <rect x="10" y="15" width="4" height="4" rx="1" fill="none" stroke="currentColor" stroke-width="2"></rect>
-            <rect x="15" y="15" width="4" height="4" rx="1" fill="none" stroke="currentColor" stroke-width="2"></rect>
-            <path d="M12 7v4m0 0H7m5 0h5M7 11v2m5-2v2m5-2v2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-          </svg>
-        </div>
-        <h4>Mejor organización del equipo</h4>
-        <p>Agenda compartida, horarios claros y fichajes digitales que evitan malentendidos y discusiones.</p>
-      </div>
-      <div class="card">
-        <div class="mini-icon" aria-hidden="true">
-          <span class="mini-icon-symbol" aria-hidden="true">€</span>
-        </div>
-        <h4>Control total de ingresos</h4>
-        <p>Ventas, caja y facturas en el mismo panel: sabes cada día cuánto has facturado y de dónde viene.</p>
-      </div>
-      <div class="card">
-        <div class="mini-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" role="img" focusable="false">
-            <path d="M12 4 13.6 9H19l-4.5 3.4L16 17l-4-2.9L8 17l1.5-4.6L5 9h5.4Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path>
-          </svg>
-        </div>
-        <h4>Imagen digital moderna</h4>
-        <p>Una app propia que refuerza tu marca, fideliza a los clientes y te diferencia de otros salones.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="testimonios" class="section">
-    <div class="section-header center" data-animate>
-      <h2>Testimonios</h2>
-      <p>Salones de peluquería y barbería que ya usan exora® y han ganado control, reservas y tranquilidad en su día a día.</p>
-    </div>
-    <div class="testimonial-wrap">
-      <div class="quote">
-        “Hemos reducido a la mitad las llamadas y las ausencias casi han desaparecido. Los recordatorios automáticos mantienen la agenda llena sin perseguir a los clientes uno a uno.”
-        <strong>Barbería Central</strong>
-      </div>
-      <div class="quote">
-        “El panel de administración me dice cada día cuánto he vendido, qué servicios funcionan mejor y dónde necesito refuerzo. Ahora decido con datos y no solo con intuición.”
-        <strong>Peluquería Urban Cut</strong>
-      </div>
-      <div class="quote">
-        “Con el control horario y la facturación integrada todo está registrado y listo para la gestoría. Hemos ganado tiempo, orden y mucha tranquilidad con el tema legal.”
-        <strong>Studio Línea</strong>
-      </div>
-    </div>
-  </section>
-
-  <section id="contacto" class="section">
-    <div class="cta-final" data-animate>
-      <h2>¿Quieres ver exora® aplicada a tu salón?</h2>
-      <p>Déjanos tus datos y te enseñamos, en una llamada breve, cómo integrar reservas, control horario y facturación en una sola plataforma. Sin compromiso y desde 34,90 €/mes (más IVA).</p>
-      <form id="contact-form">
-        <div>
-          <label>Nombre del negocio</label>
-          <input name="businessName" type="text" placeholder="Nombre de tu peluquería o barbería" required>
-        </div>
-        <div>
-          <label>Nombre y apellidos</label>
-          <input name="fullName" type="text" placeholder="Tu nombre completo" required>
-        </div>
-        <div>
-          <label>Teléfono</label>
-          <input name="phone" type="tel" placeholder="Número para contactar contigo" required>
-        </div>
-        <div>
-          <label>Email</label>
-          <input name="email" type="email" placeholder="correo@ejemplo.com" required>
-        </div>
-        <div>
-          <label>Tipo de negocio</label>
-          <select name="businessType" required>
-            <option>Barbería</option>
-            <option>Peluquería</option>
-            <option>Centro de estética</option>
-            <option>Otro</option>
-          </select>
-        </div>
-        <div>
-          <label>Nº de empleados</label>
-          <select name="employees" required>
-            <option>1–2</option>
-            <option>3–5</option>
-            <option>6–10</option>
-            <option>+10</option>
-          </select>
-        </div>
-        <div>
-          <label>Mensaje (opcional)</label>
-          <textarea name="message" placeholder="Cuéntanos brevemente tu situación actual (agenda, ausencias, control horario…)"></textarea>
-        </div>
-        <div class="form-actions">
-          <button type="submit" class="btn btn-primary">Quiero que me contactéis</button>
-        </div>
-        <p class="legal-note">Al enviar este formulario aceptas nuestra <a href="legales.html#privacidad">Política de Privacidad</a> y consientes que te contactemos para enviarte información sobre exora® por los medios indicados.</p>
-        <div class="form-status" role="status" aria-live="polite"></div>
-      </form>
-      <div class="note">Te contactaremos en menos de 24 horas laborables para ver juntos si exora® encaja en tu salón.</div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="logo" aria-label="exora">
-      <img src="assets/Logo exora.png" alt="Logotipo de exora" />
-    </div>
-    <div class="footer-links">
-      <a href="legales.html#aviso-legal">Términos</a>
-      <a href="legales.html#privacidad">Privacidad</a>
-      <a href="legales.html#cookies">Cookies</a>
-    </div>
-    <div class="footer-social">
-      <a href="https://www.instagram.com/exora.app?igsh=MThiMGVncWozOGM3dg==">Instagram</a>
-      <a href="https://es.linkedin.com/company/exoraapp">LinkedIn</a>
-    </div>
-    <div style="font-weight:600; color: var(--text);">Tu manera de trabajar define tu negocio y crea marca.</div>
-  </footer>
-
-  <button class="btn btn-primary floating-cta cta-contact" aria-label="Quiero información sobre exora">
-    Quiero información sobre exora®
-  </button>
 
   <script>
     const SHEETS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxbfpXkmqYXLh7bdGetBA4e0mr0AbuwtoJA-QlOJNSmsBPx4FcvIAlHUKrpVYOSin7dQg/exec';
-    const contactButtons = document.querySelectorAll('.cta-contact');
-    const navLinks = document.querySelectorAll('nav a[href^="#"]');
-    const contactSection = document.getElementById('contacto');
+    const STEP_TOTAL = 5;
     const contactForm = document.getElementById('contact-form');
-    const floatingCta = document.querySelector('.floating-cta');
     const statusMessage = contactForm?.querySelector('.form-status');
-    const submitButton = contactForm?.querySelector('button[type="submit"]');
-    const submitDefaultText = submitButton?.textContent || 'Enviar';
+    const submitButton = document.getElementById('submit-button');
+    const submitDefaultText = submitButton?.textContent || 'Quiero que me contactes';
+    const backButtons = [document.getElementById('back-button-footer')];
+    const nextButtons = [document.getElementById('next-button-footer')];
+    const stepCounter = document.getElementById('step-counter');
+    const stepDots = document.querySelectorAll('.step-dot');
+    const stepperTrack = document.getElementById('stepper-track');
+    const stepSections = Array.from(document.querySelectorAll('.step'));
+    const benefitsNext = document.getElementById('benefits-next');
+    const backToStart = document.getElementById('back-to-start');
+    const openExora = document.getElementById('open-exora');
+    const mobileStepBar = document.querySelector('.mobile-step-bar');
+    const stepFooter = document.querySelector('.step-footer');
+    const ctaButtons = document.querySelectorAll('.cta-contact');
+    const resetFormButton = document.getElementById('reset-form');
+    const DESKTOP_BREAKPOINT = 769;
+    let currentStep = 1;
+    let hasSubmitted = false;
 
-    const focusFirstField = () => {
-      const firstInput = contactForm?.querySelector('input, select, textarea');
-      firstInput?.focus({ preventScroll: true });
-    };
+    function track(eventName, data = {}) {
+      console.log('[track]', eventName, data);
+      window.dataLayer?.push({ event: eventName, ...data });
+    }
 
-    const animatedElements = document.querySelectorAll('[data-animate], .card, .quote, .hero-bullets .item, .visual-placeholder, .mockup, .list .row');
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.2 });
-
-    animatedElements.forEach((element) => {
-      element.classList.add('animate');
-      observer.observe(element);
-    });
-
-    const toggleFloatingCta = () => {
-      if (!floatingCta) return;
-
-      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-      if (scrollable <= 0) return;
-
-      const progress = window.scrollY / scrollable;
-      const contactRect = contactSection?.getBoundingClientRect();
-      const contactInView = contactRect && contactRect.top < window.innerHeight && contactRect.bottom > 0;
-
-      if (progress > 0.35 && !contactInView) {
-        floatingCta.classList.add('visible');
-      } else {
-        floatingCta.classList.remove('visible');
-      }
-    };
-
-    const setStatusMessage = (message, type) => {
+    function setStatusMessage(message, type) {
       if (!statusMessage) return;
       statusMessage.textContent = '';
       statusMessage.className = 'form-status';
-      if (type) {
-        statusMessage.classList.add(`is-${type}`);
-      }
+      if (type) statusMessage.classList.add(`is-${type}`);
       statusMessage.textContent = message;
-    };
+    }
 
-    const setErrorStatus = (message) => {
+    function setAppHeight() {
+      const height = Math.max(window.innerHeight, document.documentElement.clientHeight || 0);
+      document.documentElement.style.setProperty('--app-height', `${height}px`);
+    }
+
+    function setErrorStatus(message) {
       if (!statusMessage) return;
       statusMessage.textContent = '';
       statusMessage.className = 'form-status is-error';
@@ -1191,11 +1186,45 @@
       retry.className = 'retry-btn';
       retry.textContent = 'Reintentar';
       retry.addEventListener('click', () => contactForm?.requestSubmit());
-
       statusMessage.append(text, retry);
-    };
+    }
 
-    const handleSubmit = async (event) => {
+    function unlockForm(clearStorage = true) {
+      if (clearStorage) {
+        localStorage.removeItem('exoraLeadSubmitted');
+      }
+      if (contactForm) {
+        contactForm.querySelectorAll('input, select, textarea').forEach((field) => {
+          field.removeAttribute('disabled');
+        });
+        contactForm.reset();
+      }
+      if (submitButton) {
+        submitButton.textContent = submitDefaultText;
+        submitButton.disabled = false;
+      }
+      hasSubmitted = false;
+      resetFormButton?.classList.add('hidden');
+      setStatusMessage('');
+      toggleNextAvailability();
+      updateFooterVisibility();
+    }
+
+    function lockForm() {
+      if (!contactForm || !submitButton) return;
+      contactForm.querySelectorAll('input, select, textarea').forEach((field) => {
+        field.setAttribute('disabled', 'disabled');
+      });
+      submitButton.textContent = 'Enviado';
+      submitButton.disabled = true;
+      hasSubmitted = true;
+      setStatusMessage('¡Solicitud enviada! Te contactamos en menos de 24 horas laborables.', 'success');
+      resetFormButton?.classList.remove('hidden');
+      toggleNextAvailability();
+      updateFooterVisibility();
+    }
+
+    async function handleSubmit(event) {
       event.preventDefault();
       if (!contactForm || !submitButton) return;
 
@@ -1211,47 +1240,192 @@
           body: formData,
         });
 
-        if (!response.ok) {
+        const wasDelivered = response.ok || response.type === 'opaque';
+        if (!wasDelivered) {
           throw new Error('La solicitud al servidor falló');
         }
 
-        setStatusMessage('¡Solicitud enviada! Te contactaremos en menos de 24 horas laborables.', 'success');
-        submitButton.disabled = false;
-        submitButton.textContent = submitDefaultText;
-        contactForm.reset();
+        const businessType = formData.get('businessType');
+        const employees = formData.get('employees');
+        track('lp_lead_submitted', { businessType, employees });
+        lockForm();
+        showStep(2, { focus: false });
+        setTimeout(() => showStep(2, { focus: true }), 350);
       } catch (error) {
         console.error(error);
+        track('lp_lead_error');
         setErrorStatus('No se pudo enviar el formulario. Comprueba tu conexión e inténtalo de nuevo.');
         submitButton.disabled = false;
-        submitButton.textContent = submitDefaultText;
+        submitButton.textContent = 'Quiero que me contactes';
       }
-    };
-
-    contactButtons.forEach((button) => {
-      button.addEventListener('click', () => {
-        contactSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        setTimeout(focusFirstField, 400);
-      });
-    });
-
-    navLinks.forEach((link) => {
-      link.addEventListener('click', (event) => {
-        const targetId = link.getAttribute('href');
-        if (!targetId || !targetId.startsWith('#')) return;
-
-        event.preventDefault();
-        const targetElement = document.querySelector(targetId);
-        targetElement?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
-    });
-
-    window.addEventListener('scroll', toggleFloatingCta, { passive: true });
-    window.addEventListener('resize', toggleFloatingCta);
-    toggleFloatingCta();
-
-    if (contactForm) {
-      contactForm.addEventListener('submit', handleSubmit);
     }
+
+    function showStep(step, options = { track: true, focus: true }) {
+      const { track = true, focus = true } = options || {};
+      const targetStep = Math.max(1, Math.min(STEP_TOTAL, step));
+      if (targetStep > 1 && !hasSubmitted) {
+        currentStep = 1;
+      } else {
+        currentStep = targetStep;
+      }
+      const isMobile = window.innerWidth < DESKTOP_BREAKPOINT;
+      if (stepperTrack) {
+        stepperTrack.style.transform = 'none';
+      }
+
+      stepCounter.textContent = `${currentStep}/${STEP_TOTAL}`;
+      stepDots.forEach((dot, index) => {
+        dot.classList.toggle('active', index + 1 === currentStep);
+      });
+
+      stepSections.forEach((section, index) => {
+        const isActive = index + 1 === currentStep;
+        section.classList.toggle('is-active', isActive);
+        section.inert = isMobile && !isActive;
+        section.setAttribute('aria-hidden', isActive ? 'false' : 'true');
+      });
+
+      backButtons.forEach((btn) => {
+        if (!btn) return;
+        btn.disabled = currentStep === 1;
+      });
+
+      toggleNextAvailability();
+      updateFooterVisibility();
+      if (focus) {
+        focusStepElement();
+      }
+      if (track) {
+        track('lp_step_view', { step: currentStep });
+      }
+    }
+
+    function focusStepElement() {
+      const activeStep = stepSections[currentStep - 1];
+      if (!activeStep) return;
+      const firstControl = activeStep.querySelector('input, select, textarea, button, a');
+      const fallbackTitle = activeStep.querySelector('[data-step-title]');
+      (firstControl || fallbackTitle)?.focus({ preventScroll: true });
+    }
+
+    function nextStep() {
+      showStep(currentStep + 1);
+    }
+
+    function prevStep() {
+      if (currentStep === 1) return;
+      showStep(currentStep - 1);
+    }
+
+    function toggleNextAvailability() {
+      const isLastStep = currentStep === STEP_TOTAL;
+      const nextLabel = isLastStep ? 'Volver al inicio' : 'Siguiente';
+      nextButtons.forEach((btn) => {
+        if (!btn) return;
+        btn.textContent = nextLabel;
+        if (currentStep === 1) {
+          btn.disabled = !hasSubmitted;
+        } else {
+          btn.disabled = false;
+        }
+      });
+    }
+
+    function updateFooterVisibility() {
+      if (!stepFooter) return;
+      const shouldHide = currentStep === 1 && !hasSubmitted;
+      stepFooter.classList.toggle('hidden', shouldHide);
+    }
+
+    function handleNext() {
+      if (currentStep === STEP_TOTAL) {
+        showStep(1);
+        return;
+      }
+      if (currentStep === 1 && !hasSubmitted) return;
+      nextStep();
+    }
+
+    function handleBack() {
+      if (currentStep === 1) return;
+      prevStep();
+    }
+
+    function restoreFormState() {
+      localStorage.removeItem('exoraLeadSubmitted');
+      unlockForm(false);
+      currentStep = 1;
+    }
+
+    function initNavigation() {
+      backButtons.forEach((btn) => btn?.addEventListener('click', handleBack));
+      nextButtons.forEach((btn) => btn?.addEventListener('click', handleNext));
+      benefitsNext?.addEventListener('click', () => showStep(5));
+      backToStart?.addEventListener('click', () => showStep(1));
+      openExora?.addEventListener('click', () => track('lp_open_exora'));
+      resetFormButton?.addEventListener('click', () => {
+        unlockForm();
+        setStatusMessage('Formulario listo para completar.');
+        showStep(1, { track: false });
+      });
+      ctaButtons.forEach((button) => {
+        button.addEventListener('click', (event) => {
+          event.preventDefault();
+          showStep(1);
+          focusStepElement();
+        });
+      });
+    }
+
+    function toggleMobileMode() {
+      const isMobile = window.innerWidth < DESKTOP_BREAKPOINT;
+      document.body.classList.toggle('no-scroll', isMobile);
+      mobileStepBar?.classList.toggle('hidden', !isMobile);
+      stepFooter?.classList.toggle('hidden', currentStep === 1 && !hasSubmitted);
+      if (!isMobile) {
+        stepSections.forEach((section) => { section.inert = false; });
+        window.scrollTo({ top: 0 });
+      } else {
+        showStep(currentStep, { track: false, focus: false });
+      }
+    }
+
+    function initAnimation() {
+      const animatedElements = document.querySelectorAll('.card, .quote, .hero-img, .list .row, .pill-note, .price-tag');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.2 });
+
+      animatedElements.forEach((element) => {
+        element.classList.add('animate');
+        observer.observe(element);
+      });
+    }
+
+    function init() {
+      track('lp_view');
+      restoreFormState();
+      initNavigation();
+      setAppHeight();
+      toggleMobileMode();
+      showStep(currentStep);
+      initAnimation();
+      if (contactForm) {
+        contactForm.addEventListener('submit', handleSubmit);
+      }
+      window.addEventListener('resize', () => {
+        setAppHeight();
+        toggleMobileMode();
+      });
+      window.addEventListener('orientationchange', setAppHeight);
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
   </script>
 </body>
 </html>
