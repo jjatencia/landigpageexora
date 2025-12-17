@@ -57,7 +57,8 @@
     }
 
     .app-shell {
-      min-height: 100vh;
+      height: var(--app-height, 100vh);
+      min-height: var(--app-height, 100vh);
       display: flex;
       flex-direction: column;
       position: relative;
@@ -715,7 +716,8 @@
       }
 
       .app-shell {
-        height: 100dvh;
+        height: var(--app-height, 100dvh);
+        min-height: var(--app-height, 100dvh);
         display: grid;
         grid-template-rows: auto auto 1fr auto;
         overflow: hidden;
@@ -1117,6 +1119,17 @@
       statusMessage.textContent = message;
     }
 
+    function setAppHeight() {
+      const viewport = window.visualViewport;
+      const height = viewport?.height || window.innerHeight;
+      document.documentElement.style.setProperty('--app-height', `${height}px`);
+    }
+
+    function stabilizeViewport() {
+      setAppHeight();
+      window.scrollTo(0, 0);
+    }
+
     function setErrorStatus(message) {
       if (!statusMessage) return;
       statusMessage.textContent = '';
@@ -1318,6 +1331,19 @@
       }
     }
 
+    function bindViewportWatchers() {
+      const viewport = window.visualViewport;
+      const handler = () => {
+        stabilizeViewport();
+        goToStep(currentStep, { track: false });
+      };
+      viewport?.addEventListener('resize', handler);
+      viewport?.addEventListener('scroll', handler);
+      window.addEventListener('orientationchange', handler);
+      window.addEventListener('focusin', () => setTimeout(handler, 40));
+      window.addEventListener('focusout', () => setTimeout(handler, 40));
+    }
+
     function initAnimation() {
       const animatedElements = document.querySelectorAll('.card, .quote, .hero-img, .list .row, .pill-note, .price-tag');
       const observer = new IntersectionObserver((entries) => {
@@ -1339,7 +1365,9 @@
       track('lp_view');
       restoreFormState();
       initNavigation();
+      stabilizeViewport();
       toggleMobileMode();
+      bindViewportWatchers();
       goToStep(currentStep);
       initAnimation();
       if (contactForm) {
