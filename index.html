@@ -1234,7 +1234,8 @@
           body: formData,
         });
 
-        if (!response.ok) {
+        const wasDelivered = response.ok || response.type === 'opaque';
+        if (!wasDelivered) {
           throw new Error('La solicitud al servidor falló');
         }
 
