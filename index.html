@@ -574,20 +574,25 @@
     .reset-form-btn.hidden { display: none; }
 
     .step-footer {
-      position: fixed;
+      position: sticky;
       left: 0;
       right: 0;
       bottom: 0;
-      padding: 10px 14px 14px;
-      background: linear-gradient(180deg, rgba(255,255,255,0) 0%, #fff 28%);
+      padding: 8px 12px 10px;
+      background: linear-gradient(180deg, rgba(255,255,255,0) 0%, #fff 40%);
       display: flex;
       justify-content: space-between;
-      gap: 10px;
+      gap: 8px;
       z-index: 5;
       flex: 0 0 auto;
+      box-shadow: 0 -8px 20px rgba(0, 0, 0, 0.04);
     }
 
-    .step-footer .btn { flex: 1; }
+    .step-footer .btn {
+      flex: 1;
+      padding: 10px 12px;
+      font-size: 13px;
+    }
 
     .testimonial-wrap {
       display: grid;
@@ -823,6 +828,8 @@
         border-top: 1px solid var(--border);
         box-shadow: 0 -6px 22px rgba(15, 15, 26, 0.05);
       }
+
+      footer { display: none; }
     }
 
     @media (max-width: 520px) {
