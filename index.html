@@ -256,11 +256,15 @@
       max-width: 100vw;
       height: 100%;
       padding: clamp(18px, 5vw, 32px) clamp(16px, 4vw, 22px) clamp(110px, 10vw, 130px);
-      display: flex;
+      display: none;
       justify-content: center;
       flex: 0 0 100%;
       overflow: hidden;
       box-sizing: border-box;
+    }
+
+    .step.is-active {
+      display: flex;
     }
 
     .step-inner {
@@ -706,7 +710,7 @@
 
     @media (min-width: 769px) {
       body.no-scroll { overflow: auto; height: auto; }
-      .mobile-step-bar, .step-footer { display: none; }
+      .mobile-step-bar { display: none; }
       .app-shell { height: auto; min-height: auto; }
       .stepper-viewport { overflow: visible; background: #fff; height: auto; min-height: 0; }
       .stepper-track { flex-direction: column; transform: none !important; height: auto; overflow: visible; }
@@ -910,7 +914,7 @@
 
     <div class="stepper-viewport">
       <div class="stepper-track" id="stepper-track">
-        <section class="step step--form" data-step="1" id="step-1">
+        <section class="step step--form is-active" data-step="1" id="step-1">
           <div class="step-inner" data-step-title tabindex="-1">
             <div class="step-header">
               <div class="pill-note">Paso 1 · Formulario</div>
@@ -1245,8 +1249,8 @@
         const employees = formData.get('employees');
         track('lp_lead_submitted', { businessType, employees });
         lockForm();
-        goToStep(2, { focus: false });
-        setTimeout(() => goToStep(2, { focus: true }), 350);
+        showStep(2, { focus: false });
+        setTimeout(() => showStep(2, { focus: true }), 350);
       } catch (error) {
         console.error(error);
         track('lp_lead_error');
@@ -1256,7 +1260,7 @@
       }
     }
 
-    function goToStep(step, options = { track: true, focus: true }) {
+    function showStep(step, options = { track: true, focus: true }) {
       const { track = true, focus = true } = options || {};
       const targetStep = Math.max(1, Math.min(STEP_TOTAL, step));
       if (targetStep > 1 && !hasSubmitted) {
@@ -1266,11 +1270,7 @@
       }
       const isMobile = window.innerWidth < DESKTOP_BREAKPOINT;
       if (stepperTrack) {
-        if (isMobile) {
-          stepperTrack.style.transform = `translateX(-${(currentStep - 1) * 100}%)`;
-        } else {
-          stepperTrack.style.transform = 'none';
-        }
+        stepperTrack.style.transform = 'none';
       }
 
       stepCounter.textContent = `${currentStep}/${STEP_TOTAL}`;
@@ -1279,13 +1279,11 @@
       });
 
       stepSections.forEach((section, index) => {
-        section.style.opacity = index + 1 === currentStep ? '1' : isMobile ? '0.35' : '1';
-        section.inert = isMobile && index + 1 !== currentStep;
+        const isActive = index + 1 === currentStep;
+        section.classList.toggle('is-active', isActive);
+        section.inert = isMobile && !isActive;
+        section.setAttribute('aria-hidden', isActive ? 'false' : 'true');
       });
-
-      if (!isMobile) {
-        stepSections[currentStep - 1]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
 
       backButtons.forEach((btn) => {
         if (!btn) return;
@@ -1295,17 +1293,28 @@
       toggleNextAvailability();
       updateFooterVisibility();
       if (focus) {
-        focusStepTitle();
+        focusStepElement();
       }
       if (track) {
         track('lp_step_view', { step: currentStep });
       }
     }
 
-    function focusStepTitle() {
+    function focusStepElement() {
       const activeStep = stepSections[currentStep - 1];
-      const title = activeStep?.querySelector('[data-step-title]');
-      title?.focus({ preventScroll: true });
+      if (!activeStep) return;
+      const firstControl = activeStep.querySelector('input, select, textarea, button, a');
+      const fallbackTitle = activeStep.querySelector('[data-step-title]');
+      (firstControl || fallbackTitle)?.focus({ preventScroll: true });
+    }
+
+    function nextStep() {
+      showStep(currentStep + 1);
+    }
+
+    function prevStep() {
+      if (currentStep === 1) return;
+      showStep(currentStep - 1);
     }
 
     function toggleNextAvailability() {
@@ -1324,22 +1333,22 @@
 
     function updateFooterVisibility() {
       if (!stepFooter) return;
-      const shouldHide = currentStep === 1 || window.innerWidth >= DESKTOP_BREAKPOINT;
+      const shouldHide = currentStep === 1 && !hasSubmitted;
       stepFooter.classList.toggle('hidden', shouldHide);
     }
 
     function handleNext() {
       if (currentStep === STEP_TOTAL) {
-        goToStep(1);
+        showStep(1);
         return;
       }
       if (currentStep === 1 && !hasSubmitted) return;
-      goToStep(currentStep + 1);
+      nextStep();
     }
 
     function handleBack() {
       if (currentStep === 1) return;
-      goToStep(currentStep - 1);
+      prevStep();
     }
 
     function restoreFormState() {
@@ -1351,19 +1360,19 @@
     function initNavigation() {
       backButtons.forEach((btn) => btn?.addEventListener('click', handleBack));
       nextButtons.forEach((btn) => btn?.addEventListener('click', handleNext));
-      benefitsNext?.addEventListener('click', () => goToStep(5));
-      backToStart?.addEventListener('click', () => goToStep(1));
+      benefitsNext?.addEventListener('click', () => showStep(5));
+      backToStart?.addEventListener('click', () => showStep(1));
       openExora?.addEventListener('click', () => track('lp_open_exora'));
       resetFormButton?.addEventListener('click', () => {
         unlockForm();
         setStatusMessage('Formulario listo para completar.');
-        goToStep(1, { track: false });
+        showStep(1, { track: false });
       });
       ctaButtons.forEach((button) => {
         button.addEventListener('click', (event) => {
           event.preventDefault();
-          goToStep(1);
-          focusStepTitle();
+          showStep(1);
+          focusStepElement();
         });
       });
     }
@@ -1372,12 +1381,12 @@
       const isMobile = window.innerWidth < DESKTOP_BREAKPOINT;
       document.body.classList.toggle('no-scroll', isMobile);
       mobileStepBar?.classList.toggle('hidden', !isMobile);
-      stepFooter?.classList.toggle('hidden', !isMobile || (currentStep === 1 && !hasSubmitted));
+      stepFooter?.classList.toggle('hidden', currentStep === 1 && !hasSubmitted);
       if (!isMobile) {
-        stepSections.forEach((section) => { section.inert = false; section.style.opacity = '1'; });
+        stepSections.forEach((section) => { section.inert = false; });
         window.scrollTo({ top: 0 });
       } else {
-        goToStep(currentStep, { track: false, focus: false });
+        showStep(currentStep, { track: false, focus: false });
       }
     }
 
@@ -1404,7 +1413,7 @@
       initNavigation();
       setAppHeight();
       toggleMobileMode();
-      goToStep(currentStep);
+      showStep(currentStep);
       initAnimation();
       if (contactForm) {
         contactForm.addEventListener('submit', handleSubmit);
