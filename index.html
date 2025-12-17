@@ -1245,7 +1245,8 @@
         const employees = formData.get('employees');
         track('lp_lead_submitted', { businessType, employees });
         lockForm();
-        goToStep(2);
+        goToStep(2, { focus: false });
+        setTimeout(() => goToStep(2, { focus: true }), 350);
       } catch (error) {
         console.error(error);
         track('lp_lead_error');
